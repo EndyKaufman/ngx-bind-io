@@ -9,6 +9,7 @@ export class NgxBindInputsService {
    * BindInputs Directive
    */
   bindInputs(directive: Partial<IBindIO>) {
+    const inputs = this.getInputs(directive);
     const excludeInputs = (Array.isArray(directive.excludeInputs)
       ? directive.excludeInputs
       : [directive.excludeInputs]
@@ -17,14 +18,14 @@ export class NgxBindInputsService {
       ? directive.includeInputs
       : [directive.includeInputs]
     ).map(key => key.toUpperCase());
-    directive.inputs.parentKeys
+    inputs.parentKeys
       .filter(
         parentKey =>
           (includeInputs.length === 0 && excludeInputs.indexOf(parentKey.toUpperCase()) === -1) ||
           (includeInputs.length !== 0 && includeInputs.indexOf(parentKey.toUpperCase()) !== -1)
       )
       .forEach(parentKey => {
-        directive.inputs.keys.forEach(key => {
+        inputs.keys.forEach(key => {
           if (this.checkInputToBind(directive, parentKey, key)) {
             this.bindInput(directive, parentKey, key);
           }
@@ -32,6 +33,7 @@ export class NgxBindInputsService {
       });
   }
   bindObservableInputs(directive: Partial<IBindIO>) {
+    const inputs = this.getInputs(directive);
     const excludeInputs = (Array.isArray(directive.excludeInputs)
       ? directive.excludeInputs
       : [directive.excludeInputs]
@@ -41,14 +43,14 @@ export class NgxBindInputsService {
       : [directive.includeInputs]
     ).map(key => key.toUpperCase());
 
-    directive.inputs.parentKeys
+    inputs.parentKeys
       .filter(
         parentKey =>
           (includeInputs.length === 0 && excludeInputs.indexOf(parentKey.toUpperCase()) === -1) ||
           (includeInputs.length !== 0 && includeInputs.indexOf(parentKey.toUpperCase()) !== -1)
       )
       .forEach(parentKey => {
-        directive.inputs.keys.forEach(key => {
+        inputs.keys.forEach(key => {
           if (this.checkObservableInputToBind(directive, parentKey, key)) {
             this.bindObservableInput(directive, parentKey, key);
           }
@@ -63,14 +65,14 @@ export class NgxBindInputsService {
   }
   checkInputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
     return (
-      directive.used.indexOf(parentKey) === -1 &&
+      directive.usedInputs.indexOf(parentKey) === -1 &&
       this.checkKeyNameToInputBind(directive, parentKey, key) &&
       !isObservable(directive.parentComponent[parentKey]) &&
       !isObservable(directive.component[key])
     );
   }
   bindInput(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    directive.used.push(parentKey);
+    directive.usedInputs.push(parentKey);
     directive.component[key] = directive.parentComponent[parentKey];
   }
   /**
@@ -81,14 +83,14 @@ export class NgxBindInputsService {
   }
   checkObservableInputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
     return (
-      directive.used.indexOf(parentKey) === -1 &&
+      directive.usedInputs.indexOf(parentKey) === -1 &&
       this.checkKeyNameToObservableInputBind(directive, parentKey, key) &&
       isObservable(directive.parentComponent[parentKey]) &&
       !isObservable(directive.component[key])
     );
   }
   bindObservableInput(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    directive.used.push(parentKey);
+    directive.usedInputs.push(parentKey);
     directive.parentComponent[parentKey]
       .pipe(takeUntil(directive.destroyed$))
       .subscribe(value => directive.bindValue(key, value));

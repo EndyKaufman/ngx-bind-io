@@ -19,7 +19,7 @@ export class BindInputsDirective implements Partial<IBindIO>, OnDestroy, AfterCo
     parentKeys: string[];
   };
 
-  used: string[] = [];
+  usedInputs: string[] = [];
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
