@@ -5,7 +5,7 @@
 [![npm version](https://badge.fury.io/js/ngx-bind-io.svg)](https://badge.fury.io/js/ngx-bind-io)
 
 
-Directives for auto binding @Input() and @Output() in Angular7+ application
+Directives for auto binding Input() and Output() in Angular7+ application
 
 ***Attention !!! For correct work in AOT, all Inputs and Outputs ​​must be initialized, you can set them to "undefined".***
 
