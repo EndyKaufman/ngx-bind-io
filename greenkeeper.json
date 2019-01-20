@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "libs/ngx-bind-io/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
