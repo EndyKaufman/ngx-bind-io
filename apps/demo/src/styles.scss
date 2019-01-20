@@ -1,0 +1,54 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.mat-menu-item{
+    .mat-icon{
+        svg{
+            padding-bottom: 10px;
+        }
+    }
+}
+.mat-button, .mat-fab, .mat-icon-button, .mat-mini-fab, .mat-raised-button, .mat-menu-item {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.mat-table {
+    .mat-header-row, .mat-row{
+        padding: 0;
+    }
+
+    .mat-column-action {
+        text-align: center;
+        max-width: 100px;
+    }
+}
+
+.ngx-docs-example {
+    .ngx-docs-example-body {
+        padding-top: 10px
+    }
+}
+
+.full-width {
+    width: 100%;
+}
+
+.margin-15 {
+    margin: 15px;
+}
+.padding-left-15 {
+    padding-left: 15px;
+}
+.padding-top-15 {
+    padding-top: 15px
+}
+.padding-top-5 {
+    padding-top: 5px
+}

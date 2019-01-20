@@ -1,0 +1,39 @@
+<div [class]="class">
+    <mat-table [dataSource]="dataSource">
+        <ng-container *ngFor="let column of displayedColumns">
+            <ng-container *ngIf="column!=='action'">
+                <ng-container [matColumnDef]="column">
+                    <mat-header-cell *matHeaderCellDef>{{strings[column]}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element[column]}}</mat-cell>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef>
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="onAddClick()">
+                    <mat-icon>add</mat-icon>
+                    Add
+                </button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <div class="button-row">
+                    <button
+                        mat-icon-button
+                        (click)="onEditClick(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                        mat-icon-button
+                        (click)="onDeleteClick(element)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

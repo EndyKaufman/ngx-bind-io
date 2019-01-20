@@ -1,0 +1,41 @@
+{
+  "name": "ngx-bind-io",
+  "version": "0.1.0",
+  "description": "Directives for auto binding @Input() and @Output() in Angular7+ application",
+  "keywords": [
+    "input",
+    "output",
+    "directives",
+    "dynamic",
+    "auto",
+    "bind",
+    "binding",
+    "angular7"
+  ],
+  "license": "MIT",
+  "author": "EndyKaufman <admin@site15.ru>",
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6.4.0"
+  },
+  "bugs": {
+    "url": "https://github.com/EndyKaufman/ngx-bind-io/issues"
+  },
+  "homepage": "https://github.com/EndyKaufman/ngx-bind-io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EndyKaufman/ngx-bind-io.git"
+  },
+  "maintainers": [
+    {
+      "name": "EndyKaufman",
+      "email": "admin@site15.ru"
+    }
+  ],
+  "peerDependencies": {
+    "rxjs": "^6.3.3",
+    "@angular/common": "^7.2.1",
+    "@angular/compiler": "^7.2.1",
+    "@angular/core": "^7.2.1"
+  }
+}
