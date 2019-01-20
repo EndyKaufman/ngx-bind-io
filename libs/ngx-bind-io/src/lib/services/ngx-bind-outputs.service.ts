@@ -8,6 +8,7 @@ export class NgxBindOutputsService {
    * BindOutputs Directive
    */
   bindOutputs(directive: Partial<IBindIO>) {
+    const outputs = this.getOutputs(directive);
     const excludeOutputs = (Array.isArray(directive.excludeOutputs)
       ? directive.excludeOutputs
       : [directive.excludeOutputs]
@@ -16,14 +17,14 @@ export class NgxBindOutputsService {
       ? directive.includeOutputs
       : [directive.includeOutputs]
     ).map(key => key.toUpperCase());
-    directive.outputs.parentKeys
+    outputs.parentKeys
       .filter(
         parentKey =>
           (includeOutputs.length === 0 && excludeOutputs.indexOf(parentKey.toUpperCase()) === -1) ||
           (includeOutputs.length !== 0 && includeOutputs.indexOf(parentKey.toUpperCase()) !== -1)
       )
       .forEach(parentKey => {
-        directive.outputs.keys.forEach(key => {
+        outputs.keys.forEach(key => {
           if (this.checkOutputToBind(directive, parentKey, key)) {
             this.bindOutput(directive, parentKey, key);
           }
@@ -34,18 +35,19 @@ export class NgxBindOutputsService {
    * Outputs
    */
   checkKeyNameToOutputBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+    const outputs = this.getOutputs(directive);
     const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
     return (
       (parentKey === `on${keyWithFirstUpperLetter}` &&
-        directive.outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
+        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
       parentKey === `on${keyWithFirstUpperLetter}Click`
     );
   }
   checkOutputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    return directive.used.indexOf(key) === -1 && this.checkKeyNameToOutputBind(directive, parentKey, key);
+    return directive.used.indexOf('output_' + key) === -1 && this.checkKeyNameToOutputBind(directive, parentKey, key);
   }
   bindOutput(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    directive.used.push(key);
+    directive.used.push('output_' + key);
     directive.component[key].subscribe(value => directive.parentComponent[parentKey](value));
   }
   /**
