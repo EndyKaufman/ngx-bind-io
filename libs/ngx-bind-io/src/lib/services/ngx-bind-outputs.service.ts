@@ -44,10 +44,10 @@ export class NgxBindOutputsService {
     );
   }
   checkOutputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    return directive.used.indexOf('output_' + key) === -1 && this.checkKeyNameToOutputBind(directive, parentKey, key);
+    return directive.usedOutputs.indexOf(key) === -1 && this.checkKeyNameToOutputBind(directive, parentKey, key);
   }
   bindOutput(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    directive.used.push('output_' + key);
+    directive.usedOutputs.push(key);
     directive.component[key].subscribe(value => directive.parentComponent[parentKey](value));
   }
   /**

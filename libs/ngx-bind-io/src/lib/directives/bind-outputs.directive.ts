@@ -1,4 +1,4 @@
-import { AfterContentInit, Directive, Input, OnDestroy, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Directive, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IBindIO } from '../interfaces/bind-io.interface';
 import { NgxBindOutputsService } from '../services/ngx-bind-outputs.service';
@@ -18,7 +18,7 @@ export class BindOutputsDirective implements Partial<IBindIO>, OnDestroy, AfterC
     parentKeys: string[];
   };
 
-  used: string[] = [];
+  usedOutputs: string[] = [];
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
   constructor(

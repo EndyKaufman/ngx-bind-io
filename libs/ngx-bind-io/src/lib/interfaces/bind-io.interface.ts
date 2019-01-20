@@ -17,7 +17,8 @@ export interface IBindIO {
     parentKeys: string[];
   };
 
-  used: string[];
+  usedInputs?: string[];
+  usedOutputs?: string[];
   destroyed$: Subject<boolean>;
 
   bindValue(key: string, value: any): void;

@@ -28,7 +28,8 @@ export class BindIODirective implements IBindIO, OnDestroy, AfterContentInit {
     parentKeys: string[];
   };
 
-  used: string[] = [];
+  usedInputs: string[] = [];
+  usedOutputs: string[] = [];
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
