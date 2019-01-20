@@ -1,5 +1,0 @@
-<div class="customization-page">
-  <markdown
-      [data]="customization"
-      lineNumbers></markdown>
-</div>

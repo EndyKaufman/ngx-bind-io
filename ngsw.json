@@ -1,0 +1,93 @@
+{
+  "configVersion": 1,
+  "index": "/ngx-bind-io/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/ngx-bind-io/1.f76db3b1a735c0ced70f.js",
+        "/ngx-bind-io/10.90440dfd4068374449f9.js",
+        "/ngx-bind-io/11.31b7538ce04681fd7f98.js",
+        "/ngx-bind-io/3.a8b3d772d2f4b551c390.js",
+        "/ngx-bind-io/4.f9a9293bea2bb999012c.js",
+        "/ngx-bind-io/8.3b7a4a3cacf3a5b10ab4.js",
+        "/ngx-bind-io/9.3274c3728460f4ae13f5.js",
+        "/ngx-bind-io/common.3e74a4a20e894bf60787.js",
+        "/ngx-bind-io/favicon.ico",
+        "/ngx-bind-io/index.html",
+        "/ngx-bind-io/main.f7e32e0a7c08df09eae7.js",
+        "/ngx-bind-io/polyfills.45a1d62132015e6b5f87.js",
+        "/ngx-bind-io/runtime.7bc4e92b3ac0748d9e45.js",
+        "/ngx-bind-io/scripts.e031dac00244de27498e.js",
+        "/ngx-bind-io/styles.223bfc81046e3dcbdd93.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/ngx-bind-io/assets/icons/icon-128x128.png",
+        "/ngx-bind-io/assets/icons/icon-144x144.png",
+        "/ngx-bind-io/assets/icons/icon-152x152.png",
+        "/ngx-bind-io/assets/icons/icon-192x192.png",
+        "/ngx-bind-io/assets/icons/icon-384x384.png",
+        "/ngx-bind-io/assets/icons/icon-512x512.png",
+        "/ngx-bind-io/assets/icons/icon-72x72.png",
+        "/ngx-bind-io/assets/icons/icon-96x96.png",
+        "/ngx-bind-io/assets/img/icons/github-circle.svg",
+        "/ngx-bind-io/assets/img/icons/shape-outline.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/ngx-bind-io/1.f76db3b1a735c0ced70f.js": "9f44ca6b6c55a1c484c1ce21857213a9f95b470c",
+    "/ngx-bind-io/10.90440dfd4068374449f9.js": "b523afbee2e550730024c25ee2230bd328664e6b",
+    "/ngx-bind-io/11.31b7538ce04681fd7f98.js": "8531e8bba6b4cd81ccc5b45711acae73b3574cbf",
+    "/ngx-bind-io/3.a8b3d772d2f4b551c390.js": "3e5004f36712e20d5a63112899f3863517d8446b",
+    "/ngx-bind-io/4.f9a9293bea2bb999012c.js": "47bf2574f052cde020d928372953a50ae1772e68",
+    "/ngx-bind-io/8.3b7a4a3cacf3a5b10ab4.js": "44d5c248586c9357384f4e9aa589e0f746f0d4ea",
+    "/ngx-bind-io/9.3274c3728460f4ae13f5.js": "fd6d302ed6aaa3396faf58402bcb8a1dc91ff205",
+    "/ngx-bind-io/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/ngx-bind-io/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/ngx-bind-io/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/ngx-bind-io/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/ngx-bind-io/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/ngx-bind-io/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/ngx-bind-io/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/ngx-bind-io/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/ngx-bind-io/assets/img/icons/github-circle.svg": "9a2dfab04214dc8b31f2df7baec3419e18ed166e",
+    "/ngx-bind-io/assets/img/icons/shape-outline.svg": "9d0f9439eb430f8282fd8cc60e674b07ec8318ac",
+    "/ngx-bind-io/common.3e74a4a20e894bf60787.js": "4a3665232a823f65d151cf8d7f36f9b15e33c50b",
+    "/ngx-bind-io/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/ngx-bind-io/index.html": "2da88def3701ba568ffc0005ec31da81d19763c0",
+    "/ngx-bind-io/main.f7e32e0a7c08df09eae7.js": "0a65e1496aa4cd37cddc8f858441b04ea0489f34",
+    "/ngx-bind-io/polyfills.45a1d62132015e6b5f87.js": "63c3c0166e6fb3849422766e8d5a03875fb7555b",
+    "/ngx-bind-io/runtime.7bc4e92b3ac0748d9e45.js": "a39b3cba6ef298b76231e6fe242cdacf0c35fbbc",
+    "/ngx-bind-io/scripts.e031dac00244de27498e.js": "99ca0057d6ecfaa73e7aa454b35a63e1237ec952",
+    "/ngx-bind-io/styles.223bfc81046e3dcbdd93.css": "c76e3e8fdda42d62efcf6f453cff063cc7876311"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

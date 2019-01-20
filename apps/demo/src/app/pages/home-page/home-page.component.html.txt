@@ -1,5 +1,0 @@
-<div class="home-page">
-  <markdown
-      [data]="readme"
-      lineNumbers></markdown>
-</div>
