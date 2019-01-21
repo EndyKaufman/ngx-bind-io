@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.1.1...0.2.0) (2019-01-21)
+
+
+### Features
+
+* Add support update inputs values on child component, when update values in parent component ([d55460e](https://github.com/EndyKaufman/ngx-bind-io/commit/d55460e))
+
+
+
 ## [0.1.1](https://github.com/EndyKaufman/ngx-bind-io/compare/0.1.0...0.1.1) (2019-01-20)
 
 

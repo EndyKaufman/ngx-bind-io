@@ -82,19 +82,12 @@ export class NgxBindInputsService {
     const currentValue: any = descriptor.value;
     delete directive.parentComponent[parentKey];
     if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
-      redefineAccessorProperty(
-        directive.parentComponent,
-        parentKey,
-        descriptor.originalDescriptor,
-        (newValue: any) =>
-          directive.bindValue(key, newValue)
+      redefineAccessorProperty(directive.parentComponent, parentKey, descriptor.originalDescriptor, (newValue: any) =>
+        directive.bindValue(key, newValue)
       );
     } else {
-      redefineSimpleProperty(
-        directive.parentComponent,
-        parentKey,
-        (newValue: any) =>
-          directive.bindValue(key, newValue)
+      redefineSimpleProperty(directive.parentComponent, parentKey, (newValue: any) =>
+        directive.bindValue(key, newValue)
       );
     }
     directive.parentComponent[parentKey] = currentValue;
@@ -126,32 +119,23 @@ export class NgxBindInputsService {
     delete directive.parentComponent[parentKey];
 
     if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
-      redefineAccessorProperty(
-        directive.parentComponent,
-        parentKey,
-        descriptor.originalDescriptor,
-        (newValue: any) => {
-          if (directive.parentComponent[parentKey + '_subscription']) {
-            (directive.parentComponent[parentKey + '_subscription'] as Subscription).unsubscribe();
-          }
-          directive.parentComponent[parentKey + '_subscription'] =
-            newValue
-              .pipe(takeUntil(directive.destroyed$))
-              .subscribe(value => directive.bindValue(key, value));
-        });
+      redefineAccessorProperty(directive.parentComponent, parentKey, descriptor.originalDescriptor, (newValue: any) => {
+        if (directive.parentComponent[parentKey + '_subscription']) {
+          (directive.parentComponent[parentKey + '_subscription'] as Subscription).unsubscribe();
+        }
+        directive.parentComponent[parentKey + '_subscription'] = newValue
+          .pipe(takeUntil(directive.destroyed$))
+          .subscribe(value => directive.bindValue(key, value));
+      });
     } else {
-      redefineSimpleProperty(
-        directive.parentComponent,
-        parentKey,
-        (newValue: any) => {
-          if (directive.parentComponent[parentKey + '_subscription']) {
-            (directive.parentComponent[parentKey + '_subscription'] as Subscription).unsubscribe();
-          }
-          directive.parentComponent[parentKey + '_subscription'] =
-            newValue
-              .pipe(takeUntil(directive.destroyed$))
-              .subscribe(value => directive.bindValue(key, value));
-        });
+      redefineSimpleProperty(directive.parentComponent, parentKey, (newValue: any) => {
+        if (directive.parentComponent[parentKey + '_subscription']) {
+          (directive.parentComponent[parentKey + '_subscription'] as Subscription).unsubscribe();
+        }
+        directive.parentComponent[parentKey + '_subscription'] = newValue
+          .pipe(takeUntil(directive.destroyed$))
+          .subscribe(value => directive.bindValue(key, value));
+      });
     }
     directive.parentComponent[parentKey] = currentValue;
     if (isBehaviorSubject) {
