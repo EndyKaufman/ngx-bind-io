@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBindIO } from '../interfaces/bind-io.interface';
+import { getPropDescriptor } from '../utils/property-utils';
 import { isFunction } from '../utils/utils';
 
 @Injectable()
@@ -58,15 +59,15 @@ export class NgxBindOutputsService {
       parentKeys: [
         ...Object.keys(directive.parentComponent).filter(parentKey => isFunction(directive.parentComponent[parentKey])),
         ...Object.keys(directive.parentComponent.__proto__).filter(parentKey =>
-          isFunction(directive.parentComponent.__proto__[parentKey])
+          isFunction(getPropDescriptor(directive.parentComponent.__proto__, parentKey).value)
         ),
         ...Object.keys(directive.parentComponent.__proto__ ? directive.parentComponent.__proto__.__proto__ : []).filter(
-          parentKey => isFunction(directive.parentComponent.__proto__.__proto__[parentKey])
+          parentKey => isFunction(getPropDescriptor(directive.parentComponent.__proto__.__proto__, parentKey).value)
         )
       ],
       keys: [
         ...Object.keys(directive.component ? directive.component : []).filter(
-          key => directive.component[key] instanceof EventEmitter
+          key => getPropDescriptor(directive.component, key).value instanceof EventEmitter
         )
       ]
     };

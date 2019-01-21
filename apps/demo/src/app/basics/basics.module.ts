@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NgxBindIOModule } from 'ngx-bind-io';
 import {
   BasicBindInputWithDeepInheritsComponent,
@@ -25,9 +26,13 @@ import {
   BasicBindOutputWithCustomClickParentComponent
 } from './bind-output-with-custom-click.component';
 import { BasicBindOutputComponent, BasicBindOutputParentComponent } from './bind-output.component';
+import {
+  BasicBindInputOnChangeParentComponent,
+  BasicBindInputOnChangeComponent
+} from './bind-input-on-change.component';
 
 @NgModule({
-  imports: [CommonModule, NgxBindIOModule],
+  imports: [CommonModule, FormsModule, NgxBindIOModule],
   declarations: [
     BasicBindInputComponent,
     BasicBindInputParentComponent,
@@ -46,7 +51,9 @@ import { BasicBindOutputComponent, BasicBindOutputParentComponent } from './bind
     BasicBindIOParentComponent,
     BasicBindIOComponent,
     BasicBindOutputWithCustomClickParentComponent,
-    BasicBindOutputWithCustomClickComponent
+    BasicBindOutputWithCustomClickComponent,
+    BasicBindInputOnChangeParentComponent,
+    BasicBindInputOnChangeComponent
   ],
   exports: [
     BasicBindInputParentComponent,
@@ -57,7 +64,8 @@ import { BasicBindOutputComponent, BasicBindOutputParentComponent } from './bind
     BasicBindOutputParentComponent,
     BasicBindOutputWithClickParentComponent,
     BasicBindIOParentComponent,
-    BasicBindOutputWithCustomClickParentComponent
+    BasicBindOutputWithCustomClickParentComponent,
+    BasicBindInputOnChangeParentComponent
   ]
 })
 export class BasicsModule {}

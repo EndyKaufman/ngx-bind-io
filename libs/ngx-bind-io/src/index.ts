@@ -5,4 +5,5 @@ export * from './lib/directives/bind-outputs.directive';
 export * from './lib/interfaces/bind-io.interface';
 export * from './lib/services/ngx-bind-inputs.service';
 export * from './lib/services/ngx-bind-outputs.service';
+export * from './lib/utils/property-utils';
 export * from './lib/utils/utils';

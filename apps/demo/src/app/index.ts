@@ -5,6 +5,7 @@ export * from './app.routes';
 export * from './base/base-grid.component';
 export * from './base/base-modal.component';
 export * from './basics/basics.module';
+export * from './basics/bind-input-on-change.component';
 export * from './basics/bind-input-with-deep-inherits.component';
 export * from './basics/bind-input-with-exclude.component';
 export * from './basics/bind-input-with-include.component';

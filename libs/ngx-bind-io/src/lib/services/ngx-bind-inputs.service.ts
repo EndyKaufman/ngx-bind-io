@@ -1,7 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { isObservable } from 'rxjs';
+import { BehaviorSubject, isObservable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IBindIO } from '../interfaces/bind-io.interface';
+import { getPropDescriptor, redefineAccessorProperty, redefineSimpleProperty } from '../utils/property-utils';
 
 @Injectable()
 export class NgxBindInputsService {
@@ -64,16 +65,39 @@ export class NgxBindInputsService {
     return parentKey === key;
   }
   checkInputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+    const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
+    const value = getPropDescriptor(directive.component, key).value;
     return (
       directive.usedInputs.indexOf(parentKey) === -1 &&
       this.checkKeyNameToInputBind(directive, parentKey, key) &&
-      !isObservable(directive.parentComponent[parentKey]) &&
-      !isObservable(directive.component[key])
+      !isObservable(parentValue) &&
+      !isObservable(value)
     );
   }
   bindInput(directive: Partial<IBindIO>, parentKey: string, key: string) {
     directive.usedInputs.push(parentKey);
-    directive.component[key] = directive.parentComponent[parentKey];
+
+    const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
+
+    const currentValue: any = descriptor.value;
+    delete directive.parentComponent[parentKey];
+    if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
+      redefineAccessorProperty(
+        directive.parentComponent,
+        parentKey,
+        descriptor.originalDescriptor,
+        (newValue: any) =>
+          directive.bindValue(key, newValue)
+      );
+    } else {
+      redefineSimpleProperty(
+        directive.parentComponent,
+        parentKey,
+        (newValue: any) =>
+          directive.bindValue(key, newValue)
+      );
+    }
+    directive.parentComponent[parentKey] = currentValue;
   }
   /**
    * Observable Inputs
@@ -82,18 +106,57 @@ export class NgxBindInputsService {
     return parentKey === `${key}$`;
   }
   checkObservableInputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+    const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
+    const value = getPropDescriptor(directive.component, key).value;
     return (
       directive.usedInputs.indexOf(parentKey) === -1 &&
       this.checkKeyNameToObservableInputBind(directive, parentKey, key) &&
-      isObservable(directive.parentComponent[parentKey]) &&
-      !isObservable(directive.component[key])
+      isObservable(parentValue) &&
+      !isObservable(value)
     );
   }
   bindObservableInput(directive: Partial<IBindIO>, parentKey: string, key: string) {
     directive.usedInputs.push(parentKey);
-    directive.parentComponent[parentKey]
-      .pipe(takeUntil(directive.destroyed$))
-      .subscribe(value => directive.bindValue(key, value));
+
+    const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
+    const isBehaviorSubject = descriptor.value instanceof BehaviorSubject;
+    const currentValue = descriptor.value;
+    const behaviorSubjectValue = isBehaviorSubject ? descriptor.value.getValue() : undefined;
+
+    delete directive.parentComponent[parentKey];
+
+    if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
+      redefineAccessorProperty(
+        directive.parentComponent,
+        parentKey,
+        descriptor.originalDescriptor,
+        (newValue: any) => {
+          if (directive.parentComponent[parentKey + '_subscription']) {
+            (directive.parentComponent[parentKey + '_subscription'] as Subscription).unsubscribe();
+          }
+          directive.parentComponent[parentKey + '_subscription'] =
+            newValue
+              .pipe(takeUntil(directive.destroyed$))
+              .subscribe(value => directive.bindValue(key, value));
+        });
+    } else {
+      redefineSimpleProperty(
+        directive.parentComponent,
+        parentKey,
+        (newValue: any) => {
+          if (directive.parentComponent[parentKey + '_subscription']) {
+            (directive.parentComponent[parentKey + '_subscription'] as Subscription).unsubscribe();
+          }
+          directive.parentComponent[parentKey + '_subscription'] =
+            newValue
+              .pipe(takeUntil(directive.destroyed$))
+              .subscribe(value => directive.bindValue(key, value));
+        });
+    }
+    directive.parentComponent[parentKey] = currentValue;
+    if (isBehaviorSubject) {
+      currentValue.next(behaviorSubjectValue);
+    }
   }
   /**
    * Utils
@@ -107,7 +170,7 @@ export class NgxBindInputsService {
       ],
       keys: [
         ...Object.keys(directive.component ? directive.component : []).filter(
-          key => !(directive.component[key] instanceof EventEmitter)
+          key => !(getPropDescriptor(directive.component, key).value instanceof EventEmitter)
         )
       ]
     };
