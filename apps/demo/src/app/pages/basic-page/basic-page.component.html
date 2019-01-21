@@ -235,12 +235,40 @@
             <strong>Options</strong>
             <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
 &lt;input [(ngModel)]=&quot;propB&quot; /&gt;
-&lt;hr /&gt;
 &lt;button (click)=&quot;loadingWith1500s()&quot;&gt;
     Loading with 1,5s.
 &lt;/button&gt;</pre>
             <hr>
             <basic-bind-input-on-change-parent></basic-bind-input-on-change-parent>
+        </div>
+    </ngx-docs-example>
+    <ngx-docs-example
+        title="Basics: bind input without onPush"
+        html="<basic-bind-input-no-on-push-parent></basic-bind-input-no-on-push-parent>"
+        [ts]="ts['bind-input-no-on-push']"
+        fxFlex.gt-sm="50">
+        <div class="body">
+            <strong>Without auto binding inputs and outputs</strong>
+            <pre>&lt;basic-bind-input-no-on-push
+    (start)=&quot;onRun()&quot;
+    [propA]=&quot;propA&quot;
+    [propB]=&quot;propB&quot;
+#child1&gt;
+&lt;/basic-bind-input-no-on-push&gt;</pre>
+            <strong>With auto binding inputs</strong>
+            <pre>&lt;basic-bind-input-no-on-push
+    bindInputs
+    (start)=&quot;onRun()&quot;
+#child2&gt;
+&lt;/basic-bind-input-no-on-push&gt;</pre>
+            <strong>Options</strong>
+            <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
+&lt;input [(ngModel)]=&quot;propB&quot; /&gt;
+&lt;button (click)=&quot;loadingWith1500s()&quot;&gt;
+    Loading with 1,5s.
+&lt;/button&gt;</pre>
+            <hr>
+            <basic-bind-input-no-on-push-parent></basic-bind-input-no-on-push-parent>
         </div>
     </ngx-docs-example>
 </div>

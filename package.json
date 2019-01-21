@@ -10,6 +10,10 @@
     "auto",
     "bind",
     "binding",
+    "inheritance",
+    "nested",
+    "class",
+    "component",
     "angular7"
   ],
   "license": "MIT",
