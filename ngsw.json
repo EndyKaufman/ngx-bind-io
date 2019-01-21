@@ -7,7 +7,7 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/ngx-bind-io/1.f76db3b1a735c0ced70f.js",
+        "/ngx-bind-io/1.a4fd5c2accc5590f775c.js",
         "/ngx-bind-io/10.90440dfd4068374449f9.js",
         "/ngx-bind-io/11.31b7538ce04681fd7f98.js",
         "/ngx-bind-io/3.a8b3d772d2f4b551c390.js",
@@ -19,7 +19,7 @@
         "/ngx-bind-io/index.html",
         "/ngx-bind-io/main.3913ead27abbd2b1cb1d.js",
         "/ngx-bind-io/polyfills.45a1d62132015e6b5f87.js",
-        "/ngx-bind-io/runtime.14dc9fa4f06b24bd9ddf.js",
+        "/ngx-bind-io/runtime.6202b54cb3b7c15d7a55.js",
         "/ngx-bind-io/scripts.e031dac00244de27498e.js",
         "/ngx-bind-io/styles.223bfc81046e3dcbdd93.css"
       ],
@@ -46,7 +46,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/ngx-bind-io/1.f76db3b1a735c0ced70f.js": "9f44ca6b6c55a1c484c1ce21857213a9f95b470c",
+    "/ngx-bind-io/1.a4fd5c2accc5590f775c.js": "b269fa6134dc16042487a04ce2a62b7f22e6b09a",
     "/ngx-bind-io/10.90440dfd4068374449f9.js": "b523afbee2e550730024c25ee2230bd328664e6b",
     "/ngx-bind-io/11.31b7538ce04681fd7f98.js": "8531e8bba6b4cd81ccc5b45711acae73b3574cbf",
     "/ngx-bind-io/3.a8b3d772d2f4b551c390.js": "3e5004f36712e20d5a63112899f3863517d8446b",
@@ -65,10 +65,10 @@
     "/ngx-bind-io/assets/img/icons/shape-outline.svg": "9d0f9439eb430f8282fd8cc60e674b07ec8318ac",
     "/ngx-bind-io/common.3e74a4a20e894bf60787.js": "4a3665232a823f65d151cf8d7f36f9b15e33c50b",
     "/ngx-bind-io/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/ngx-bind-io/index.html": "2bb1cff8d8cbb586d4d5183acdede9d4edfd907a",
+    "/ngx-bind-io/index.html": "6500689427fb657e5f6be59a89cf4c0c88e03cd4",
     "/ngx-bind-io/main.3913ead27abbd2b1cb1d.js": "48066af7a218b2c412b7f039e832bfea3deaa45a",
     "/ngx-bind-io/polyfills.45a1d62132015e6b5f87.js": "63c3c0166e6fb3849422766e8d5a03875fb7555b",
-    "/ngx-bind-io/runtime.14dc9fa4f06b24bd9ddf.js": "e64c91c41a69ef9e81b01e62dda55de147a0f646",
+    "/ngx-bind-io/runtime.6202b54cb3b7c15d7a55.js": "d94735670b694404ac1c880b0c909b1a5e9f002e",
     "/ngx-bind-io/scripts.e031dac00244de27498e.js": "99ca0057d6ecfaa73e7aa454b35a63e1237ec952",
     "/ngx-bind-io/styles.223bfc81046e3dcbdd93.css": "c76e3e8fdda42d62efcf6f453cff063cc7876311"
   },
