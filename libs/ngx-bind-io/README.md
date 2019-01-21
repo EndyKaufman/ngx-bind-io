@@ -7,6 +7,27 @@ Directives for auto binding Input() and Output() in Angular7+ application
 
 ***Attention !!! For correct work in AOT, all Inputs and Outputs ​​must be initialized, you can set them to "undefined".***
 
+
+
+## Example
+
+Without auto binding inputs and outputs
+```html
+<component-name
+    (start)="onStart()"
+    [isLoading]="isLoading$ | async"
+    [propA]="propA"
+    [propB]="propB">
+</component-name>
+```
+
+With auto binding inputs and outputs
+```html
+<component-name
+    bindIO>
+</component-name>
+```
+
 ## Installation
 
 ```bash
