@@ -11,10 +11,12 @@
     "bind",
     "binding",
     "inheritance",
+    "hierarchy",
     "nested",
     "class",
     "component",
     "extends",
+    "angular",
     "angular7"
   ],
   "license": "MIT",
