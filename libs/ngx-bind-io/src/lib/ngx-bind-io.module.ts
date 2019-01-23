@@ -6,6 +6,7 @@ import { BindOutputsDirective } from './directives/bind-outputs.directive';
 import { INgxBindIOConfig } from './interfaces/ngx-bind-io-config.interface';
 import { defaultNgxBindIOConfig, NGX_BIND_IO_CONFIG } from './ngx-bind-io.config';
 import { NgxBindInputsService } from './services/ngx-bind-inputs.service';
+import { NgxBindIODebugService } from './services/ngx-bind-io-debug.service';
 import { NgxBindOutputsService } from './services/ngx-bind-outputs.service';
 
 @NgModule({
@@ -24,6 +25,7 @@ export class NgxBindIOModule {
             debug: options ? options.debug : defaultNgxBindIOConfig.debug
           }
         },
+        NgxBindIODebugService,
         NgxBindInputsService,
         NgxBindOutputsService
       ]

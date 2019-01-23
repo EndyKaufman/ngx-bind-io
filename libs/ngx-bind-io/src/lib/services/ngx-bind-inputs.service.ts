@@ -1,14 +1,11 @@
-import { EventEmitter, Inject, Injectable, isDevMode } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, isObservable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
-import { NGX_BIND_IO_CONFIG } from '../ngx-bind-io.config';
 import { getPropDescriptor, redefineAccessorProperty, redefineSimpleProperty } from '../utils/property-utils';
 
 @Injectable()
 export class NgxBindInputsService {
-  constructor(@Inject(NGX_BIND_IO_CONFIG) private ngxBindIOConfig: INgxBindIOConfig) { }
   /**
    * BindInputs Directive
    */
@@ -71,14 +68,14 @@ export class NgxBindInputsService {
     const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
     const value = getPropDescriptor(directive.component, key).value;
     return (
-      directive.usedInputs.indexOf(parentKey) === -1 &&
+      directive.usedInputs[parentKey] === undefined &&
       this.checkKeyNameToInputBind(directive, parentKey, key) &&
       !isObservable(parentValue) &&
       !isObservable(value)
     );
   }
   bindInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    directive.usedInputs.push(parentKey);
+    directive.usedInputs[parentKey] = key;
 
     const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
 
@@ -105,14 +102,14 @@ export class NgxBindInputsService {
     const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
     const value = getPropDescriptor(directive.component, key).value;
     return (
-      directive.usedInputs.indexOf(parentKey) === -1 &&
+      directive.usedInputs[parentKey] === undefined &&
       this.checkKeyNameToObservableInputBind(directive, parentKey, key) &&
       isObservable(parentValue) &&
       !isObservable(value)
     );
   }
   bindObservableInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    directive.usedInputs.push(parentKey);
+    directive.usedInputs[parentKey] = key;
 
     const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
     const isBehaviorSubject = descriptor.value instanceof BehaviorSubject;
@@ -162,28 +159,5 @@ export class NgxBindInputsService {
       ]
     };
     return foundedInputs;
-  }
-  showDebugInputInfo(directive: Partial<INgxBindIODirective>) {
-    if (this.ngxBindIOConfig.debug || isDevMode()) {
-      if (
-        directive.component &&
-        directive.component.__proto__ &&
-        directive.component.__proto__.constructor &&
-        directive.component.__proto__.constructor.ngBaseDef &&
-        directive.component.__proto__.constructor.ngBaseDef.inputs
-      ) {
-        const ngBaseDefInputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.inputs);
-        const notExists = ngBaseDefInputs.filter(
-          ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1
-        );
-        if (notExists.length > 0) {
-          console.group('Not initialized inputs');
-          console.log('Component:', directive.component.__proto__.constructor.name, directive.component);
-          console.log('Inputs:', notExists);
-          console.log('Inputs (text):', JSON.stringify(notExists));
-          console.groupEnd();
-        }
-      }
-    }
   }
 }

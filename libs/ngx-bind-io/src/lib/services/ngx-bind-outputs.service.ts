@@ -1,13 +1,10 @@
-import { EventEmitter, Inject, Injectable, isDevMode } from '@angular/core';
-import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
+import { EventEmitter, Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
-import { NGX_BIND_IO_CONFIG } from '../ngx-bind-io.config';
 import { getPropDescriptor } from '../utils/property-utils';
 import { isFunction } from '../utils/utils';
 
 @Injectable()
 export class NgxBindOutputsService {
-  constructor(@Inject(NGX_BIND_IO_CONFIG) private ngxBindIOConfig: INgxBindIOConfig) { }
   /**
    * BindOutputs Directive
    */
@@ -48,10 +45,10 @@ export class NgxBindOutputsService {
     );
   }
   checkOutputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    return directive.usedOutputs.indexOf(key) === -1 && this.checkKeyNameToOutputBind(directive, parentKey, key);
+    return directive.usedOutputs[parentKey] === undefined && this.checkKeyNameToOutputBind(directive, parentKey, key);
   }
   bindOutput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    directive.usedOutputs.push(key);
+    directive.usedOutputs[parentKey] = key;
     directive.component[key].subscribe(value => directive.parentComponent[parentKey](value));
   }
   /**
@@ -75,28 +72,5 @@ export class NgxBindOutputsService {
       ]
     };
     return foundedOutputs;
-  }
-  showDebugOutputsInfo(directive: Partial<INgxBindIODirective>) {
-    if (this.ngxBindIOConfig.debug || isDevMode()) {
-      if (
-        directive.component &&
-        directive.component.__proto__ &&
-        directive.component.__proto__.constructor &&
-        directive.component.__proto__.constructor.ngBaseDef &&
-        directive.component.__proto__.constructor.ngBaseDef.outputs
-      ) {
-        const ngBaseDefOutputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.outputs);
-        const notExists = ngBaseDefOutputs.filter(
-          ngBaseDefOutput => directive.outputs.keys.indexOf(ngBaseDefOutput) === -1
-        );
-        if (notExists.length > 0) {
-          console.group('Not initialized outputs');
-          console.log('Component:', directive.component.__proto__.constructor.name, directive.component);
-          console.log('Outputs:', notExists);
-          console.log('Outputs (text):', JSON.stringify(notExists));
-          console.groupEnd();
-        }
-      }
-    }
   }
 }

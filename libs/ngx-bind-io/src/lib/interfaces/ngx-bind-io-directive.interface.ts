@@ -17,8 +17,8 @@ export interface INgxBindIODirective {
     parentKeys: string[];
   };
 
-  usedInputs?: string[];
-  usedOutputs?: string[];
+  usedInputs?: { [key: string]: string };
+  usedOutputs?: { [key: string]: string };
   destroyed$: Subject<boolean>;
 
   bindValue(key: string, value: any): void;

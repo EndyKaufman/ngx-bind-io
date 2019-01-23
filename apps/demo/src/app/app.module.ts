@@ -26,7 +26,7 @@ import { MyNgxBindOutputsService } from './shared/utils/my-ngx-bind-outputs.serv
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: 'demo' }),
     NavbarModule,
-    NgxBindIOModule.forRoot({ debug: true }),
+    NgxBindIOModule.forRoot(),
     RouterModule.forRoot(AppRoutes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabled' }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
@@ -37,4 +37,4 @@ import { MyNgxBindOutputsService } from './shared/utils/my-ngx-bind-outputs.serv
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
