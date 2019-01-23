@@ -45,7 +45,12 @@ export class NgxBindOutputsService {
     );
   }
   checkOutputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    return directive.usedOutputs[parentKey] === undefined && this.checkKeyNameToOutputBind(directive, parentKey, key);
+    const value = getPropDescriptor(directive.component, key).value;
+    return (
+      directive.usedOutputs[parentKey] === undefined &&
+      value instanceof EventEmitter &&
+      this.checkKeyNameToOutputBind(directive, parentKey, key)
+    );
   }
   bindOutput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     directive.usedOutputs[parentKey] = key;

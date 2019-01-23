@@ -66,12 +66,10 @@ export class NgxBindInputsService {
   }
   checkInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
-    const value = getPropDescriptor(directive.component, key).value;
     return (
       directive.usedInputs[parentKey] === undefined &&
-      this.checkKeyNameToInputBind(directive, parentKey, key) &&
       !isObservable(parentValue) &&
-      !isObservable(value)
+      this.checkKeyNameToInputBind(directive, parentKey, key)
     );
   }
   bindInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
@@ -100,12 +98,10 @@ export class NgxBindInputsService {
   }
   checkObservableInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
-    const value = getPropDescriptor(directive.component, key).value;
     return (
       directive.usedInputs[parentKey] === undefined &&
-      this.checkKeyNameToObservableInputBind(directive, parentKey, key) &&
       isObservable(parentValue) &&
-      !isObservable(value)
+      this.checkKeyNameToObservableInputBind(directive, parentKey, key)
     );
   }
   bindObservableInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
