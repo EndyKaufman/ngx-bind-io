@@ -26,7 +26,7 @@ export class BaseBasicBindInputWithDeepInheritsComponent extends BaseBaseBasicBi
     {{ propB }}
   `
 })
-export class BasicBindInputWithDeepInheritsComponent extends BaseBasicBindInputWithDeepInheritsComponent {}
+export class BasicBindInputWithDeepInheritsComponent extends BaseBasicBindInputWithDeepInheritsComponent { }
 
 export class BaseBaseBasicBindInputWithDeepInheritsParentComponent {
   isLoading$ = new BehaviorSubject(false);

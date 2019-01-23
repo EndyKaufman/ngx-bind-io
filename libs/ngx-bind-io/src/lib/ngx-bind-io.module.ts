@@ -3,6 +3,8 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { BindInputsDirective } from './directives/bind-inputs.directive';
 import { BindIODirective } from './directives/bind-io.directive';
 import { BindOutputsDirective } from './directives/bind-outputs.directive';
+import { INgxBindIOConfig } from './interfaces/ngx-bind-io-config.interface';
+import { defaultNgxBindIOConfig, NGX_BIND_IO_CONFIG } from './ngx-bind-io.config';
 import { NgxBindInputsService } from './services/ngx-bind-inputs.service';
 import { NgxBindOutputsService } from './services/ngx-bind-outputs.service';
 
@@ -12,10 +14,19 @@ import { NgxBindOutputsService } from './services/ngx-bind-outputs.service';
   exports: [BindInputsDirective, BindOutputsDirective, BindIODirective]
 })
 export class NgxBindIOModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(options?: INgxBindIOConfig): ModuleWithProviders {
     return {
       ngModule: NgxBindIOModule,
-      providers: [NgxBindInputsService, NgxBindOutputsService]
+      providers: [
+        {
+          provide: NGX_BIND_IO_CONFIG,
+          useValue: {
+            debug: options ? options.debug : defaultNgxBindIOConfig.debug
+          }
+        },
+        NgxBindInputsService,
+        NgxBindOutputsService
+      ]
     };
   }
 }

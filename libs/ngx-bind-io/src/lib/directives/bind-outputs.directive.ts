@@ -1,11 +1,11 @@
 import { AfterContentInit, ChangeDetectorRef, Directive, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IBindIO } from '../interfaces/bind-io.interface';
 import { NgxBindOutputsService } from '../services/ngx-bind-outputs.service';
+import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 @Directive({
   selector: '[bindOutputs]'
 })
-export class BindOutputsDirective implements Partial<IBindIO>, OnDestroy, AfterContentInit {
+export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnDestroy, AfterContentInit {
   @Input()
   excludeOutputs: string[] | string = [];
   @Input()
@@ -30,6 +30,7 @@ export class BindOutputsDirective implements Partial<IBindIO>, OnDestroy, AfterC
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;
     this.outputs = this._ngxBindOutputsService.getOutputs(this);
+    this._ngxBindOutputsService.showDebugOutputsInfo(this);
     this._ngxBindOutputsService.bindOutputs(this);
     if (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true') {
       console.log(this.outputs, this);

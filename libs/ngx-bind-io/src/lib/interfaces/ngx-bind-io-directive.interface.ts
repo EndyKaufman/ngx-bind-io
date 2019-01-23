@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 
-export interface IBindIO {
+export interface INgxBindIODirective {
   excludeInputs: string[] | string;
   includeInputs: string[] | string;
   excludeOutputs: string[] | string;

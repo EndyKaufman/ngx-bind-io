@@ -1,13 +1,13 @@
 import { AfterContentInit, ChangeDetectorRef, Directive, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IBindIO } from '../interfaces/bind-io.interface';
 import { NgxBindInputsService } from '../services/ngx-bind-inputs.service';
 import { NgxBindOutputsService } from '../services/ngx-bind-outputs.service';
+import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 
 @Directive({
   selector: '[bindIO]'
 })
-export class BindIODirective implements IBindIO, OnDestroy, AfterContentInit {
+export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterContentInit {
   @Input()
   excludeInputs: string[] | string = [];
   @Input()
@@ -37,12 +37,14 @@ export class BindIODirective implements IBindIO, OnDestroy, AfterContentInit {
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ref: ChangeDetectorRef
-  ) {}
+  ) { }
   ngAfterContentInit() {
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;
     this.inputs = this._ngxBindInputsService.getInputs(this);
     this.outputs = this._ngxBindOutputsService.getOutputs(this);
+    this._ngxBindInputsService.showDebugInputInfo(this);
+    this._ngxBindOutputsService.showDebugOutputsInfo(this);
     this._ngxBindInputsService.bindInputs(this);
     this._ngxBindInputsService.bindObservableInputs(this);
     this._ngxBindOutputsService.bindOutputs(this);

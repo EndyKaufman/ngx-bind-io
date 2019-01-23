@@ -1,14 +1,17 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { IBindIO } from '../interfaces/bind-io.interface';
+import { EventEmitter, Inject, Injectable, isDevMode } from '@angular/core';
+import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
+import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
+import { NGX_BIND_IO_CONFIG } from '../ngx-bind-io.config';
 import { getPropDescriptor } from '../utils/property-utils';
 import { isFunction } from '../utils/utils';
 
 @Injectable()
 export class NgxBindOutputsService {
+  constructor(@Inject(NGX_BIND_IO_CONFIG) private ngxBindIOConfig: INgxBindIOConfig) { }
   /**
    * BindOutputs Directive
    */
-  bindOutputs(directive: Partial<IBindIO>) {
+  bindOutputs(directive: Partial<INgxBindIODirective>) {
     const outputs = this.getOutputs(directive);
     const excludeOutputs = (Array.isArray(directive.excludeOutputs)
       ? directive.excludeOutputs
@@ -35,7 +38,7 @@ export class NgxBindOutputsService {
   /**
    * Outputs
    */
-  checkKeyNameToOutputBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const outputs = this.getOutputs(directive);
     const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
     return (
@@ -44,18 +47,18 @@ export class NgxBindOutputsService {
       parentKey === `on${keyWithFirstUpperLetter}Click`
     );
   }
-  checkOutputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  checkOutputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     return directive.usedOutputs.indexOf(key) === -1 && this.checkKeyNameToOutputBind(directive, parentKey, key);
   }
-  bindOutput(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  bindOutput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     directive.usedOutputs.push(key);
     directive.component[key].subscribe(value => directive.parentComponent[parentKey](value));
   }
   /**
    * Utils
    */
-  getOutputs(directive: Partial<IBindIO>) {
-    const data = {
+  getOutputs(directive: Partial<INgxBindIODirective>) {
+    const foundedOutputs = {
       parentKeys: [
         ...Object.keys(directive.parentComponent).filter(parentKey => isFunction(directive.parentComponent[parentKey])),
         ...Object.keys(directive.parentComponent.__proto__).filter(parentKey =>
@@ -71,6 +74,29 @@ export class NgxBindOutputsService {
         )
       ]
     };
-    return data;
+    return foundedOutputs;
+  }
+  showDebugOutputsInfo(directive: Partial<INgxBindIODirective>) {
+    if (this.ngxBindIOConfig.debug || isDevMode()) {
+      if (
+        directive.component &&
+        directive.component.__proto__ &&
+        directive.component.__proto__.constructor &&
+        directive.component.__proto__.constructor.ngBaseDef &&
+        directive.component.__proto__.constructor.ngBaseDef.outputs
+      ) {
+        const ngBaseDefOutputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.outputs);
+        const notExists = ngBaseDefOutputs.filter(
+          ngBaseDefOutput => directive.outputs.keys.indexOf(ngBaseDefOutput) === -1
+        );
+        if (notExists.length > 0) {
+          console.group('Not initialized outputs');
+          console.log('Component:', directive.component.__proto__.constructor.name, directive.component);
+          console.log('Outputs:', notExists);
+          console.log('Outputs (text):', JSON.stringify(notExists));
+          console.groupEnd();
+        }
+      }
+    }
   }
 }
