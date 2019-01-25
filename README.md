@@ -9,7 +9,15 @@ Directives for auto binding Input() and Output() in Angular7+ application
 
 ***Attention !!! For correct work in AOT, all Inputs and Outputs ​​must be initialized, you can set them to "undefined".***
 
+For check project for use bindIO directives, you may run:
+```bash
+npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
+```
 
+For check and add initialize statement, you may run:
+```bash
+npx ngx-bind-io-cli ./src --fix --maxInputs=0 --maxOutputs=0
+```
 
 ## Example
 
