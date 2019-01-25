@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, isObservable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IBindIO } from '../interfaces/bind-io.interface';
+import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 import { getPropDescriptor, redefineAccessorProperty, redefineSimpleProperty } from '../utils/property-utils';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class NgxBindInputsService {
   /**
    * BindInputs Directive
    */
-  bindInputs(directive: Partial<IBindIO>) {
+  bindInputs(directive: Partial<INgxBindIODirective>) {
     const inputs = this.getInputs(directive);
     const excludeInputs = (Array.isArray(directive.excludeInputs)
       ? directive.excludeInputs
@@ -33,7 +33,7 @@ export class NgxBindInputsService {
         });
       });
   }
-  bindObservableInputs(directive: Partial<IBindIO>) {
+  bindObservableInputs(directive: Partial<INgxBindIODirective>) {
     const inputs = this.getInputs(directive);
     const excludeInputs = (Array.isArray(directive.excludeInputs)
       ? directive.excludeInputs
@@ -61,21 +61,19 @@ export class NgxBindInputsService {
   /**
    * Inputs
    */
-  checkKeyNameToInputBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  checkKeyNameToInputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     return parentKey === key;
   }
-  checkInputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  checkInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
-    const value = getPropDescriptor(directive.component, key).value;
     return (
-      directive.usedInputs.indexOf(parentKey) === -1 &&
-      this.checkKeyNameToInputBind(directive, parentKey, key) &&
+      directive.usedInputs[parentKey] === undefined &&
       !isObservable(parentValue) &&
-      !isObservable(value)
+      this.checkKeyNameToInputBind(directive, parentKey, key)
     );
   }
-  bindInput(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    directive.usedInputs.push(parentKey);
+  bindInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    directive.usedInputs[parentKey] = key;
 
     const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
 
@@ -95,21 +93,19 @@ export class NgxBindInputsService {
   /**
    * Observable Inputs
    */
-  checkKeyNameToObservableInputBind(directive: Partial<IBindIO>, parentKey, key) {
+  checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
     return parentKey === `${key}$`;
   }
-  checkObservableInputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  checkObservableInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const parentValue = getPropDescriptor(directive.parentComponent, parentKey).value;
-    const value = getPropDescriptor(directive.component, key).value;
     return (
-      directive.usedInputs.indexOf(parentKey) === -1 &&
-      this.checkKeyNameToObservableInputBind(directive, parentKey, key) &&
+      directive.usedInputs[parentKey] === undefined &&
       isObservable(parentValue) &&
-      !isObservable(value)
+      this.checkKeyNameToObservableInputBind(directive, parentKey, key)
     );
   }
-  bindObservableInput(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    directive.usedInputs.push(parentKey);
+  bindObservableInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    directive.usedInputs[parentKey] = key;
 
     const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
     const isBehaviorSubject = descriptor.value instanceof BehaviorSubject;
@@ -145,8 +141,8 @@ export class NgxBindInputsService {
   /**
    * Utils
    */
-  getInputs(directive: Partial<IBindIO>) {
-    const data = {
+  getInputs(directive: Partial<INgxBindIODirective>) {
+    const foundedInputs = {
       parentKeys: [
         ...Object.keys(directive.parentComponent),
         ...Object.keys(directive.parentComponent.__proto__),
@@ -158,6 +154,6 @@ export class NgxBindInputsService {
         )
       ]
     };
-    return data;
+    return foundedInputs;
   }
 }

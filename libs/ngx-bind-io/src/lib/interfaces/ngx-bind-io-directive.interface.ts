@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 
-export interface IBindIO {
+export interface INgxBindIODirective {
   excludeInputs: string[] | string;
   includeInputs: string[] | string;
   excludeOutputs: string[] | string;
@@ -17,8 +17,8 @@ export interface IBindIO {
     parentKeys: string[];
   };
 
-  usedInputs?: string[];
-  usedOutputs?: string[];
+  usedInputs?: { [key: string]: string };
+  usedOutputs?: { [key: string]: string };
   destroyed$: Subject<boolean>;
 
   bindValue(key: string, value: any): void;

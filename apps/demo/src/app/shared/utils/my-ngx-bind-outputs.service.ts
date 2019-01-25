@@ -1,7 +1,7 @@
-import { IBindIO, NgxBindOutputsService } from 'ngx-bind-io';
+import { INgxBindIODirective, NgxBindOutputsService } from 'ngx-bind-io';
 
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
-  checkKeyNameToOutputBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const outputs = this.getOutputs(directive);
     const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
     return (

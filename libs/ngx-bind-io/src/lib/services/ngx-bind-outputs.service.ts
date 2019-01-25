@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IBindIO } from '../interfaces/bind-io.interface';
+import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 import { getPropDescriptor } from '../utils/property-utils';
 import { isFunction } from '../utils/utils';
 
@@ -8,7 +8,7 @@ export class NgxBindOutputsService {
   /**
    * BindOutputs Directive
    */
-  bindOutputs(directive: Partial<IBindIO>) {
+  bindOutputs(directive: Partial<INgxBindIODirective>) {
     const outputs = this.getOutputs(directive);
     const excludeOutputs = (Array.isArray(directive.excludeOutputs)
       ? directive.excludeOutputs
@@ -35,7 +35,7 @@ export class NgxBindOutputsService {
   /**
    * Outputs
    */
-  checkKeyNameToOutputBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const outputs = this.getOutputs(directive);
     const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
     return (
@@ -44,18 +44,23 @@ export class NgxBindOutputsService {
       parentKey === `on${keyWithFirstUpperLetter}Click`
     );
   }
-  checkOutputToBind(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    return directive.usedOutputs.indexOf(key) === -1 && this.checkKeyNameToOutputBind(directive, parentKey, key);
+  checkOutputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    const value = getPropDescriptor(directive.component, key).value;
+    return (
+      directive.usedOutputs[parentKey] === undefined &&
+      value instanceof EventEmitter &&
+      this.checkKeyNameToOutputBind(directive, parentKey, key)
+    );
   }
-  bindOutput(directive: Partial<IBindIO>, parentKey: string, key: string) {
-    directive.usedOutputs.push(key);
+  bindOutput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    directive.usedOutputs[parentKey] = key;
     directive.component[key].subscribe(value => directive.parentComponent[parentKey](value));
   }
   /**
    * Utils
    */
-  getOutputs(directive: Partial<IBindIO>) {
-    const data = {
+  getOutputs(directive: Partial<INgxBindIODirective>) {
+    const foundedOutputs = {
       parentKeys: [
         ...Object.keys(directive.parentComponent).filter(parentKey => isFunction(directive.parentComponent[parentKey])),
         ...Object.keys(directive.parentComponent.__proto__).filter(parentKey =>
@@ -71,6 +76,6 @@ export class NgxBindOutputsService {
         )
       ]
     };
-    return data;
+    return foundedOutputs;
   }
 }

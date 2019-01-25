@@ -1,6 +1,6 @@
 {
   "name": "ngx-bind-io",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Directives for auto binding Input() and Output() in Angular7+ application",
   "keywords": [
     "input",
@@ -11,10 +11,12 @@
     "bind",
     "binding",
     "inheritance",
+    "hierarchy",
     "nested",
     "class",
     "component",
     "extends",
+    "angular",
     "angular7"
   ],
   "license": "MIT",
