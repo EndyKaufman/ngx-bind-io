@@ -37,4 +37,4 @@ import { MyNgxBindOutputsService } from './shared/utils/my-ngx-bind-outputs.serv
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

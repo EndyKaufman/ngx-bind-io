@@ -1,3 +1,18 @@
+# [0.3.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.2.0...0.3.0) (2019-01-25)
+
+
+### Bug Fixes
+
+* Remove type check of child component inputs and outputs ([c5a067c](https://github.com/EndyKaufman/ngx-bind-io/commit/c5a067c))
+
+
+### Features
+
+* Add debug options for show in dev mode warnings with not initialized inputs or outputs ([7a317e3](https://github.com/EndyKaufman/ngx-bind-io/commit/7a317e3))
+* Add support set options of INgxBindIOConfig interface to directives for local debug bindings, example: ```<comp [bindIO]="{debug:true}"></comp>``` ([ba59661](https://github.com/EndyKaufman/ngx-bind-io/commit/ba59661))
+
+
+
 # [0.2.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.1.1...0.2.0) (2019-01-21)
 
 
