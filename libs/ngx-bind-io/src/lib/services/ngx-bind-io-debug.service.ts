@@ -4,11 +4,7 @@ import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
 @Injectable()
 export class NgxBindIODebugService {
-  constructor(
-    private _ngxBindInputsService: NgxBindInputsService,
-  ) {
-
-  }
+  constructor(private _ngxBindInputsService: NgxBindInputsService) {}
   showDebugInfo(directive: Partial<INgxBindIODirective>, debug: boolean) {
     let notExistsOutputs: string[] = [];
     let notExistsInputs: string[] = [];
@@ -44,10 +40,10 @@ export class NgxBindIODebugService {
       }
       console.log('Component:', directive.component.__proto__.constructor.name, directive.component);
       if (directive.usedOutputs) {
-        console.log('Outputs maping:',
+        console.log(
+          'Outputs maping:',
           Object.keys(directive.usedOutputs).map(
-            parentKey =>
-              `(${directive.usedOutputs[parentKey]})="${parentKey}($event)"`
+            parentKey => `(${directive.usedOutputs[parentKey]})="${parentKey}($event)"`
           )
         );
       }
@@ -56,14 +52,16 @@ export class NgxBindIODebugService {
         console.log('Not initialized outputs (text):', JSON.stringify(notExistsOutputs));
       }
       if (directive.usedInputs) {
-        console.log('Inputs maping:',
-          Object.keys(directive.usedInputs).map(
-            parentKey =>
-              this._ngxBindInputsService.checkKeyNameToObservableInputBind(
-                directive, parentKey, directive.usedInputs[parentKey]
-              ) ?
-                `[${directive.usedInputs[parentKey]}]="${parentKey} | async"` :
-                `[${directive.usedInputs[parentKey]}]="${parentKey}"`
+        console.log(
+          'Inputs maping:',
+          Object.keys(directive.usedInputs).map(parentKey =>
+            this._ngxBindInputsService.checkKeyNameToObservableInputBind(
+              directive,
+              parentKey,
+              directive.usedInputs[parentKey]
+            )
+              ? `[${directive.usedInputs[parentKey]}]="${parentKey} | async"`
+              : `[${directive.usedInputs[parentKey]}]="${parentKey}"`
           )
         );
       }
