@@ -7,7 +7,8 @@ my-ngx-bind-outputs.service.ts
 import { IBindIO, NgxBindOutputsService } from 'ngx-bind-io';
 
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
-    const outputs = this.getOutputs(directive);
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    const outputs = directive.outputs;
     const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
     return (
       (parentKey === `on${keyWithFirstUpperLetter}` &&
@@ -17,6 +18,7 @@ export class MyNgxBindOutputsService extends NgxBindOutputsService {
         outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
       parentKey === `on${keyWithFirstUpperLetter}ButtonClick`
     );
+  }
 }
 
 ```

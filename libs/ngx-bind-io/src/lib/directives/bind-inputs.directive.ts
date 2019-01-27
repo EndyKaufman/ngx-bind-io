@@ -1,12 +1,4 @@
-import {
-  AfterContentInit,
-  ChangeDetectorRef,
-  Directive,
-  Inject,
-  Input,
-  OnDestroy,
-  ViewContainerRef
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Directive, Inject, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
@@ -31,9 +23,9 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnDest
     keys: string[];
     parentKeys: string[];
   } = {
-    keys: [],
-    parentKeys: []
-  };
+      keys: [],
+      parentKeys: []
+    };
 
   usedInputs: { [key: string]: string } = {};
   destroyed$: Subject<boolean> = new Subject<boolean>();
@@ -44,10 +36,13 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnDest
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _ref: ChangeDetectorRef
-  ) {}
+  ) { }
   ngAfterContentInit() {
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;
+    if (this.parentComponent.$implicit !== undefined) {
+      this.parentComponent = (<any>this._viewContainerRef)._view.component;
+    }
     this.inputs = this._ngxBindInputsService.getInputs(this);
     this._ngxBindInputsService.bindInputs(this);
     this._ngxBindInputsService.bindObservableInputs(this);
