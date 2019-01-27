@@ -145,7 +145,7 @@ export class NgxBindInputsService {
       });
     try {
       directive.parentComponent[parentKey] = currentValue;
-    } catch (error) { }
+    } catch (error) {}
     if (isBehaviorSubject) {
       currentValue.next(behaviorSubjectValue);
     }
@@ -163,19 +163,19 @@ export class NgxBindInputsService {
       ),
       keys: directive.component
         ? [
-          ...Object.keys(directive.component).filter(
-            key =>
-              !(
-                getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
-                directive.component[key] instanceof EventEmitter
-              )
-          ),
-          ...collectKeys(
-            directive.component.__proto__,
-            (cmp, key) => !(getPropDescriptor(cmp, key).value instanceof EventEmitter),
-            10
-          )
-        ]
+            ...Object.keys(directive.component).filter(
+              key =>
+                !(
+                  getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
+                  directive.component[key] instanceof EventEmitter
+                )
+            ),
+            ...collectKeys(
+              directive.component.__proto__,
+              (cmp, key) => !(getPropDescriptor(cmp, key).value instanceof EventEmitter),
+              10
+            )
+          ]
         : []
     };
     foundedInputs.parentKeys = [
@@ -195,26 +195,20 @@ export class NgxBindInputsService {
     return foundedInputs;
   }
   getIncludesAndExcludes(directive: Partial<INgxBindIODirective>) {
-    const exclude = Array.isArray(directive.excludeInputs)
-      ? directive.excludeInputs
-      : [directive.excludeInputs];
-    const include = Array.isArray(directive.includeInputs)
-      ? directive.includeInputs
-      : [directive.includeInputs];
-    const includeIO = !directive.includeIO ? [] : (Array.isArray(directive.includeIO)
+    const exclude = Array.isArray(directive.excludeInputs) ? directive.excludeInputs : [directive.excludeInputs];
+    const include = Array.isArray(directive.includeInputs) ? directive.includeInputs : [directive.includeInputs];
+    const includeIO = !directive.includeIO
+      ? []
+      : Array.isArray(directive.includeIO)
       ? directive.includeIO
-      : [directive.includeIO]);
-    const excludeIO = !directive.excludeIO ? [] : (Array.isArray(directive.excludeIO)
+      : [directive.includeIO];
+    const excludeIO = !directive.excludeIO
+      ? []
+      : Array.isArray(directive.excludeIO)
       ? directive.excludeIO
-      : [directive.excludeIO]);
-    const excludeInputs = [
-      ...exclude,
-      ...excludeIO
-    ].map(key => key.toUpperCase());
-    const includeInputs = [
-      ...include,
-      ...includeIO
-    ].map(key => key.toUpperCase());
+      : [directive.excludeIO];
+    const excludeInputs = [...exclude, ...excludeIO].map(key => key.toUpperCase());
+    const includeInputs = [...include, ...includeIO].map(key => key.toUpperCase());
     return { includeInputs, excludeInputs };
   }
 }
