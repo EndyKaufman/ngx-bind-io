@@ -9,7 +9,7 @@ Directives for auto binding Input() and Output() in Angular7+ application
 
 ***Attention !!! For correct work in AOT, all Inputs and Outputs ​​must be initialized, you can set them to "undefined".***
 
-For check project for use bindIO directives, you may run:
+For check project for use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
 ```bash
 npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
 ```
@@ -135,6 +135,29 @@ export class ParentComponent extends BaseParentComponent {
   propB = 'Prop B: defined';
 }
 ```
+## Debug
+
+For global debug all bindings
+
+```js
+import { NgxBindIOModule } from 'ngx-bind-io';
+
+@NgModule({
+  ...
+  imports: [
+    ...
+    NgxBindIOModule.forRoot({debug: true})
+    ...
+  ],
+  ...
+})
+export class AppModule { }
+```
+
+For debug on one place
+```html
+<comp-name [bindIO]="{debug:true}"></comp-name>
+```
 
 ## Custom rules for detect output method
 
@@ -143,7 +166,8 @@ my-ngx-bind-outputs.service.ts
 import { IBindIO, NgxBindOutputsService } from 'ngx-bind-io';
 
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
-    const outputs = this.getOutputs(directive);
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    const outputs = directive.outputs;
     const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
     return (
       (parentKey === `on${keyWithFirstUpperLetter}` &&
@@ -153,6 +177,7 @@ export class MyNgxBindOutputsService extends NgxBindOutputsService {
         outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
       parentKey === `on${keyWithFirstUpperLetter}ButtonClick`
     );
+  }
 }
 
 ```
@@ -185,6 +210,42 @@ import { ParentComponent } from './parent.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+```
+
+## Default rules for detect output method
+
+ngx-bind-outputs.service.ts
+```js
+export class NgxBindOutputsService {
+  ...
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    const outputs = directive.outputs;
+    const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
+    return (
+      (parentKey === `on${keyWithFirstUpperLetter}` &&
+        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
+      parentKey === `on${keyWithFirstUpperLetter}Click`
+    );
+  }
+  ...
+}
+```
+
+## Default rules for detect inputs variables
+
+ngx-bind-inputs.service.ts
+```js
+export class NgxBindInputsService {
+  ...
+  checkKeyNameToInputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    return parentKey === key && parentKey[0] !== '_';
+  }  
+  ...
+  checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
+    return parentKey === `${key}$`;
+  }
+  ...
+}
 ```
 
 ## License

@@ -187,7 +187,7 @@
         </div>
     </ngx-docs-example>
     <ngx-docs-example
-        title="Basics: bind input with mixins (NOT WORK!)"
+        title="Basics: bind input with mixins"
         html="<basic-bind-io-with-mixins-parent></basic-bind-io-with-mixins-parent>"
         [ts]="ts['bind-io-with-mixins']"
         fxFlex.gt-sm="50">
@@ -268,6 +268,44 @@
 &lt;/button&gt;</pre>
             <hr>
             <basic-bind-input-no-on-push-parent></basic-bind-input-no-on-push-parent>
+        </div>
+    </ngx-docs-example>
+    <ngx-docs-example
+        title="Basics: bind one host to many inners with debug"
+        html="<basic-bind-one-to-many-parent></basic-bind-one-to-many-parent>"
+        [ts]="ts['bind-input-on-change']"
+        fxFlex.gt-sm="50">
+        <div class="body">
+            <strong>Without auto binding inputs and outputs</strong>
+            <pre>&lt;basic-bind-one-to-many 
+    (start)=&quot;onStart()&quot; 
+    [isLoading]=&quot;isLoading$ | async&quot; 
+    [propA]=&quot;propA&quot; 
+    [propB]=&quot;propB&quot;&gt;
+&lt;/basic-bind-one-to-many&gt;
+
+&lt;basic-bind-one-to-many 
+    (start)=&quot;onStart()&quot; 
+    [isLoading]=&quot;isLoading$ | async&quot; 
+    [propA]=&quot;propA&quot; 
+    [propB]=&quot;propB&quot;&gt;
+&lt;/basic-bind-one-to-many&gt;</pre>
+            <strong>With auto binding inputs and outputs</strong>
+            <pre>&lt;basic-bind-one-to-many
+    bindIO&gt;
+&lt;/basic-bind-one-to-many&gt;
+
+&lt;basic-bind-one-to-many
+    [bindIO]=&quot;&#x7B;debug:true&#x7D;&quot;&gt;
+&lt;/basic-bind-one-to-many&gt;</pre>
+            <strong>Options</strong>
+            <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
+&lt;input [(ngModel)]=&quot;propB&quot; /&gt;
+&lt;button (click)=&quot;loadingWith1500s()&quot;&gt;
+    Loading with 1,5s.
+&lt;/button&gt;</pre>
+            <hr>
+            <basic-bind-one-to-many-parent></basic-bind-one-to-many-parent>
         </div>
     </ngx-docs-example>
 </div>

@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 import { getPropDescriptor } from '../utils/property-utils';
-import { isFunction } from '../utils/utils';
+import { collectKeys, removeKeysUsedInAttributes, isFunction } from '../utils/utils';
 
 @Injectable()
 export class NgxBindOutputsService {
@@ -9,7 +9,7 @@ export class NgxBindOutputsService {
    * BindOutputs Directive
    */
   bindOutputs(directive: Partial<INgxBindIODirective>) {
-    const outputs = this.getOutputs(directive);
+    const outputs = directive.outputs;
     const excludeOutputs = (Array.isArray(directive.excludeOutputs)
       ? directive.excludeOutputs
       : [directive.excludeOutputs]
@@ -25,18 +25,24 @@ export class NgxBindOutputsService {
           (includeOutputs.length !== 0 && includeOutputs.indexOf(parentKey.toUpperCase()) !== -1)
       )
       .forEach(parentKey => {
-        outputs.keys.forEach(key => {
-          if (this.checkOutputToBind(directive, parentKey, key)) {
-            this.bindOutput(directive, parentKey, key);
-          }
-        });
+        outputs.keys
+          .filter(
+            key =>
+              (includeOutputs.length === 0 && excludeOutputs.indexOf(key.toUpperCase()) === -1) ||
+              (includeOutputs.length !== 0 && includeOutputs.indexOf(key.toUpperCase()) !== -1)
+          )
+          .forEach(key => {
+            if (this.checkOutputToBind(directive, parentKey, key)) {
+              this.bindOutput(directive, parentKey, key);
+            }
+          });
       });
   }
   /**
    * Outputs
    */
   checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    const outputs = this.getOutputs(directive);
+    const outputs = directive.outputs;
     const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
     return (
       (parentKey === `on${keyWithFirstUpperLetter}` &&
@@ -45,7 +51,7 @@ export class NgxBindOutputsService {
     );
   }
   checkOutputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    const value = getPropDescriptor(directive.component, key).value;
+    const value = getPropDescriptor(directive.component, key).value || directive.component[key];
     return (
       directive.usedOutputs[parentKey] === undefined &&
       value instanceof EventEmitter &&
@@ -63,19 +69,29 @@ export class NgxBindOutputsService {
     const foundedOutputs = {
       parentKeys: [
         ...Object.keys(directive.parentComponent).filter(parentKey => isFunction(directive.parentComponent[parentKey])),
-        ...Object.keys(directive.parentComponent.__proto__).filter(parentKey =>
-          isFunction(getPropDescriptor(directive.parentComponent.__proto__, parentKey).value)
-        ),
-        ...Object.keys(directive.parentComponent.__proto__ ? directive.parentComponent.__proto__.__proto__ : []).filter(
-          parentKey => isFunction(getPropDescriptor(directive.parentComponent.__proto__.__proto__, parentKey).value)
+        ...collectKeys(
+          directive.parentComponent.__proto__,
+          (cmp, key) => isFunction(getPropDescriptor(cmp, key).value),
+          10
         )
       ],
-      keys: [
-        ...Object.keys(directive.component ? directive.component : []).filter(
-          key => getPropDescriptor(directive.component, key).value instanceof EventEmitter
-        )
-      ]
+      keys: directive.component
+        ? [
+            ...Object.keys(directive.component).filter(
+              key =>
+                getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
+                directive.component[key] instanceof EventEmitter
+            ),
+            ...collectKeys(
+              directive.component.__proto__,
+              (cmp, key) => getPropDescriptor(cmp, key).value instanceof EventEmitter,
+              10
+            )
+          ]
+        : []
     };
+    foundedOutputs.keys = removeKeysUsedInAttributes(directive, foundedOutputs.keys);
+    foundedOutputs.parentKeys = removeKeysUsedInAttributes(directive, foundedOutputs.parentKeys);
     return foundedOutputs;
   }
 }

@@ -34,6 +34,7 @@ import {
   BasicBindInputNoOnPushComponent,
   BasicBindInputNoOnPushParentComponent
 } from './bind-input-no-on-push.component';
+import { BasicBindOneToManyParentComponent, BasicBindOneToManyComponent } from './bind-one-to-many.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, NgxBindIOModule],
@@ -59,7 +60,9 @@ import {
     BasicBindInputOnChangeParentComponent,
     BasicBindInputOnChangeComponent,
     BasicBindInputNoOnPushParentComponent,
-    BasicBindInputNoOnPushComponent
+    BasicBindInputNoOnPushComponent,
+    BasicBindOneToManyParentComponent,
+    BasicBindOneToManyComponent
   ],
   exports: [
     BasicBindInputParentComponent,
@@ -72,7 +75,8 @@ import {
     BasicBindIOParentComponent,
     BasicBindOutputWithCustomClickParentComponent,
     BasicBindInputOnChangeParentComponent,
-    BasicBindInputNoOnPushParentComponent
+    BasicBindInputNoOnPushParentComponent,
+    BasicBindOneToManyParentComponent
   ]
 })
 export class BasicsModule {}

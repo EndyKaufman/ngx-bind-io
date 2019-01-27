@@ -47,6 +47,9 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnDes
   ngAfterContentInit() {
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;
+    if (this.parentComponent.$implicit !== undefined) {
+      this.parentComponent = (<any>this._viewContainerRef)._view.component;
+    }
     this.outputs = this._ngxBindOutputsService.getOutputs(this);
     this._ngxBindOutputsService.bindOutputs(this);
     const debug =

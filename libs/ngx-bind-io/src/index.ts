@@ -3,6 +3,7 @@ export * from './lib/ngx-bind-io.module';
 export * from './lib/directives/bind-inputs.directive';
 export * from './lib/directives/bind-io.directive';
 export * from './lib/directives/bind-outputs.directive';
+export * from './lib/interfaces/__bind-io-metadata__.interface';
 export * from './lib/interfaces/ngx-bind-io-config.interface';
 export * from './lib/interfaces/ngx-bind-io-directive.interface';
 export * from './lib/services/ngx-bind-inputs.service';

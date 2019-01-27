@@ -48,6 +48,9 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnDest
   ngAfterContentInit() {
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;
+    if (this.parentComponent.$implicit !== undefined) {
+      this.parentComponent = (<any>this._viewContainerRef)._view.component;
+    }
     this.inputs = this._ngxBindInputsService.getInputs(this);
     this._ngxBindInputsService.bindInputs(this);
     this._ngxBindInputsService.bindObservableInputs(this);

@@ -62,6 +62,9 @@ export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterCon
   ngAfterContentInit() {
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;
+    if (this.parentComponent.$implicit !== undefined) {
+      this.parentComponent = (<any>this._viewContainerRef)._view.component;
+    }
     this.inputs = this._ngxBindInputsService.getInputs(this);
     this.outputs = this._ngxBindOutputsService.getOutputs(this);
     this._ngxBindInputsService.bindInputs(this);

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
+import { removeKeysUsedInAttributes } from '../utils/utils';
 import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
 @Injectable()
@@ -17,7 +18,7 @@ export class NgxBindIODebugService {
       directive.component.__proto__.constructor.ngBaseDef.outputs
     ) {
       const ngBaseDefOutputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.outputs);
-      notExistsOutputs = ngBaseDefOutputs.filter(
+      notExistsOutputs = removeKeysUsedInAttributes(directive, ngBaseDefOutputs).filter(
         ngBaseDefOutput => directive.outputs.keys.indexOf(ngBaseDefOutput) === -1
       );
     }
@@ -30,7 +31,9 @@ export class NgxBindIODebugService {
       directive.component.__proto__.constructor.ngBaseDef.inputs
     ) {
       const ngBaseDefInputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.inputs);
-      notExistsInputs = ngBaseDefInputs.filter(ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1);
+      notExistsInputs = removeKeysUsedInAttributes(directive, ngBaseDefInputs).filter(
+        ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1
+      );
     }
     if (debug || notExistsOutputs.length > 0 || notExistsInputs.length > 0) {
       if (debug) {
