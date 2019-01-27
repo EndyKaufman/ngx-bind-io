@@ -22,6 +22,10 @@ export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterCon
   @Input()
   bindIO?: INgxBindIOConfig;
   @Input()
+  excludeIO: string[] | string = [];
+  @Input()
+  includeIO: string[] | string = [];
+  @Input()
   excludeInputs: string[] | string = [];
   @Input()
   includeInputs: string[] | string = [];
@@ -36,16 +40,16 @@ export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterCon
     keys: string[];
     parentKeys: string[];
   } = {
-    keys: [],
-    parentKeys: []
-  };
+      keys: [],
+      parentKeys: []
+    };
   outputs: {
     keys: string[];
     parentKeys: string[];
   } = {
-    keys: [],
-    parentKeys: []
-  };
+      keys: [],
+      parentKeys: []
+    };
 
   usedInputs: { [key: string]: string } = {};
   usedOutputs: { [key: string]: string } = {};
@@ -58,7 +62,7 @@ export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterCon
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _ref: ChangeDetectorRef
-  ) {}
+  ) { }
   ngAfterContentInit() {
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;
