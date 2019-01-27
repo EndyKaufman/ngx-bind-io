@@ -10,14 +10,7 @@ export class NgxBindOutputsService {
    */
   bindOutputs(directive: Partial<INgxBindIODirective>) {
     const outputs = directive.outputs;
-    const excludeOutputs = (Array.isArray(directive.excludeOutputs)
-      ? directive.excludeOutputs
-      : [directive.excludeOutputs]
-    ).map(key => key.toUpperCase());
-    const includeOutputs = (Array.isArray(directive.includeOutputs)
-      ? directive.includeOutputs
-      : [directive.includeOutputs]
-    ).map(key => key.toUpperCase());
+    const { includeOutputs, excludeOutputs } = this.getIncludesAndExcludes(directive);
     outputs.parentKeys
       .filter(
         parentKey =>
@@ -93,5 +86,22 @@ export class NgxBindOutputsService {
     foundedOutputs.keys = removeKeysUsedInAttributes(directive, foundedOutputs.keys);
     foundedOutputs.parentKeys = removeKeysUsedInAttributes(directive, foundedOutputs.parentKeys);
     return foundedOutputs;
+  }
+  getIncludesAndExcludes(directive: Partial<INgxBindIODirective>) {
+    const exclude = Array.isArray(directive.excludeOutputs) ? directive.excludeOutputs : [directive.excludeOutputs];
+    const include = Array.isArray(directive.includeOutputs) ? directive.includeOutputs : [directive.includeOutputs];
+    const includeIO = !directive.includeIO
+      ? []
+      : Array.isArray(directive.includeIO)
+      ? directive.includeIO
+      : [directive.includeIO];
+    const excludeIO = !directive.excludeIO
+      ? []
+      : Array.isArray(directive.excludeIO)
+      ? directive.excludeIO
+      : [directive.excludeIO];
+    const excludeOutputs = [...exclude, ...excludeIO].map(key => key.toUpperCase());
+    const includeOutputs = [...include, ...includeIO].map(key => key.toUpperCase());
+    return { includeOutputs, excludeOutputs };
   }
 }

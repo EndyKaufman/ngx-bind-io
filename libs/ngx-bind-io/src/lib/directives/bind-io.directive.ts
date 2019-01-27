@@ -22,6 +22,10 @@ export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterCon
   @Input()
   bindIO?: INgxBindIOConfig;
   @Input()
+  excludeIO: string[] | string = [];
+  @Input()
+  includeIO: string[] | string = [];
+  @Input()
   excludeInputs: string[] | string = [];
   @Input()
   includeInputs: string[] | string = [];

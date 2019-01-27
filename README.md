@@ -242,7 +242,7 @@ export class NgxBindInputsService {
   }  
   ...
   checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
-    return parentKey === `${key}$`;
+    return parentKey === `${key}$` && parentKey[0] !== '_';
   }
   ...
 }

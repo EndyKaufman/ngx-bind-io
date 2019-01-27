@@ -3,7 +3,7 @@ import { BehaviorSubject, isObservable, Observable, ReplaySubject, Subject } fro
 import { takeUntil } from 'rxjs/operators';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 import { getPropDescriptor, redefineAccessorProperty, redefineSimpleProperty } from '../utils/property-utils';
-import { collectKeys, removeKeysUsedInAttributes, getBindIOMetadata, isFunction } from '../utils/utils';
+import { collectKeys, getBindIOMetadata, isFunction, removeKeysUsedInAttributes } from '../utils/utils';
 
 @Injectable()
 export class NgxBindInputsService {
@@ -12,14 +12,7 @@ export class NgxBindInputsService {
    */
   bindInputs(directive: Partial<INgxBindIODirective>) {
     const inputs = directive.inputs;
-    const excludeInputs = (Array.isArray(directive.excludeInputs)
-      ? directive.excludeInputs
-      : [directive.excludeInputs]
-    ).map(key => key.toUpperCase());
-    const includeInputs = (Array.isArray(directive.includeInputs)
-      ? directive.includeInputs
-      : [directive.includeInputs]
-    ).map(key => key.toUpperCase());
+    const { includeInputs, excludeInputs } = this.getIncludesAndExcludes(directive);
     inputs.parentKeys
       .filter(
         parentKey =>
@@ -42,15 +35,7 @@ export class NgxBindInputsService {
   }
   bindObservableInputs(directive: Partial<INgxBindIODirective>) {
     const inputs = directive.inputs;
-    const excludeInputs = (Array.isArray(directive.excludeInputs)
-      ? directive.excludeInputs
-      : [directive.excludeInputs]
-    ).map(key => key.toUpperCase());
-    const includeInputs = (Array.isArray(directive.includeInputs)
-      ? directive.includeInputs
-      : [directive.includeInputs]
-    ).map(key => key.toUpperCase());
-
+    const { includeInputs, excludeInputs } = this.getIncludesAndExcludes(directive);
     inputs.parentKeys
       .filter(
         parentKey =>
@@ -112,7 +97,7 @@ export class NgxBindInputsService {
    * Observable Inputs
    */
   checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
-    return parentKey === `${key}$`;
+    return parentKey === `${key}$` && parentKey[0] !== '_';
   }
   checkObservableInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const parentValue =
@@ -208,5 +193,22 @@ export class NgxBindInputsService {
     foundedInputs.keys = removeKeysUsedInAttributes(directive, foundedInputs.keys);
     foundedInputs.parentKeys = removeKeysUsedInAttributes(directive, foundedInputs.parentKeys);
     return foundedInputs;
+  }
+  getIncludesAndExcludes(directive: Partial<INgxBindIODirective>) {
+    const exclude = Array.isArray(directive.excludeInputs) ? directive.excludeInputs : [directive.excludeInputs];
+    const include = Array.isArray(directive.includeInputs) ? directive.includeInputs : [directive.includeInputs];
+    const includeIO = !directive.includeIO
+      ? []
+      : Array.isArray(directive.includeIO)
+      ? directive.includeIO
+      : [directive.includeIO];
+    const excludeIO = !directive.excludeIO
+      ? []
+      : Array.isArray(directive.excludeIO)
+      ? directive.excludeIO
+      : [directive.excludeIO];
+    const excludeInputs = [...exclude, ...excludeIO].map(key => key.toUpperCase());
+    const includeInputs = [...include, ...includeIO].map(key => key.toUpperCase());
+    return { includeInputs, excludeInputs };
   }
 }

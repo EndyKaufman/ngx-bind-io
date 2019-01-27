@@ -49,7 +49,6 @@ export function removeKeysUsedInAttributes(directive: any, existsKeys: string[])
         const name = attributes
           .item(i)
           .name.replace(new RegExp('-', 'g'), '')
-          .replace('ngreflect', '')
           .toUpperCase();
         if (key.replace(new RegExp('-', 'g'), '').toUpperCase() === name) {
           founded = true;
