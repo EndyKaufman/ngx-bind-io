@@ -1,3 +1,14 @@
+## [0.4.1](https://github.com/EndyKaufman/ngx-bind-io/compare/0.4.0...0.4.1) (2019-01-27)
+
+
+### Bug Fixes
+
+* Add includeIO and excludeIO properties for directives ([3e44423](https://github.com/EndyKaufman/ngx-bind-io/commit/3e44423))
+* Change detect native attributes, remove replace ngreflect (not work in prod build) ([2e0423f](https://github.com/EndyKaufman/ngx-bind-io/commit/2e0423f))
+* Update checkKeyNameToObservableInputBind for ignore private variables ([28660c2](https://github.com/EndyKaufman/ngx-bind-io/commit/28660c2))
+
+
+
 # [0.4.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.3.0...0.4.0) (2019-01-27)
 
 
