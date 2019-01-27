@@ -112,7 +112,7 @@ export class NgxBindInputsService {
    * Observable Inputs
    */
   checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
-    return parentKey === `${key}$`;
+    return parentKey === `${key}$` && parentKey[0] !== '_';
   }
   checkObservableInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
     const parentValue =
@@ -160,7 +160,7 @@ export class NgxBindInputsService {
       });
     try {
       directive.parentComponent[parentKey] = currentValue;
-    } catch (error) {}
+    } catch (error) { }
     if (isBehaviorSubject) {
       currentValue.next(behaviorSubjectValue);
     }
@@ -178,19 +178,19 @@ export class NgxBindInputsService {
       ),
       keys: directive.component
         ? [
-            ...Object.keys(directive.component).filter(
-              key =>
-                !(
-                  getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
-                  directive.component[key] instanceof EventEmitter
-                )
-            ),
-            ...collectKeys(
-              directive.component.__proto__,
-              (cmp, key) => !(getPropDescriptor(cmp, key).value instanceof EventEmitter),
-              10
-            )
-          ]
+          ...Object.keys(directive.component).filter(
+            key =>
+              !(
+                getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
+                directive.component[key] instanceof EventEmitter
+              )
+          ),
+          ...collectKeys(
+            directive.component.__proto__,
+            (cmp, key) => !(getPropDescriptor(cmp, key).value instanceof EventEmitter),
+            10
+          )
+        ]
         : []
     };
     foundedInputs.parentKeys = [
