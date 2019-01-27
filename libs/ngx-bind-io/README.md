@@ -210,6 +210,42 @@ import { ParentComponent } from './parent.component';
 export class AppModule { }
 ```
 
+## Default rules for detect output method
+
+ngx-bind-outputs.service.ts
+```js
+export class NgxBindOutputsService {
+  ...
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    const outputs = directive.outputs;
+    const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
+    return (
+      (parentKey === `on${keyWithFirstUpperLetter}` &&
+        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
+      parentKey === `on${keyWithFirstUpperLetter}Click`
+    );
+  }
+  ...
+}
+```
+
+## Default rules for detect inputs variables
+
+ngx-bind-inputs.service.ts
+```js
+export class NgxBindInputsService {
+  ...
+  checkKeyNameToInputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+    return parentKey === key && parentKey[0] !== '_';
+  }  
+  ...
+  checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
+    return parentKey === `${key}$`;
+  }
+  ...
+}
+```
+
 ## License
 
 MIT
