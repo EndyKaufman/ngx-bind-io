@@ -13,7 +13,7 @@ export function applyMixins(derivedCtor: any, baseCtors: any[]) {
   return derivedCtor;
 }
 export function Mixin(baseCtors: Function[]) {
-  return function(derivedCtor: Function) {
+  return function (derivedCtor: Function) {
     baseCtors.forEach(baseCtor => {
       Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
         derivedCtor.prototype[name] = baseCtor.prototype[name];
@@ -49,7 +49,6 @@ export function removeKeysUsedInAttributes(directive: any, existsKeys: string[])
         const name = attributes
           .item(i)
           .name.replace(new RegExp('-', 'g'), '')
-          .replace('ngreflect', '')
           .toUpperCase();
         if (key.replace(new RegExp('-', 'g'), '').toUpperCase() === name) {
           founded = true;
