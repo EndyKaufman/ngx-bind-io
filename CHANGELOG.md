@@ -1,3 +1,12 @@
+# [0.4.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.3.0...0.4.0) (2019-01-27)
+
+
+### Features
+
+* Tested on big application, and fix: bind one host to many inner components, add ignore inputs and outputs binded with html attributes ([6fdd5b8](https://github.com/EndyKaufman/ngx-bind-io/commit/6fdd5b8))
+
+
+
 # [0.3.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.2.0...0.3.0) (2019-01-25)
 
 
