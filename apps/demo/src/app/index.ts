@@ -13,6 +13,7 @@ export * from './basics/bind-input-with-include.component';
 export * from './basics/bind-input.component';
 export * from './basics/bind-io-with-mixins.component';
 export * from './basics/bind-io.component';
+export * from './basics/bind-one-to-many.component';
 export * from './basics/bind-output-with-click.component';
 export * from './basics/bind-output-with-custom-click.component';
 export * from './basics/bind-output.component';

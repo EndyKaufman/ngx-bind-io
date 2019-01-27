@@ -77,17 +77,17 @@ export class NgxBindOutputsService {
       ],
       keys: directive.component
         ? [
-          ...Object.keys(directive.component).filter(
-            key =>
-              getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
-              directive.component[key] instanceof EventEmitter
-          ),
-          ...collectKeys(
-            directive.component.__proto__,
-            (cmp, key) => getPropDescriptor(cmp, key).value instanceof EventEmitter,
-            10
-          )
-        ]
+            ...Object.keys(directive.component).filter(
+              key =>
+                getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
+                directive.component[key] instanceof EventEmitter
+            ),
+            ...collectKeys(
+              directive.component.__proto__,
+              (cmp, key) => getPropDescriptor(cmp, key).value instanceof EventEmitter,
+              10
+            )
+          ]
         : []
     };
     foundedOutputs.keys = removeKeysUsedInAttributes(directive, foundedOutputs.keys);

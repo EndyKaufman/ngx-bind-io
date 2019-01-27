@@ -5,7 +5,7 @@ import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
 @Injectable()
 export class NgxBindIODebugService {
-  constructor(private _ngxBindInputsService: NgxBindInputsService) { }
+  constructor(private _ngxBindInputsService: NgxBindInputsService) {}
   showDebugInfo(directive: Partial<INgxBindIODirective>, debug: boolean) {
     let notExistsOutputs: string[] = [];
     let notExistsInputs: string[] = [];
@@ -31,7 +31,9 @@ export class NgxBindIODebugService {
       directive.component.__proto__.constructor.ngBaseDef.inputs
     ) {
       const ngBaseDefInputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.inputs);
-      notExistsInputs = removeKeysUsedInAttributes(directive, ngBaseDefInputs).filter(ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1);
+      notExistsInputs = removeKeysUsedInAttributes(directive, ngBaseDefInputs).filter(
+        ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1
+      );
     }
     if (debug || notExistsOutputs.length > 0 || notExistsInputs.length > 0) {
       if (debug) {

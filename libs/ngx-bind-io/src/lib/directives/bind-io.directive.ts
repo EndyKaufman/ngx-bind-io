@@ -1,4 +1,12 @@
-import { AfterContentInit, ChangeDetectorRef, Directive, Inject, Input, OnDestroy, ViewContainerRef } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectorRef,
+  Directive,
+  Inject,
+  Input,
+  OnDestroy,
+  ViewContainerRef
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
@@ -28,16 +36,16 @@ export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterCon
     keys: string[];
     parentKeys: string[];
   } = {
-      keys: [],
-      parentKeys: []
-    };
+    keys: [],
+    parentKeys: []
+  };
   outputs: {
     keys: string[];
     parentKeys: string[];
   } = {
-      keys: [],
-      parentKeys: []
-    };
+    keys: [],
+    parentKeys: []
+  };
 
   usedInputs: { [key: string]: string } = {};
   usedOutputs: { [key: string]: string } = {};
@@ -50,7 +58,7 @@ export class BindIODirective implements INgxBindIODirective, OnDestroy, AfterCon
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _ref: ChangeDetectorRef
-  ) { }
+  ) {}
   ngAfterContentInit() {
     this.component = this._viewContainerRef['_data'].componentView.component;
     this.parentComponent = (<any>this._viewContainerRef)._view.context;

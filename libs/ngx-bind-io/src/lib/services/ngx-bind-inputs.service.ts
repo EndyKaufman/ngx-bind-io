@@ -103,8 +103,8 @@ export class NgxBindInputsService {
         );
       }
     }
-    getBindIOMetadata(directive.parentComponent).asHost[parentKey]
-      .pipe(takeUntil(directive.destroyed$))
+    getBindIOMetadata(directive.parentComponent)
+      .asHost[parentKey].pipe(takeUntil(directive.destroyed$))
       .subscribe(value => directive.bindValue(key, value));
     directive.parentComponent[parentKey] = currentValue;
   }
@@ -146,8 +146,8 @@ export class NgxBindInputsService {
         );
       }
     }
-    getBindIOMetadata(directive.parentComponent).asHost[parentKey]
-      .pipe(takeUntil(directive.destroyed$))
+    getBindIOMetadata(directive.parentComponent)
+      .asHost[parentKey].pipe(takeUntil(directive.destroyed$))
       .subscribe(newValue => {
         if (newValue instanceof Observable) {
           if (getBindIOMetadata(directive.component).asInner[parentKey]) {
@@ -160,7 +160,7 @@ export class NgxBindInputsService {
       });
     try {
       directive.parentComponent[parentKey] = currentValue;
-    } catch (error) { }
+    } catch (error) {}
     if (isBehaviorSubject) {
       currentValue.next(behaviorSubjectValue);
     }
@@ -178,19 +178,19 @@ export class NgxBindInputsService {
       ),
       keys: directive.component
         ? [
-          ...Object.keys(directive.component).filter(
-            key =>
-              !(
-                getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
-                directive.component[key] instanceof EventEmitter
-              )
-          ),
-          ...collectKeys(
-            directive.component.__proto__,
-            (cmp, key) => !(getPropDescriptor(cmp, key).value instanceof EventEmitter),
-            10
-          )
-        ]
+            ...Object.keys(directive.component).filter(
+              key =>
+                !(
+                  getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
+                  directive.component[key] instanceof EventEmitter
+                )
+            ),
+            ...collectKeys(
+              directive.component.__proto__,
+              (cmp, key) => !(getPropDescriptor(cmp, key).value instanceof EventEmitter),
+              10
+            )
+          ]
         : []
     };
     foundedInputs.parentKeys = [
