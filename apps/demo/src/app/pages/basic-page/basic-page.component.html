@@ -67,6 +67,29 @@
             <basic-bind-io-parent></basic-bind-io-parent>
         </div>
     </ngx-docs-example>
+    <ngx-docs-example
+        title="Basics: bind io with manual input and output and skip default bind by name"
+        html="<basic-bind-io-with-manual-parent></basic-bind-io-with-manual-parent>"
+        [ts]="ts['bind-io-with-manual']"
+        fxFlex.gt-sm="50">
+        <div class="body">
+            <strong>Without auto binding inputs and outputs</strong>
+            <pre>&lt;basic-bind-io-with-manual
+    (start)="onStartWithAlert()
+    [isLoading]="isLoading$ | async"
+    [propA]="propA"
+    propB="Manual binded propB"&gt;
+&lt;/basic-bind-io-with-manual&gt;</pre>
+            <strong>With auto binding inputs and outputs</strong>
+            <pre>&lt;basic-bind-io-with-manual
+    [bindIO]
+    (start)="onStartWithAlert()
+    propB="Manual binded propB"&gt;
+&lt;/basic-bind-io-with-manual&gt;</pre>
+            <hr>
+            <basic-bind-io-with-manual-parent></basic-bind-io-with-manual-parent>
+        </div>
+    </ngx-docs-example>
 </div>
 <div
     class="basic-page"
@@ -119,7 +142,7 @@
         </div>
     </ngx-docs-example>
     <ngx-docs-example
-        title="Basics: bind output with click"
+        title="Basics: bind output with alternative click event name for binding"
         html="<basic-bind-output-with-click-parent></basic-bind-output-with-click-parent>"
         [ts]="ts['bind-output-with-click']"
         fxFlex.gt-sm="50">
@@ -145,7 +168,7 @@
     fxLayout.lt-md="column"
     fxLayoutAlign="space-evenly stretch">
     <ngx-docs-example
-        title="Basics: bind output with custom click"
+        title="Basics: bind output with custom click from custom rules for detect outputs name"
         html="<basic-bind-output-with-custom-click-parent></basic-bind-output-with-custom-click-parent>"
         [ts]="ts['bind-output-with-custom-click']"
         fxFlex.gt-sm="50">

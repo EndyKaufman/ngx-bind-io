@@ -8,6 +8,7 @@ import { BasicBindInputWithDeepInheritsComponent, BasicBindInputWithDeepInherits
 import { BasicBindInputWithExcludeComponent, BasicBindInputWithExcludeParentComponent } from './bind-input-with-exclude.component';
 import { BasicBindInputWithIncludeComponent, BasicBindInputWithIncludeParentComponent } from './bind-input-with-include.component';
 import { BasicBindInputComponent, BasicBindInputParentComponent } from './bind-input.component';
+import { BasicBindIOWithManualComponent, BasicBindIOWithManualParentComponent } from './bind-io-with-manual.component';
 import { BasicBindIOWithMixinsComponent, BasicBindIOWithMixinsParentComponent } from './bind-io-with-mixins.component';
 import { BasicBindIOComponent, BasicBindIOParentComponent } from './bind-io.component';
 import { BasicBindOneToManyComponent, BasicBindOneToManyParentComponent } from './bind-one-to-many.component';
@@ -45,7 +46,9 @@ import { BasicBindOutputComponent, BasicBindOutputParentComponent } from './bind
     BasicBindInputNoOnPushParentComponent,
     BasicBindInputNoOnPushComponent,
     BasicBindOneToManyParentComponent,
-    BasicBindOneToManyComponent
+    BasicBindOneToManyComponent,
+    BasicBindIOWithManualParentComponent,
+    BasicBindIOWithManualComponent
   ],
   exports: [
     BasicBindInputParentComponent,
@@ -59,7 +62,8 @@ import { BasicBindOutputComponent, BasicBindOutputParentComponent } from './bind
     BasicBindOutputWithCustomClickParentComponent,
     BasicBindInputOnChangeParentComponent,
     BasicBindInputNoOnPushParentComponent,
-    BasicBindOneToManyParentComponent
+    BasicBindOneToManyParentComponent,
+    BasicBindIOWithManualParentComponent
   ]
 })
 export class BasicsModule { }
