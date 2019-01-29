@@ -1,14 +1,14 @@
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 import { getBindIOMetadata } from './bind-io-metadata-utils';
 
-export function collectKeys(component: any, rule: (component: any, key: string) => boolean, maxLevel?: number) {
+export function collectKeys(component: any, rule: (component: any, propName: string) => boolean, maxLevel?: number) {
   if (maxLevel !== undefined) {
     maxLevel--;
     if (maxLevel === 0) {
       return [];
     }
   }
-  let keys = component ? Object.keys(component).filter(key => rule(component, key)) : [];
+  let keys = component ? Object.keys(component).filter(propName => rule(component, propName)) : [];
   if (component && component.__proto__) {
     keys = [...keys, ...collectKeys(component.__proto__, rule, maxLevel)];
   }
@@ -23,14 +23,14 @@ export function removeKeysUsedInAttributes(directive: Partial<INgxBindIODirectiv
     viewContainerRef.element.nativeElement.attributes
   ) {
     const attributes = viewContainerRef.element.nativeElement.attributes as NamedNodeMap;
-    return existsKeys.filter(key => {
+    return existsKeys.filter(existKey => {
       let founded = false;
       for (let i = 0; i < attributes.length; i++) {
         const name = attributes
           .item(i)
           .name.replace(new RegExp('-', 'g'), '')
           .toUpperCase();
-        if (key.replace(new RegExp('-', 'g'), '').toUpperCase() === name) {
+        if (existKey.replace(new RegExp('-', 'g'), '').toUpperCase() === name) {
           founded = true;
         }
       }
@@ -40,21 +40,22 @@ export function removeKeysUsedInAttributes(directive: Partial<INgxBindIODirectiv
   return existsKeys;
 }
 export function removeKeysManualBindedOutputs(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
-  const manualOutputs = getBindIOMetadata(directive.component).asInner.manualOutputs;
-  return existsKeys.filter(key => {
+  const manualOutputs = getBindIOMetadata(directive.innerComponent).asInner.manualOutputs;
+  return existsKeys.filter(innerKey => {
     return (
       (manualOutputs ? Object.keys(manualOutputs) : []).filter(
-        outputName => outputName.toUpperCase() === key.toUpperCase()
+        outputName => outputName.toUpperCase() === innerKey.toUpperCase()
       ).length === 0
     );
   });
 }
 export function removeKeysManualBindedInputs(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
-  const manualInputs = getBindIOMetadata(directive.component).asInner.manualInputs;
-  return existsKeys.filter(key => {
+  const manualInputs = getBindIOMetadata(directive.innerComponent).asInner.manualInputs;
+  return existsKeys.filter(innerKey => {
     return (
-      (manualInputs ? Object.keys(manualInputs) : []).filter(inputName => inputName.toUpperCase() === key.toUpperCase())
-        .length === 0
+      (manualInputs ? Object.keys(manualInputs) : []).filter(
+        inputName => inputName.toUpperCase() === innerKey.toUpperCase()
+      ).length === 0
     );
   });
 }

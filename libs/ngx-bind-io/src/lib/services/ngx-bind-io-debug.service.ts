@@ -9,37 +9,37 @@ import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
 @Injectable()
 export class NgxBindIODebugService {
-  constructor(private _ngxBindInputsService: NgxBindInputsService) {}
+  constructor(private _ngxBindInputsService: NgxBindInputsService) { }
   showDebugInfo(directive: Partial<INgxBindIODirective>, debug: boolean) {
     let notExistsOutputs: string[] = [];
     let notExistsInputs: string[] = [];
     if (
       directive.outputs &&
-      directive.component &&
-      directive.component.__proto__ &&
-      directive.component.__proto__.constructor &&
-      directive.component.__proto__.constructor.ngBaseDef &&
-      directive.component.__proto__.constructor.ngBaseDef.outputs
+      directive.innerComponent &&
+      directive.innerComponent.__proto__ &&
+      directive.innerComponent.__proto__.constructor &&
+      directive.innerComponent.__proto__.constructor.ngBaseDef &&
+      directive.innerComponent.__proto__.constructor.ngBaseDef.outputs
     ) {
-      const ngBaseDefOutputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.outputs);
+      const ngBaseDefOutputs = Object.keys(directive.innerComponent.__proto__.constructor.ngBaseDef.outputs);
       notExistsOutputs = removeKeysManualBindedOutputs(
         directive,
         removeKeysUsedInAttributes(directive, ngBaseDefOutputs)
-      ).filter(ngBaseDefOutput => directive.outputs.keys.indexOf(ngBaseDefOutput) === -1);
+      ).filter(ngBaseDefOutput => directive.outputs.innerKeys.indexOf(ngBaseDefOutput) === -1);
     }
     if (
       directive.inputs &&
-      directive.component &&
-      directive.component.__proto__ &&
-      directive.component.__proto__.constructor &&
-      directive.component.__proto__.constructor.ngBaseDef &&
-      directive.component.__proto__.constructor.ngBaseDef.inputs
+      directive.innerComponent &&
+      directive.innerComponent.__proto__ &&
+      directive.innerComponent.__proto__.constructor &&
+      directive.innerComponent.__proto__.constructor.ngBaseDef &&
+      directive.innerComponent.__proto__.constructor.ngBaseDef.inputs
     ) {
-      const ngBaseDefInputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.inputs);
+      const ngBaseDefInputs = Object.keys(directive.innerComponent.__proto__.constructor.ngBaseDef.inputs);
       notExistsInputs = removeKeysManualBindedInputs(
         directive,
         removeKeysUsedInAttributes(directive, ngBaseDefInputs)
-      ).filter(ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1);
+      ).filter(ngBaseDefInput => directive.inputs.innerKeys.indexOf(ngBaseDefInput) === -1);
     }
     if (debug || notExistsOutputs.length > 0 || notExistsInputs.length > 0) {
       if (debug) {
@@ -47,14 +47,12 @@ export class NgxBindIODebugService {
       } else {
         console.group('NgxBindIO: warning');
       }
-      console.log('Component:', directive.component.__proto__.constructor.name, directive.component);
-      console.log('Parent component:', directive.parentComponent.__proto__.constructor.name, directive.parentComponent);
+      console.log('Host component:', directive.hostComponent.__proto__.constructor.name, directive.hostComponent);
+      console.log('Inner component:', directive.innerComponent.__proto__.constructor.name, directive.innerComponent);
       if (directive.usedOutputs) {
         console.log(
           'Outputs maping:',
-          Object.keys(directive.usedOutputs).map(
-            parentKey => `(${directive.usedOutputs[parentKey]})="${parentKey}($event)"`
-          )
+          Object.keys(directive.usedOutputs).map(hostKey => `(${directive.usedOutputs[hostKey]})="${hostKey}($event)"`)
         );
       }
       if (notExistsOutputs.length > 0) {
@@ -64,14 +62,14 @@ export class NgxBindIODebugService {
       if (directive.usedInputs) {
         console.log(
           'Inputs maping:',
-          Object.keys(directive.usedInputs).map(parentKey =>
+          Object.keys(directive.usedInputs).map(hostKey =>
             this._ngxBindInputsService.checkKeyNameToObservableInputBind(
               directive,
-              parentKey,
-              directive.usedInputs[parentKey]
+              hostKey,
+              directive.usedInputs[hostKey]
             )
-              ? `[${directive.usedInputs[parentKey]}]="${parentKey} | async"`
-              : `[${directive.usedInputs[parentKey]}]="${parentKey}"`
+              ? `[${directive.usedInputs[hostKey]}]="${hostKey} | async"`
+              : `[${directive.usedInputs[hostKey]}]="${hostKey}"`
           )
         );
       }

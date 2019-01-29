@@ -9,15 +9,15 @@ export interface INgxBindIODirective {
   excludeOutputs: string[] | string;
   includeOutputs: string[] | string;
 
-  component: any | undefined;
-  parentComponent: any | undefined;
+  innerComponent: any | undefined;
+  hostComponent: any | undefined;
   inputs: {
-    keys: string[];
-    parentKeys: string[];
+    innerKeys: string[];
+    hostKeys: string[];
   };
   outputs: {
-    keys: string[];
-    parentKeys: string[];
+    innerKeys: string[];
+    hostKeys: string[];
   };
 
   usedInputs: { [key: string]: string } | undefined;

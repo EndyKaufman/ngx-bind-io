@@ -27,14 +27,14 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
   @Input()
   includeInputs: string[] | string = [];
 
-  component: any;
-  parentComponent: any;
+  innerComponent: any;
+  hostComponent: any;
   inputs: {
-    keys: string[];
-    parentKeys: string[];
+    innerKeys: string[];
+    hostKeys: string[];
   } = {
-    keys: [],
-    parentKeys: []
+    innerKeys: [],
+    hostKeys: []
   };
 
   usedInputs: { [key: string]: string } = {};
@@ -64,16 +64,16 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
-  bindValue(key: string, value: any) {
-    this.component[key] = value;
+  bindValue(innerKey: string, value: any) {
+    this.innerComponent[innerKey] = value;
     this._ref.markForCheck();
   }
   detectComponents() {
-    if (!this.component && !this.parentComponent) {
-      this.component = this.viewContainerRef['_data'].componentView.component;
-      this.parentComponent = (<any>this.viewContainerRef)._view.context;
-      if (this.parentComponent.$implicit !== undefined) {
-        this.parentComponent = (<any>this.viewContainerRef)._view.component;
+    if (!this.innerComponent && !this.hostComponent) {
+      this.innerComponent = this.viewContainerRef['_data'].componentView.component;
+      this.hostComponent = (<any>this.viewContainerRef)._view.context;
+      if (this.hostComponent.$implicit !== undefined) {
+        this.hostComponent = (<any>this.viewContainerRef)._view.component;
       }
     }
   }

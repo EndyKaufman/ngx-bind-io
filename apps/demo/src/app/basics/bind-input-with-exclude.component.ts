@@ -26,7 +26,7 @@ export class BasicBindInputWithExcludeComponent {
   }
 }
 
-export class BaseBasicBindInputWithExcludeParentComponent {
+export class BaseBasicBindInputWithExcludeHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
@@ -35,7 +35,7 @@ export class BaseBasicBindInputWithExcludeParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-input-with-exclude-parent',
+  selector: 'basic-bind-input-with-exclude-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-input-with-exclude (start)="onStart()" [isLoading]="isLoading$ | async" [propB]="propB">
@@ -48,7 +48,7 @@ export class BaseBasicBindInputWithExcludeParentComponent {
     ></basic-bind-input-with-exclude>
   `
 })
-export class BasicBindInputWithExcludeParentComponent extends BaseBasicBindInputWithExcludeParentComponent {
+export class BasicBindInputWithExcludeHostComponent extends BaseBasicBindInputWithExcludeHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
 }

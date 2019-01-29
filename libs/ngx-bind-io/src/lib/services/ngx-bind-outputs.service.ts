@@ -13,22 +13,22 @@ export class NgxBindOutputsService {
   bindOutputs(directive: Partial<INgxBindIODirective>) {
     const outputs = directive.outputs;
     const { includeOutputs, excludeOutputs } = this.getIncludesAndExcludes(directive);
-    outputs.parentKeys
+    outputs.hostKeys
       .filter(
-        parentKey =>
-          (includeOutputs.length === 0 && excludeOutputs.indexOf(parentKey.toUpperCase()) === -1) ||
-          (includeOutputs.length !== 0 && includeOutputs.indexOf(parentKey.toUpperCase()) !== -1)
+        hostKey =>
+          (includeOutputs.length === 0 && excludeOutputs.indexOf(hostKey.toUpperCase()) === -1) ||
+          (includeOutputs.length !== 0 && includeOutputs.indexOf(hostKey.toUpperCase()) !== -1)
       )
-      .forEach(parentKey => {
-        outputs.keys
+      .forEach(hostKey => {
+        outputs.innerKeys
           .filter(
-            key =>
-              (includeOutputs.length === 0 && excludeOutputs.indexOf(key.toUpperCase()) === -1) ||
-              (includeOutputs.length !== 0 && includeOutputs.indexOf(key.toUpperCase()) !== -1)
+            innerKey =>
+              (includeOutputs.length === 0 && excludeOutputs.indexOf(innerKey.toUpperCase()) === -1) ||
+              (includeOutputs.length !== 0 && includeOutputs.indexOf(innerKey.toUpperCase()) !== -1)
           )
-          .forEach(key => {
-            if (this.checkOutputToBind(directive, parentKey, key)) {
-              this.bindOutput(directive, parentKey, key);
+          .forEach(innerKey => {
+            if (this.checkOutputToBind(directive, hostKey, innerKey)) {
+              this.bindOutput(directive, hostKey, innerKey);
             }
           });
       });
@@ -36,60 +36,61 @@ export class NgxBindOutputsService {
   /**
    * Outputs
    */
-  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
     const outputs = directive.outputs;
-    const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
+    const keyWithFirstUpperLetter =
+      innerKey.length > 0 ? innerKey.charAt(0).toUpperCase() + innerKey.substr(1) : innerKey;
     return (
-      (parentKey === `on${keyWithFirstUpperLetter}` &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
-      parentKey === `on${keyWithFirstUpperLetter}Click`
+      (hostKey === `on${keyWithFirstUpperLetter}` &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
+      hostKey === `on${keyWithFirstUpperLetter}Click`
     );
   }
-  checkOutputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    const value = getPropDescriptor(directive.component, key).value || directive.component[key];
+  checkOutputToBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    const value = getPropDescriptor(directive.innerComponent, innerKey).value || directive.innerComponent[innerKey];
     return (
-      directive.usedOutputs[parentKey] === undefined &&
+      directive.usedOutputs[hostKey] === undefined &&
       value instanceof EventEmitter &&
-      this.checkKeyNameToOutputBind(directive, parentKey, key)
+      this.checkKeyNameToOutputBind(directive, hostKey, innerKey)
     );
   }
-  bindOutput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    directive.usedOutputs[parentKey] = key;
-    directive.component[key].subscribe(value => directive.parentComponent[parentKey](value));
+  bindOutput(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    directive.usedOutputs[hostKey] = innerKey;
+    directive.innerComponent[innerKey].subscribe(value => directive.hostComponent[hostKey](value));
   }
   /**
    * Utils
    */
   getOutputs(directive: Partial<INgxBindIODirective>) {
     const foundedOutputs = {
-      parentKeys: [
-        ...Object.keys(directive.parentComponent).filter(parentKey => isFunction(directive.parentComponent[parentKey])),
+      hostKeys: [
+        ...Object.keys(directive.hostComponent).filter(hostKey => isFunction(directive.hostComponent[hostKey])),
         ...collectKeys(
-          directive.parentComponent.__proto__,
-          (cmp, key) => isFunction(getPropDescriptor(cmp, key).value),
+          directive.hostComponent.__proto__,
+          (cmp, hostKey) => isFunction(getPropDescriptor(cmp, hostKey).value),
           10
         )
       ],
-      keys: directive.component
+      innerKeys: directive.innerComponent
         ? [
-            ...Object.keys(directive.component).filter(
-              key =>
-                getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
-                directive.component[key] instanceof EventEmitter
+            ...Object.keys(directive.innerComponent).filter(
+              innerKey =>
+                getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter ||
+                directive.innerComponent[innerKey] instanceof EventEmitter
             ),
             ...collectKeys(
-              directive.component.__proto__,
-              (cmp, key) => getPropDescriptor(cmp, key).value instanceof EventEmitter,
+              directive.innerComponent.__proto__,
+              (cmp, innerKey) => getPropDescriptor(cmp, innerKey).value instanceof EventEmitter,
               10
             )
           ]
         : []
     };
-    foundedOutputs.keys = removeKeysManualBindedOutputs(
+    foundedOutputs.innerKeys = removeKeysManualBindedOutputs(
       directive,
-      removeKeysUsedInAttributes(directive, foundedOutputs.keys)
+      removeKeysUsedInAttributes(directive, foundedOutputs.innerKeys)
     );
-    foundedOutputs.parentKeys = removeKeysUsedInAttributes(directive, foundedOutputs.parentKeys);
+    foundedOutputs.hostKeys = removeKeysUsedInAttributes(directive, foundedOutputs.hostKeys);
     return foundedOutputs;
   }
   getIncludesAndExcludes(directive: Partial<INgxBindIODirective>) {
@@ -105,8 +106,8 @@ export class NgxBindOutputsService {
       : Array.isArray(directive.excludeIO)
       ? directive.excludeIO
       : [directive.excludeIO];
-    const excludeOutputs = [...exclude, ...excludeIO].map(key => key.toUpperCase());
-    const includeOutputs = [...include, ...includeIO].map(key => key.toUpperCase());
+    const excludeOutputs = [...exclude, ...excludeIO].map(exludeKey => exludeKey.toUpperCase());
+    const includeOutputs = [...include, ...includeIO].map(includeKey => includeKey.toUpperCase());
     return { includeOutputs, excludeOutputs };
   }
 }

@@ -26,7 +26,7 @@ export class BasicBindOutputWithClickComponent {
   }
 }
 
-export class BaseBasicBindOutputWithClickParentComponent {
+export class BaseBasicBindOutputWithClickHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
@@ -35,7 +35,7 @@ export class BaseBasicBindOutputWithClickParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-output-with-click-parent',
+  selector: 'basic-bind-output-with-click-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-output-with-click (start)="onStartClick()" [propA]="propA"> </basic-bind-output-with-click>
@@ -43,7 +43,7 @@ export class BaseBasicBindOutputWithClickParentComponent {
     <basic-bind-output-with-click [bindOutputs] [propA]="propA"></basic-bind-output-with-click>
   `
 })
-export class BasicBindOutputWithClickParentComponent extends BaseBasicBindOutputWithClickParentComponent {
+export class BasicBindOutputWithClickHostComponent extends BaseBasicBindOutputWithClickHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
   onStartClick() {

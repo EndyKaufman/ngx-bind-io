@@ -26,7 +26,7 @@ export class BasicBindOutputWithCustomClickComponent {
   }
 }
 
-export class BaseBasicBindOutputWithCustomClickParentComponent {
+export class BaseBasicBindOutputWithCustomClickHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
@@ -35,7 +35,7 @@ export class BaseBasicBindOutputWithCustomClickParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-output-with-custom-click-parent',
+  selector: 'basic-bind-output-with-custom-click-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-output-with-custom-click (start)="onStartButtonClick()" [propA]="propA">
@@ -44,7 +44,7 @@ export class BaseBasicBindOutputWithCustomClickParentComponent {
     <basic-bind-output-with-custom-click [bindOutputs] [propA]="propA"></basic-bind-output-with-custom-click>
   `
 })
-export class BasicBindOutputWithCustomClickParentComponent extends BaseBasicBindOutputWithCustomClickParentComponent {
+export class BasicBindOutputWithCustomClickHostComponent extends BaseBasicBindOutputWithCustomClickHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
   onStartButtonClick() {

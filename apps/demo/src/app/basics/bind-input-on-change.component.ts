@@ -26,7 +26,7 @@ export class BasicBindInputOnChangeComponent {
   }
 }
 
-export class BaseBasicBindInputOnChangeParentComponent {
+export class BaseBasicBindInputOnChangeHostComponent {
   isLoading$: Observable<boolean> = new Observable();
   onRun() {
     this.isLoading$ = new Observable(observer => {
@@ -37,7 +37,7 @@ export class BaseBasicBindInputOnChangeParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-input-on-change-parent',
+  selector: 'basic-bind-input-on-change-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-input-on-change (start)="onRun()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
@@ -51,7 +51,7 @@ export class BaseBasicBindInputOnChangeParentComponent {
     <button (click)="loadingWith1500s()">Loading with 1,5s.</button>
   `
 })
-export class BasicBindInputOnChangeParentComponent extends BaseBasicBindInputOnChangeParentComponent {
+export class BasicBindInputOnChangeHostComponent extends BaseBasicBindInputOnChangeHostComponent {
   propA = 'Prop A: defined';
   get propB() {
     console.log('Original getter propB', this._propB);

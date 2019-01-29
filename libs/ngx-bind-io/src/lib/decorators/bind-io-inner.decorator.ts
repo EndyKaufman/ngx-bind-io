@@ -7,7 +7,7 @@ export class BindIoInnerLifecycle implements OnChanges {
     if (!getBindIOMetadata(this).asInner.manualInputs) {
       getBindIOMetadata(this).asInner.manualInputs = {};
       if (simpleChanges) {
-        Object.keys(simpleChanges).forEach(key => (getBindIOMetadata(this).asInner.manualInputs[key] = 1));
+        Object.keys(simpleChanges).forEach(innerKey => (getBindIOMetadata(this).asInner.manualInputs[innerKey] = 1));
       }
     }
     if (typeof this.originalNgOnChanges === 'function') {

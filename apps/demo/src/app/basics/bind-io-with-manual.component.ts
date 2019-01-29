@@ -26,7 +26,7 @@ export class BasicBindIOWithManualComponent {
   }
 }
 
-export class BaseBasicBindIOWithManualParentComponent {
+export class BaseBasicBindIOWithManualHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
@@ -35,16 +35,25 @@ export class BaseBasicBindIOWithManualParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-io-with-manual-parent',
+  selector: 'basic-bind-io-with-manual-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <basic-bind-io-with-manual (start)="onStartWithAlert()" [isLoading]="isLoading$ | async" [propA]="propA" propB="Manual binded propB">
+    <basic-bind-io-with-manual
+      (start)="onStartWithAlert()"
+      [isLoading]="isLoading$ | async"
+      [propA]="propA"
+      propB="Manual binded propB"
+    >
     </basic-bind-io-with-manual>
     <hr />
-    <basic-bind-io-with-manual [bindIO] propB="Manual binded propB" (start)="onStartWithAlert()"></basic-bind-io-with-manual>
+    <basic-bind-io-with-manual
+      [bindIO]
+      propB="Manual binded propB"
+      (start)="onStartWithAlert()"
+    ></basic-bind-io-with-manual>
   `
 })
-export class BasicBindIOWithManualParentComponent extends BaseBasicBindIOWithManualParentComponent {
+export class BasicBindIOWithManualHostComponent extends BaseBasicBindIOWithManualHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
   onStartWithAlert() {

@@ -37,9 +37,9 @@ export class BasicBindIOWithMixinsComponent extends BaseBasicBindIOWithMixinsCom
 }
 
 type Constructor<T> = new (...args: any[]) => T;
-class EmptyClass { }
+class EmptyClass {}
 
-function Base1BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(base?: T) {
+function Base1BasicBindIOWithMixinsHostComponent<T extends Constructor<{}>>(base?: T) {
   if (!base) {
     base = EmptyClass as any;
   }
@@ -48,7 +48,7 @@ function Base1BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(ba
     propB = 'Prop B: defined';
   };
 }
-function Base2BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(base?: T) {
+function Base2BasicBindIOWithMixinsHostComponent<T extends Constructor<{}>>(base?: T) {
   if (!base) {
     base = EmptyClass as any;
   }
@@ -62,7 +62,7 @@ function Base2BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(ba
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-io-with-mixins-parent',
+  selector: 'basic-bind-io-with-mixins-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-io-with-mixins (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
@@ -71,6 +71,6 @@ function Base2BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(ba
     <basic-bind-io-with-mixins [bindIO]></basic-bind-io-with-mixins>
   `
 })
-export class BasicBindIOWithMixinsParentComponent extends Base1BasicBindIOWithMixinsParentComponent(
-  Base2BasicBindIOWithMixinsParentComponent()
-) { }
+export class BasicBindIOWithMixinsHostComponent extends Base1BasicBindIOWithMixinsHostComponent(
+  Base2BasicBindIOWithMixinsHostComponent()
+) {}

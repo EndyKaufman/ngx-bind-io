@@ -26,7 +26,7 @@ export class BasicBindOneToManyComponent {
   }
 }
 
-export class BaseBasicBindOneToManyParentComponent {
+export class BaseBasicBindOneToManyHostComponent {
   isLoading$: Observable<boolean> = new Observable();
   onStart() {
     this.isLoading$ = new Observable(observer => {
@@ -37,7 +37,7 @@ export class BaseBasicBindOneToManyParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-one-to-many-parent',
+  selector: 'basic-bind-one-to-many-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-one-to-many (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
@@ -56,7 +56,7 @@ export class BaseBasicBindOneToManyParentComponent {
     <button (click)="loadingWith1500s()">Loading with 1,5s.</button>
   `
 })
-export class BasicBindOneToManyParentComponent extends BaseBasicBindOneToManyParentComponent {
+export class BasicBindOneToManyHostComponent extends BaseBasicBindOneToManyHostComponent {
   propA = 'Prop A: defined';
   get propB() {
     console.log('Original getter propB', this._propB);

@@ -26,7 +26,7 @@ export class BasicBindOutputComponent {
   }
 }
 
-export class BaseBasicBindOutputParentComponent {
+export class BaseBasicBindOutputHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
@@ -35,7 +35,7 @@ export class BaseBasicBindOutputParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-output-parent',
+  selector: 'basic-bind-output-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-output (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA"> </basic-bind-output>
@@ -43,7 +43,7 @@ export class BaseBasicBindOutputParentComponent {
     <basic-bind-output [bindOutputs] [isLoading]="isLoading$ | async" [propA]="propA"></basic-bind-output>
   `
 })
-export class BasicBindOutputParentComponent extends BaseBasicBindOutputParentComponent {
+export class BasicBindOutputHostComponent extends BaseBasicBindOutputHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
 }

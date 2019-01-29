@@ -15,22 +15,22 @@ export class NgxBindInputsService {
   bindInputs(directive: Partial<INgxBindIODirective>) {
     const inputs = directive.inputs;
     const { includeInputs, excludeInputs } = this.getIncludesAndExcludes(directive);
-    inputs.parentKeys
+    inputs.hostKeys
       .filter(
-        parentKey =>
-          (includeInputs.length === 0 && excludeInputs.indexOf(parentKey.toUpperCase()) === -1) ||
-          (includeInputs.length !== 0 && includeInputs.indexOf(parentKey.toUpperCase()) !== -1)
+        hostKey =>
+          (includeInputs.length === 0 && excludeInputs.indexOf(hostKey.toUpperCase()) === -1) ||
+          (includeInputs.length !== 0 && includeInputs.indexOf(hostKey.toUpperCase()) !== -1)
       )
-      .forEach(parentKey => {
-        inputs.keys
+      .forEach(hostKey => {
+        inputs.innerKeys
           .filter(
-            key =>
-              (includeInputs.length === 0 && excludeInputs.indexOf(key.toUpperCase()) === -1) ||
-              (includeInputs.length !== 0 && includeInputs.indexOf(key.toUpperCase()) !== -1)
+            innerKey =>
+              (includeInputs.length === 0 && excludeInputs.indexOf(innerKey.toUpperCase()) === -1) ||
+              (includeInputs.length !== 0 && includeInputs.indexOf(innerKey.toUpperCase()) !== -1)
           )
-          .forEach(key => {
-            if (this.checkInputToBind(directive, parentKey, key)) {
-              this.bindInput(directive, parentKey, key);
+          .forEach(innerKey => {
+            if (this.checkInputToBind(directive, hostKey, innerKey)) {
+              this.bindInput(directive, hostKey, innerKey);
             }
           });
       });
@@ -38,22 +38,22 @@ export class NgxBindInputsService {
   bindObservableInputs(directive: Partial<INgxBindIODirective>) {
     const inputs = directive.inputs;
     const { includeInputs, excludeInputs } = this.getIncludesAndExcludes(directive);
-    inputs.parentKeys
+    inputs.hostKeys
       .filter(
-        parentKey =>
-          (includeInputs.length === 0 && excludeInputs.indexOf(parentKey.toUpperCase()) === -1) ||
-          (includeInputs.length !== 0 && includeInputs.indexOf(parentKey.toUpperCase()) !== -1)
+        hostKey =>
+          (includeInputs.length === 0 && excludeInputs.indexOf(hostKey.toUpperCase()) === -1) ||
+          (includeInputs.length !== 0 && includeInputs.indexOf(hostKey.toUpperCase()) !== -1)
       )
-      .forEach(parentKey => {
-        inputs.keys
+      .forEach(hostKey => {
+        inputs.innerKeys
           .filter(
-            key =>
-              (includeInputs.length === 0 && excludeInputs.indexOf(key.toUpperCase()) === -1) ||
-              (includeInputs.length !== 0 && includeInputs.indexOf(key.toUpperCase()) !== -1)
+            innerKey =>
+              (includeInputs.length === 0 && excludeInputs.indexOf(innerKey.toUpperCase()) === -1) ||
+              (includeInputs.length !== 0 && includeInputs.indexOf(innerKey.toUpperCase()) !== -1)
           )
-          .forEach(key => {
-            if (this.checkObservableInputToBind(directive, parentKey, key)) {
-              this.bindObservableInput(directive, parentKey, key);
+          .forEach(innerKey => {
+            if (this.checkObservableInputToBind(directive, hostKey, innerKey)) {
+              this.bindObservableInput(directive, hostKey, innerKey);
             }
           });
       });
@@ -61,93 +61,91 @@ export class NgxBindInputsService {
   /**
    * Inputs
    */
-  checkKeyNameToInputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    return parentKey === key && parentKey[0] !== '_';
+  checkKeyNameToInputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    return hostKey === innerKey && hostKey[0] !== '_';
   }
-  checkInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    const parentValue =
-      getPropDescriptor(directive.parentComponent, parentKey).value || directive.parentComponent[parentKey];
+  checkInputToBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    const hostValue = getPropDescriptor(directive.hostComponent, hostKey).value || directive.hostComponent[hostKey];
     return (
-      directive.usedInputs[parentKey] === undefined &&
-      !isObservable(parentValue) &&
-      this.checkKeyNameToInputBind(directive, parentKey, key)
+      directive.usedInputs[hostKey] === undefined &&
+      !isObservable(hostValue) &&
+      this.checkKeyNameToInputBind(directive, hostKey, innerKey)
     );
   }
-  bindInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    directive.usedInputs[parentKey] = key;
-    const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
-    const currentValue: any = descriptor.value || directive.parentComponent[parentKey];
-    if (!getBindIOMetadata(directive.parentComponent).asHost[parentKey]) {
-      getBindIOMetadata(directive.parentComponent).asHost[parentKey] = new Subject<any>();
-      delete directive.parentComponent[parentKey];
+  bindInput(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    directive.usedInputs[hostKey] = innerKey;
+    const descriptor = getPropDescriptor(directive.hostComponent, hostKey);
+    const currentValue: any = descriptor.value || directive.hostComponent[hostKey];
+    if (!getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey]) {
+      getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey] = new Subject<any>();
+      delete directive.hostComponent[hostKey];
       if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
-        redefineAccessorProperty(directive.parentComponent, parentKey, descriptor.originalDescriptor, (newValue: any) =>
-          getBindIOMetadata(directive.parentComponent).asHost[parentKey].next(newValue)
+        redefineAccessorProperty(directive.hostComponent, hostKey, descriptor.originalDescriptor, (newValue: any) =>
+          getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey].next(newValue)
         );
       } else {
-        redefineSimpleProperty(directive.parentComponent, parentKey, (newValue: any) =>
-          getBindIOMetadata(directive.parentComponent).asHost[parentKey].next(newValue)
+        redefineSimpleProperty(directive.hostComponent, hostKey, (newValue: any) =>
+          getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey].next(newValue)
         );
       }
     }
-    getBindIOMetadata(directive.parentComponent)
-      .asHost[parentKey].pipe(takeUntil(directive.destroyed$))
-      .subscribe(value => directive.bindValue(key, value));
-    directive.parentComponent[parentKey] = currentValue;
+    getBindIOMetadata(directive.hostComponent)
+      .asHost.subjects[hostKey].pipe(takeUntil(directive.destroyed$))
+      .subscribe(value => directive.bindValue(innerKey, value));
+    directive.hostComponent[hostKey] = currentValue;
   }
   /**
    * Observable Inputs
    */
-  checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
-    return parentKey === `${key}$` && parentKey[0] !== '_';
+  checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    return hostKey === `${innerKey}$` && hostKey[0] !== '_';
   }
-  checkObservableInputToBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    const parentValue =
-      getPropDescriptor(directive.parentComponent, parentKey).value || directive.parentComponent[parentKey];
+  checkObservableInputToBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    const hostValue = getPropDescriptor(directive.hostComponent, hostKey).value || directive.hostComponent[hostKey];
     return (
-      directive.usedInputs[parentKey] === undefined &&
-      isObservable(parentValue) &&
-      this.checkKeyNameToObservableInputBind(directive, parentKey, key)
+      directive.usedInputs[hostKey] === undefined &&
+      isObservable(hostValue) &&
+      this.checkKeyNameToObservableInputBind(directive, hostKey, innerKey)
     );
   }
-  bindObservableInput(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    directive.usedInputs[parentKey] = key;
+  bindObservableInput(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    directive.usedInputs[hostKey] = innerKey;
 
-    const descriptor = getPropDescriptor(directive.parentComponent, parentKey);
+    const descriptor = getPropDescriptor(directive.hostComponent, hostKey);
     const isBehaviorSubject = descriptor.value instanceof BehaviorSubject;
-    const currentValue = descriptor.value || directive.parentComponent[parentKey];
+    const currentValue = descriptor.value || directive.hostComponent[hostKey];
     let behaviorSubjectValue: any;
     if (descriptor.value instanceof BehaviorSubject) {
       behaviorSubjectValue = descriptor.value.getValue();
     }
-    if (!getBindIOMetadata(directive.parentComponent).asHost[parentKey]) {
-      getBindIOMetadata(directive.parentComponent).asHost[parentKey] = new Subject<any>();
-      delete directive.parentComponent[parentKey];
+    if (!getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey]) {
+      getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey] = new Subject<any>();
+      delete directive.hostComponent[hostKey];
       if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
-        redefineAccessorProperty(directive.parentComponent, parentKey, descriptor.originalDescriptor, (newValue: any) =>
-          getBindIOMetadata(directive.parentComponent).asHost[parentKey].next(newValue)
+        redefineAccessorProperty(directive.hostComponent, hostKey, descriptor.originalDescriptor, (newValue: any) =>
+          getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey].next(newValue)
         );
       } else {
-        redefineSimpleProperty(directive.parentComponent, parentKey, (newValue: any) =>
-          getBindIOMetadata(directive.parentComponent).asHost[parentKey].next(newValue)
+        redefineSimpleProperty(directive.hostComponent, hostKey, (newValue: any) =>
+          getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey].next(newValue)
         );
       }
     }
-    getBindIOMetadata(directive.parentComponent)
-      .asHost[parentKey].pipe(takeUntil(directive.destroyed$))
+    getBindIOMetadata(directive.hostComponent)
+      .asHost.subjects[hostKey].pipe(takeUntil(directive.destroyed$))
       .subscribe(newValue => {
         if (newValue instanceof Observable) {
-          if (getBindIOMetadata(directive.component).asInner[parentKey]) {
-            getBindIOMetadata(directive.component).asInner[parentKey].unsubscribe();
+          if (getBindIOMetadata(directive.innerComponent).asInner.subscriptions[hostKey]) {
+            getBindIOMetadata(directive.innerComponent).asInner.subscriptions[hostKey].unsubscribe();
           }
-          getBindIOMetadata(directive.component).asInner[parentKey] = newValue
+          getBindIOMetadata(directive.innerComponent).asInner.subscriptions[hostKey] = newValue
             .pipe(takeUntil(directive.destroyed$))
-            .subscribe(value => directive.bindValue(key, value));
+            .subscribe(value => directive.bindValue(innerKey, value));
         }
       });
     try {
-      directive.parentComponent[parentKey] = currentValue;
-    } catch (error) {}
+      directive.hostComponent[hostKey] = currentValue;
+    } catch (error) { }
     if (isBehaviorSubject) {
       currentValue.next(behaviorSubjectValue);
     }
@@ -157,46 +155,47 @@ export class NgxBindInputsService {
    */
   getInputs(directive: Partial<INgxBindIODirective>) {
     const foundedInputs = {
-      parentKeys: collectKeys(
-        directive.parentComponent,
-        (cmp, key) =>
-          !isFunction(getPropDescriptor(directive.component, key).value) || !isFunction(directive.component[key]),
+      hostKeys: collectKeys(
+        directive.hostComponent,
+        (cmp, hostKey) =>
+          !isFunction(getPropDescriptor(directive.innerComponent, hostKey).value) ||
+          !isFunction(directive.innerComponent[hostKey]),
         10
       ),
-      keys: directive.component
+      innerKeys: directive.innerComponent
         ? [
-            ...Object.keys(directive.component).filter(
-              key =>
-                !(
-                  getPropDescriptor(directive.component, key).value instanceof EventEmitter ||
-                  directive.component[key] instanceof EventEmitter
-                )
-            ),
-            ...collectKeys(
-              directive.component.__proto__,
-              (cmp, key) => !(getPropDescriptor(cmp, key).value instanceof EventEmitter),
-              10
-            )
-          ]
+          ...Object.keys(directive.innerComponent).filter(
+            innerKey =>
+              !(
+                getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter ||
+                directive.innerComponent[innerKey] instanceof EventEmitter
+              )
+          ),
+          ...collectKeys(
+            directive.innerComponent.__proto__,
+            (cmp, innerKey) => !(getPropDescriptor(cmp, innerKey).value instanceof EventEmitter),
+            10
+          )
+        ]
         : []
     };
-    foundedInputs.parentKeys = [
-      ...foundedInputs.parentKeys,
-      ...foundedInputs.parentKeys
-        .map(parentKey => parentKey + '$')
+    foundedInputs.hostKeys = [
+      ...foundedInputs.hostKeys,
+      ...foundedInputs.hostKeys
+        .map(hostKey => hostKey + '$')
         .filter(
-          parentKey =>
-            foundedInputs.parentKeys.indexOf(parentKey) === -1 &&
-            (directive.parentComponent[parentKey] instanceof ReplaySubject ||
-              directive.parentComponent[parentKey] instanceof Subject ||
-              directive.parentComponent[parentKey] instanceof BehaviorSubject)
+          hostKey =>
+            foundedInputs.hostKeys.indexOf(hostKey) === -1 &&
+            (directive.hostComponent[hostKey] instanceof ReplaySubject ||
+              directive.hostComponent[hostKey] instanceof Subject ||
+              directive.hostComponent[hostKey] instanceof BehaviorSubject)
         )
     ];
-    foundedInputs.keys = removeKeysManualBindedInputs(
+    foundedInputs.innerKeys = removeKeysManualBindedInputs(
       directive,
-      removeKeysUsedInAttributes(directive, foundedInputs.keys)
+      removeKeysUsedInAttributes(directive, foundedInputs.innerKeys)
     );
-    foundedInputs.parentKeys = removeKeysUsedInAttributes(directive, foundedInputs.parentKeys);
+    foundedInputs.hostKeys = removeKeysUsedInAttributes(directive, foundedInputs.hostKeys);
     return foundedInputs;
   }
   getIncludesAndExcludes(directive: Partial<INgxBindIODirective>) {
@@ -205,15 +204,15 @@ export class NgxBindInputsService {
     const includeIO = !directive.includeIO
       ? []
       : Array.isArray(directive.includeIO)
-      ? directive.includeIO
-      : [directive.includeIO];
+        ? directive.includeIO
+        : [directive.includeIO];
     const excludeIO = !directive.excludeIO
       ? []
       : Array.isArray(directive.excludeIO)
-      ? directive.excludeIO
-      : [directive.excludeIO];
-    const excludeInputs = [...exclude, ...excludeIO].map(key => key.toUpperCase());
-    const includeInputs = [...include, ...includeIO].map(key => key.toUpperCase());
+        ? directive.excludeIO
+        : [directive.excludeIO];
+    const excludeInputs = [...exclude, ...excludeIO].map(excludeKey => excludeKey.toUpperCase());
+    const includeInputs = [...include, ...includeIO].map(includeKey => includeKey.toUpperCase());
     return { includeInputs, excludeInputs };
   }
 }

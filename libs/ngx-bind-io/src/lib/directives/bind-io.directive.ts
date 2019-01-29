@@ -38,21 +38,21 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
   @Input()
   includeOutputs: string[] | string = [];
 
-  component: any;
-  parentComponent: any;
+  innerComponent: any;
+  hostComponent: any;
   inputs: {
-    keys: string[];
-    parentKeys: string[];
+    innerKeys: string[];
+    hostKeys: string[];
   } = {
-    keys: [],
-    parentKeys: []
+    innerKeys: [],
+    hostKeys: []
   };
   outputs: {
-    keys: string[];
-    parentKeys: string[];
+    innerKeys: string[];
+    hostKeys: string[];
   } = {
-    keys: [],
-    parentKeys: []
+    innerKeys: [],
+    hostKeys: []
   };
 
   usedInputs: { [key: string]: string } = {};
@@ -78,8 +78,8 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     this.destroyed$.next(true);
     this.destroyed$.complete();
   }
-  bindValue(key: string, value: any) {
-    this.component[key] = value;
+  bindValue(innerKey: string, value: any) {
+    this.innerComponent[innerKey] = value;
     this._ref.markForCheck();
   }
   bindAll() {
@@ -91,24 +91,24 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     this._ngxBindIODebugService.showDebugInfo(this, this.debugIsActive());
   }
   detectComponents() {
-    if (!this.component && !this.parentComponent) {
-      this.component = this.viewContainerRef['_data'].componentView.component;
-      this.parentComponent = (<any>this.viewContainerRef)._view.context;
-      if (this.parentComponent.$implicit !== undefined) {
-        this.parentComponent = (<any>this.viewContainerRef)._view.component;
+    if (!this.innerComponent && !this.hostComponent) {
+      this.innerComponent = this.viewContainerRef['_data'].componentView.component;
+      this.hostComponent = (<any>this.viewContainerRef)._view.context;
+      if (this.hostComponent.$implicit !== undefined) {
+        this.hostComponent = (<any>this.viewContainerRef)._view.component;
       }
-      getBindIOMetadata(this.component).asInner.manualOutputs = {};
-      Object.keys(this.component)
+      getBindIOMetadata(this.innerComponent).asInner.manualOutputs = {};
+      Object.keys(this.innerComponent)
         .filter(
-          key =>
-            this.component[key] instanceof EventEmitter &&
-            (this.component[key] as EventEmitter<any>).observers.length > 0
+          innerKey =>
+            this.innerComponent[innerKey] instanceof EventEmitter &&
+            (this.innerComponent[innerKey] as EventEmitter<any>).observers.length > 0
         )
         .forEach(
-          key =>
-            (getBindIOMetadata(this.component).asInner.manualOutputs[key] = (this.component[key] as EventEmitter<
-              any
-            >).observers.length)
+          innerKey =>
+            (getBindIOMetadata(this.innerComponent).asInner.manualOutputs[innerKey] = (this.innerComponent[
+              innerKey
+            ] as EventEmitter<any>).observers.length)
         );
     }
   }

@@ -1,5 +1,13 @@
 // external
-import { ChangeDetectionStrategy, Component, ElementRef, Inject, Input, Optional, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  Optional,
+  ViewEncapsulation
+} from '@angular/core';
 import { BindIoInner } from 'ngx-bind-io';
 // internal
 import { DocsExampleClass } from './docs-example.class';

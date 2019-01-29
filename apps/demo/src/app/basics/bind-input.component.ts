@@ -26,7 +26,7 @@ export class BasicBindInputComponent {
   }
 }
 
-export class BaseBasicBindInputParentComponent {
+export class BaseBasicBindInputHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onRun() {
     this.isLoading$.next(true);
@@ -35,7 +35,7 @@ export class BaseBasicBindInputParentComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-input-parent',
+  selector: 'basic-bind-input-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-input (start)="onRun()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
@@ -44,7 +44,7 @@ export class BaseBasicBindInputParentComponent {
     <basic-bind-input [bindInputs] (start)="onRun()"></basic-bind-input>
   `
 })
-export class BasicBindInputParentComponent extends BaseBasicBindInputParentComponent {
+export class BasicBindInputHostComponent extends BaseBasicBindInputHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
 }

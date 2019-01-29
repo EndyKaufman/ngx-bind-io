@@ -42,4 +42,4 @@ import { NgxBindIOModule } from 'ngx-bind-io';
   exports: [UsersGridWithBindIOComponent],
   declarations: [UsersGridWithBindIOComponent]
 })
-export class UsersGridWithBindIOModule { }
+export class UsersGridWithBindIOModule {}

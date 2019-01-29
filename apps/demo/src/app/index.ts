@@ -11,6 +11,7 @@ export * from './basics/bind-input-with-deep-inherits.component';
 export * from './basics/bind-input-with-exclude.component';
 export * from './basics/bind-input-with-include.component';
 export * from './basics/bind-input.component';
+export * from './basics/bind-io-with-manual.component';
 export * from './basics/bind-io-with-mixins.component';
 export * from './basics/bind-io.component';
 export * from './basics/bind-one-to-many.component';
