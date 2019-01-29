@@ -1,16 +1,17 @@
 import { INgxBindIODirective, NgxBindOutputsService } from 'ngx-bind-io';
 
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
-  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
     const outputs = directive.outputs;
-    const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
+    const keyWithFirstUpperLetter =
+      innerKey.length > 0 ? innerKey.charAt(0).toUpperCase() + innerKey.substr(1) : innerKey;
     return (
-      (parentKey === `on${keyWithFirstUpperLetter}` &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1 &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
-      (parentKey === `on${keyWithFirstUpperLetter}Click` &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
-      parentKey === `on${keyWithFirstUpperLetter}ButtonClick`
+      (hostKey === `on${keyWithFirstUpperLetter}` &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1 &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
+      (hostKey === `on${keyWithFirstUpperLetter}Click` &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
+      hostKey === `on${keyWithFirstUpperLetter}ButtonClick`
     );
   }
 }

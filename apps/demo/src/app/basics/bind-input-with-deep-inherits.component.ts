@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
 
 export class BaseBaseBasicBindInputWithDeepInheritsComponent {
@@ -16,6 +17,7 @@ export class BaseBasicBindInputWithDeepInheritsComponent extends BaseBaseBasicBi
     this.start.next(true);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-with-deep-inherits',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,18 +30,19 @@ export class BaseBasicBindInputWithDeepInheritsComponent extends BaseBaseBasicBi
 })
 export class BasicBindInputWithDeepInheritsComponent extends BaseBasicBindInputWithDeepInheritsComponent {}
 
-export class BaseBaseBasicBindInputWithDeepInheritsParentComponent {
+export class BaseBaseBasicBindInputWithDeepInheritsHostComponent {
   isLoading$ = new BehaviorSubject(false);
   propB = 'Prop B: defined';
 }
-export class BaseBasicBindInputWithDeepInheritsParentComponent extends BaseBaseBasicBindInputWithDeepInheritsParentComponent {
+export class BaseBasicBindInputWithDeepInheritsHostComponent extends BaseBaseBasicBindInputWithDeepInheritsHostComponent {
   onStart() {
     this.isLoading$.next(true);
     setTimeout(() => this.isLoading$.next(false), 5000);
   }
 }
+@BindIoInner()
 @Component({
-  selector: 'basic-bind-input-with-deep-inherits-parent',
+  selector: 'basic-bind-input-with-deep-inherits-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-input-with-deep-inherits
@@ -50,9 +53,9 @@ export class BaseBasicBindInputWithDeepInheritsParentComponent extends BaseBaseB
     >
     </basic-bind-input-with-deep-inherits>
     <hr />
-    <basic-bind-input-with-deep-inherits bindInputs (start)="onStart()"> </basic-bind-input-with-deep-inherits>
+    <basic-bind-input-with-deep-inherits [bindInputs] (start)="onStart()"> </basic-bind-input-with-deep-inherits>
   `
 })
-export class BasicBindInputWithDeepInheritsParentComponent extends BaseBasicBindInputWithDeepInheritsParentComponent {
+export class BasicBindInputWithDeepInheritsHostComponent extends BaseBasicBindInputWithDeepInheritsHostComponent {
   propA = 'Prop A: defined';
 }

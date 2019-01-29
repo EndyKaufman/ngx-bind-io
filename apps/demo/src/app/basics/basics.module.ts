@@ -3,80 +3,81 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxBindIOModule } from 'ngx-bind-io';
 import {
+  BasicBindInputNoOnPushComponent,
+  BasicBindInputNoOnPushHostComponent
+} from './bind-input-no-on-push.component';
+import { BasicBindInputOnChangeComponent, BasicBindInputOnChangeHostComponent } from './bind-input-on-change.component';
+import {
   BasicBindInputWithDeepInheritsComponent,
-  BasicBindInputWithDeepInheritsParentComponent
+  BasicBindInputWithDeepInheritsHostComponent
 } from './bind-input-with-deep-inherits.component';
 import {
   BasicBindInputWithExcludeComponent,
-  BasicBindInputWithExcludeParentComponent
+  BasicBindInputWithExcludeHostComponent
 } from './bind-input-with-exclude.component';
 import {
   BasicBindInputWithIncludeComponent,
-  BasicBindInputWithIncludeParentComponent
+  BasicBindInputWithIncludeHostComponent
 } from './bind-input-with-include.component';
-import { BasicBindInputComponent, BasicBindInputParentComponent } from './bind-input.component';
-import { BasicBindIOWithMixinsComponent, BasicBindIOWithMixinsParentComponent } from './bind-io-with-mixins.component';
-import { BasicBindIOComponent, BasicBindIOParentComponent } from './bind-io.component';
+import { BasicBindInputComponent, BasicBindInputHostComponent } from './bind-input.component';
+import { BasicBindIOWithManualComponent, BasicBindIOWithManualHostComponent } from './bind-io-with-manual.component';
+import { BasicBindIOWithMixinsComponent, BasicBindIOWithMixinsHostComponent } from './bind-io-with-mixins.component';
+import { BasicBindIOComponent, BasicBindIOHostComponent } from './bind-io.component';
+import { BasicBindOneToManyComponent, BasicBindOneToManyHostComponent } from './bind-one-to-many.component';
 import {
   BasicBindOutputWithClickComponent,
-  BasicBindOutputWithClickParentComponent
+  BasicBindOutputWithClickHostComponent
 } from './bind-output-with-click.component';
 import {
   BasicBindOutputWithCustomClickComponent,
-  BasicBindOutputWithCustomClickParentComponent
+  BasicBindOutputWithCustomClickHostComponent
 } from './bind-output-with-custom-click.component';
-import { BasicBindOutputComponent, BasicBindOutputParentComponent } from './bind-output.component';
-import {
-  BasicBindInputOnChangeParentComponent,
-  BasicBindInputOnChangeComponent
-} from './bind-input-on-change.component';
-import {
-  BasicBindInputNoOnPushComponent,
-  BasicBindInputNoOnPushParentComponent
-} from './bind-input-no-on-push.component';
-import { BasicBindOneToManyParentComponent, BasicBindOneToManyComponent } from './bind-one-to-many.component';
+import { BasicBindOutputComponent, BasicBindOutputHostComponent } from './bind-output.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, NgxBindIOModule],
   declarations: [
     BasicBindInputComponent,
-    BasicBindInputParentComponent,
+    BasicBindInputHostComponent,
     BasicBindInputWithExcludeComponent,
-    BasicBindInputWithExcludeParentComponent,
+    BasicBindInputWithExcludeHostComponent,
     BasicBindInputWithIncludeComponent,
-    BasicBindInputWithIncludeParentComponent,
+    BasicBindInputWithIncludeHostComponent,
     BasicBindInputWithDeepInheritsComponent,
-    BasicBindInputWithDeepInheritsParentComponent,
+    BasicBindInputWithDeepInheritsHostComponent,
     BasicBindIOWithMixinsComponent,
-    BasicBindIOWithMixinsParentComponent,
+    BasicBindIOWithMixinsHostComponent,
     BasicBindOutputComponent,
-    BasicBindOutputParentComponent,
-    BasicBindOutputWithClickParentComponent,
+    BasicBindOutputHostComponent,
+    BasicBindOutputWithClickHostComponent,
     BasicBindOutputWithClickComponent,
-    BasicBindIOParentComponent,
+    BasicBindIOHostComponent,
     BasicBindIOComponent,
-    BasicBindOutputWithCustomClickParentComponent,
+    BasicBindOutputWithCustomClickHostComponent,
     BasicBindOutputWithCustomClickComponent,
-    BasicBindInputOnChangeParentComponent,
+    BasicBindInputOnChangeHostComponent,
     BasicBindInputOnChangeComponent,
-    BasicBindInputNoOnPushParentComponent,
+    BasicBindInputNoOnPushHostComponent,
     BasicBindInputNoOnPushComponent,
-    BasicBindOneToManyParentComponent,
-    BasicBindOneToManyComponent
+    BasicBindOneToManyHostComponent,
+    BasicBindOneToManyComponent,
+    BasicBindIOWithManualHostComponent,
+    BasicBindIOWithManualComponent
   ],
   exports: [
-    BasicBindInputParentComponent,
-    BasicBindInputWithExcludeParentComponent,
-    BasicBindInputWithIncludeParentComponent,
-    BasicBindInputWithDeepInheritsParentComponent,
-    BasicBindIOWithMixinsParentComponent,
-    BasicBindOutputParentComponent,
-    BasicBindOutputWithClickParentComponent,
-    BasicBindIOParentComponent,
-    BasicBindOutputWithCustomClickParentComponent,
-    BasicBindInputOnChangeParentComponent,
-    BasicBindInputNoOnPushParentComponent,
-    BasicBindOneToManyParentComponent
+    BasicBindInputHostComponent,
+    BasicBindInputWithExcludeHostComponent,
+    BasicBindInputWithIncludeHostComponent,
+    BasicBindInputWithDeepInheritsHostComponent,
+    BasicBindIOWithMixinsHostComponent,
+    BasicBindOutputHostComponent,
+    BasicBindOutputWithClickHostComponent,
+    BasicBindIOHostComponent,
+    BasicBindOutputWithCustomClickHostComponent,
+    BasicBindInputOnChangeHostComponent,
+    BasicBindInputNoOnPushHostComponent,
+    BasicBindOneToManyHostComponent,
+    BasicBindIOWithManualHostComponent
   ]
 })
 export class BasicsModule {}

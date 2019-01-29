@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { Observable } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-one-to-many',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +26,7 @@ export class BasicBindOneToManyComponent {
   }
 }
 
-export class BaseBasicBindOneToManyParentComponent {
+export class BaseBasicBindOneToManyHostComponent {
   isLoading$: Observable<boolean> = new Observable();
   onStart() {
     this.isLoading$ = new Observable(observer => {
@@ -34,8 +35,9 @@ export class BaseBasicBindOneToManyParentComponent {
     });
   }
 }
+@BindIoInner()
 @Component({
-  selector: 'basic-bind-one-to-many-parent',
+  selector: 'basic-bind-one-to-many-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-one-to-many (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
@@ -44,7 +46,7 @@ export class BaseBasicBindOneToManyParentComponent {
     <basic-bind-one-to-many (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
     </basic-bind-one-to-many>
     <hr />
-    <basic-bind-one-to-many bindIO></basic-bind-one-to-many>
+    <basic-bind-one-to-many [bindIO]></basic-bind-one-to-many>
     <br />
     <basic-bind-one-to-many [bindIO]="{ debug: true }"></basic-bind-one-to-many>
     <hr />
@@ -54,7 +56,7 @@ export class BaseBasicBindOneToManyParentComponent {
     <button (click)="loadingWith1500s()">Loading with 1,5s.</button>
   `
 })
-export class BasicBindOneToManyParentComponent extends BaseBasicBindOneToManyParentComponent {
+export class BasicBindOneToManyHostComponent extends BaseBasicBindOneToManyHostComponent {
   propA = 'Prop A: defined';
   get propB() {
     console.log('Original getter propB', this._propB);

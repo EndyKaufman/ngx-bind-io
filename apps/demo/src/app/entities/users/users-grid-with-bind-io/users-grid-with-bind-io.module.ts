@@ -10,13 +10,13 @@ import {
   MatPaginatorModule,
   MatTableModule
 } from '@angular/material';
-import { NgxBindIOModule } from 'ngx-bind-io';
 import { NgxRepositoryModule } from 'ngx-repository';
 import { EntityGridModule } from '../../../components/entity-grid/entity-grid.module';
 import { MessageBoxModule } from '../../../components/message-box/message-box.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { UserModalModule } from '../user-modal/user-modal.module';
 import { UsersGridWithBindIOComponent } from './users-grid-with-bind-io.component';
+import { NgxBindIOModule } from 'ngx-bind-io';
 
 @NgModule({
   imports: [

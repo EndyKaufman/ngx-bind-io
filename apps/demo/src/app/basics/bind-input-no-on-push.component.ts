@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-
+import { BindIoInner } from 'ngx-bind-io';
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-no-on-push',
   template: `
@@ -22,30 +23,31 @@ export class BasicBindInputNoOnPushComponent {
   }
 }
 
-export class BaseBasicBindInputNoOnPushParentComponent {
-  @ViewChild('child1')
-  child1: BasicBindInputNoOnPushComponent;
-  @ViewChild('child2')
-  child2: BasicBindInputNoOnPushComponent;
+export class BaseBasicBindInputNoOnPushHostComponent {
+  @ViewChild('inner1')
+  inner1: BasicBindInputNoOnPushComponent;
+  @ViewChild('inner2')
+  inner2: BasicBindInputNoOnPushComponent;
   constructor(public changeDetectorRef: ChangeDetectorRef) {}
   onRun() {
-    this.child1.isLoading = true;
-    this.child2.isLoading = true;
+    this.inner1.isLoading = true;
+    this.inner2.isLoading = true;
     this.changeDetectorRef.markForCheck();
     setTimeout(_ => {
-      this.child1.isLoading = false;
-      this.child2.isLoading = false;
+      this.inner1.isLoading = false;
+      this.inner2.isLoading = false;
       this.changeDetectorRef.markForCheck();
     }, 5000);
   }
 }
+@BindIoInner()
 @Component({
-  selector: 'basic-bind-input-no-on-push-parent',
+  selector: 'basic-bind-input-no-on-push-host',
   template: `
-    <basic-bind-input-no-on-push (start)="onRun()" [propA]="propA" [propB]="propB" #child1>
+    <basic-bind-input-no-on-push (start)="onRun()" [propA]="propA" [propB]="propB" #inner1>
     </basic-bind-input-no-on-push>
     <hr />
-    <basic-bind-input-no-on-push bindInputs (start)="onRun()" #child2> </basic-bind-input-no-on-push>
+    <basic-bind-input-no-on-push [bindInputs] (start)="onRun()" #inner2> </basic-bind-input-no-on-push>
     <hr />
     <input [(ngModel)]="propA" />
     <input [(ngModel)]="propB" />
@@ -53,7 +55,7 @@ export class BaseBasicBindInputNoOnPushParentComponent {
     <button (click)="loadingWith1500s()">Loading with 1,5s.</button>
   `
 })
-export class BasicBindInputNoOnPushParentComponent extends BaseBasicBindInputNoOnPushParentComponent {
+export class BasicBindInputNoOnPushHostComponent extends BaseBasicBindInputNoOnPushHostComponent {
   propA = 'Prop A: defined';
   get propB() {
     console.log('Original getter propB', this._propB);
@@ -68,12 +70,12 @@ export class BasicBindInputNoOnPushParentComponent extends BaseBasicBindInputNoO
     super(changeDetectorRef);
   }
   loadingWith1500s() {
-    this.child1.isLoading = true;
-    this.child2.isLoading = true;
+    this.inner1.isLoading = true;
+    this.inner2.isLoading = true;
     this.changeDetectorRef.markForCheck();
     setTimeout(_ => {
-      this.child1.isLoading = false;
-      this.child2.isLoading = false;
+      this.inner1.isLoading = false;
+      this.inner2.isLoading = false;
       this.changeDetectorRef.markForCheck();
     }, 1500);
   }

@@ -34,7 +34,7 @@ Without auto binding inputs and outputs
 With auto binding inputs and outputs
 ```html
 <component-name
-    bindIO>
+    [bindIO]>
 </component-name>
 ```
 
@@ -55,8 +55,8 @@ npm i --save ngx-bind-io
 app.module.ts
 ```js
 import { NgxBindIOModule } from 'ngx-bind-io';
-import { ChildComponent } from './child.component';
-import { ParentComponent } from './parent.component';
+import { InnerComponent } from './inner.component';
+import { HostComponent } from './host.component';
 
 @NgModule({
   ...
@@ -67,8 +67,8 @@ import { ParentComponent } from './parent.component';
   ]
   declarations: [ 
     ...
-    ChildComponent, 
-    ParentComponent 
+    InnerComponent, 
+    HostComponent 
     ...
   ],
   ...
@@ -76,12 +76,14 @@ import { ParentComponent } from './parent.component';
 export class AppModule { }
 ```
 
-child.component.ts
+inner.component.ts
 ```js
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 
+@BindIoInner()
 @Component({
-  selector: 'child',
+  selector: 'inner',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngIf="isLoading">Loading... (5s)</div>
@@ -90,7 +92,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
     {{ propB }}
   `
 })
-export class ChildComponent {
+export class InnerComponent {
   @Input()
   isLoading: boolean = undefined;
   @Input()
@@ -105,11 +107,11 @@ export class ChildComponent {
 }
 ```
 
-base-parent.component.ts
+base-host.component.ts
 ```js
 import { BehaviorSubject } from 'rxjs';
 
-export class BaseParentComponent {
+export class BaseHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
@@ -118,19 +120,19 @@ export class BaseParentComponent {
 }
 ```
 
-parent.component.ts
+host.component.ts
 ```js
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BaseParentComponent } from './base-parent.component';
+import { BaseHostComponent } from './base-host.component';
 
 @Component({
-  selector: 'parent',
+  selector: 'host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <child bindIO></child>
+    <inner [bindIO]></inner>
   `
 })
-export class ParentComponent extends BaseParentComponent {
+export class HostComponent extends BaseHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
 }
@@ -166,16 +168,16 @@ my-ngx-bind-outputs.service.ts
 import { IBindIO, NgxBindOutputsService } from 'ngx-bind-io';
 
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
-  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
     const outputs = directive.outputs;
-    const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
+    const keyWithFirstUpperLetter = innerKey.length > 0 ? innerKey.charAt(0).toUpperCase() + innerKey.substr(1) : innerKey;
     return (
-      (parentKey === `on${keyWithFirstUpperLetter}` &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1 &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
-      (parentKey === `on${keyWithFirstUpperLetter}Click` &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
-      parentKey === `on${keyWithFirstUpperLetter}ButtonClick`
+      (hostKey === `on${keyWithFirstUpperLetter}` &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1 &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
+      (hostKey === `on${keyWithFirstUpperLetter}Click` &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}ButtonClick`) === -1) ||
+      hostKey === `on${keyWithFirstUpperLetter}ButtonClick`
     );
   }
 }
@@ -186,8 +188,8 @@ app.module.ts
 ```js
 import { NgxBindOutputsService, NgxBindIOModule } from 'ngx-bind-io';
 import { MyNgxBindOutputsService } from './shared/utils/my-ngx-bind-outputs.service';
-import { ChildComponent } from './child.component';
-import { ParentComponent } from './parent.component';
+import { InnerComponent } from './inner.component';
+import { HostComponent } from './host.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -198,8 +200,8 @@ import { ParentComponent } from './parent.component';
   ],
   declarations: [ 
     AppComponent,
-    ChildComponent, 
-    ParentComponent,
+    InnerComponent, 
+    HostComponent,
     ...
   ],
   providers: [
@@ -218,13 +220,13 @@ ngx-bind-outputs.service.ts
 ```js
 export class NgxBindOutputsService {
   ...
-  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
+  checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
     const outputs = directive.outputs;
-    const keyWithFirstUpperLetter = key.length > 0 ? key.charAt(0).toUpperCase() + key.substr(1) : key;
+    const keyWithFirstUpperLetter = innerKey.length > 0 ? innerKey.charAt(0).toUpperCase() + innerKey.substr(1) : innerKey;
     return (
-      (parentKey === `on${keyWithFirstUpperLetter}` &&
-        outputs.parentKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
-      parentKey === `on${keyWithFirstUpperLetter}Click`
+      (hostKey === `on${keyWithFirstUpperLetter}` &&
+        outputs.hostKeys.indexOf(`on${keyWithFirstUpperLetter}Click`) === -1) ||
+      hostKey === `on${keyWithFirstUpperLetter}Click`
     );
   }
   ...
@@ -237,12 +239,12 @@ ngx-bind-inputs.service.ts
 ```js
 export class NgxBindInputsService {
   ...
-  checkKeyNameToInputBind(directive: Partial<INgxBindIODirective>, parentKey: string, key: string) {
-    return parentKey === key && parentKey[0] !== '_';
+  checkKeyNameToInputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    return hostKey === innerKey && hostKey[0] !== '_';
   }  
   ...
-  checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, parentKey, key) {
-    return parentKey === `${key}$` && parentKey[0] !== '_';
+  checkKeyNameToObservableInputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
+    return hostKey === `${innerKey}$` && hostKey[0] !== '_';
   }
   ...
 }

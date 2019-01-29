@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-with-include',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,22 +26,23 @@ export class BasicBindInputWithIncludeComponent {
   }
 }
 
-export class BaseBasicBindInputWithIncludeParentComponent {
+export class BaseBasicBindInputWithIncludeHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
     setTimeout(() => this.isLoading$.next(false), 5000);
   }
 }
+@BindIoInner()
 @Component({
-  selector: 'basic-bind-input-with-include-parent',
+  selector: 'basic-bind-input-with-include-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-input-with-include (start)="onStart()" [isLoading]="isLoading$ | async" [propB]="propB">
     </basic-bind-input-with-include>
     <hr />
     <basic-bind-input-with-include
-      bindInputs
+      [bindInputs]
       [includeInputs]="['propB']"
       (start)="onStart()"
       [isLoading]="isLoading$ | async"
@@ -48,7 +50,7 @@ export class BaseBasicBindInputWithIncludeParentComponent {
     </basic-bind-input-with-include>
   `
 })
-export class BasicBindInputWithIncludeParentComponent extends BaseBasicBindInputWithIncludeParentComponent {
+export class BasicBindInputWithIncludeHostComponent extends BaseBasicBindInputWithIncludeHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
 }

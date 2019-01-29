@@ -4,7 +4,7 @@
     fxLayout.lt-md="column">
     <ngx-docs-example
         title="Basics: bind input"
-        html="<basic-bind-input-parent></basic-bind-input-parent>"
+        html="<basic-bind-input-host></basic-bind-input-host>"
         [ts]="ts['bind-input']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -17,16 +17,16 @@
 &lt;/basic-bind-input&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input
-    bindInputs
+    [bindInputs]
     (start)="onRun()"&gt;
 &lt;/basic-bind-input&gt;</pre>
             <hr>
-            <basic-bind-input-parent></basic-bind-input-parent>
+            <basic-bind-input-host></basic-bind-input-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
         title="Basics: bind output"
-        html="<basic-bind-output-parent></basic-bind-output-parent>"
+        html="<basic-bind-output-host></basic-bind-output-host>"
         [ts]="ts['bind-output']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -38,17 +38,17 @@
 &lt;/basic-bind-output&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-output
-    bindOutputs
+    [bindOutputs]
     [isLoading]="isLoading$ | async"
     [propA]="propA"&gt;
 &lt;/basic-bind-output&gt;</pre>
             <hr>
-            <basic-bind-output-parent></basic-bind-output-parent>
+            <basic-bind-output-host></basic-bind-output-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
         title="Basics: bind io"
-        html="<basic-bind-io-parent></basic-bind-io-parent>"
+        html="<basic-bind-io-host></basic-bind-io-host>"
         [ts]="ts['bind-io']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -61,10 +61,33 @@
 &lt;/basic-bind-io&gt;</pre>
             <strong>With auto binding inputs and outputs</strong>
             <pre>&lt;basic-bind-io
-    bindIO&gt;
+    [bindIO]&gt;
 &lt;/basic-bind-io&gt;</pre>
             <hr>
-            <basic-bind-io-parent></basic-bind-io-parent>
+            <basic-bind-io-host></basic-bind-io-host>
+        </div>
+    </ngx-docs-example>
+    <ngx-docs-example
+        title="Basics: bind io with manual input and output and skip default bind by name"
+        html="<basic-bind-io-with-manual-host></basic-bind-io-with-manual-host>"
+        [ts]="ts['bind-io-with-manual']"
+        fxFlex.gt-sm="50">
+        <div class="body">
+            <strong>Without auto binding inputs and outputs</strong>
+            <pre>&lt;basic-bind-io-with-manual
+    (start)="onStartWithAlert()
+    [isLoading]="isLoading$ | async"
+    [propA]="propA"
+    propB="Manual binded propB"&gt;
+&lt;/basic-bind-io-with-manual&gt;</pre>
+            <strong>With auto binding inputs and outputs</strong>
+            <pre>&lt;basic-bind-io-with-manual
+    [bindIO]
+    (start)="onStartWithAlert()
+    propB="Manual binded propB"&gt;
+&lt;/basic-bind-io-with-manual&gt;</pre>
+            <hr>
+            <basic-bind-io-with-manual-host></basic-bind-io-with-manual-host>
         </div>
     </ngx-docs-example>
 </div>
@@ -75,7 +98,7 @@
     fxLayoutAlign="space-evenly stretch">
     <ngx-docs-example
         title="Basics: bind input with exclude"
-        html="<basic-bind-input-with-exclude-parent></basic-bind-input-with-exclude-parent>"
+        html="<basic-bind-input-with-exclude-host></basic-bind-input-with-exclude-host>"
         [ts]="ts['bind-input-with-exclude']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -87,17 +110,17 @@
 &lt;/basic-bind-input-with-exclude&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-with-exclude
-    bindInputs
+    [bindInputs]
     excludeInputs="propA"
     (start)="onStart()"&gt;
 &lt;/basic-bind-input-with-exclude&gt;</pre>
             <hr>
-            <basic-bind-input-with-exclude-parent></basic-bind-input-with-exclude-parent>
+            <basic-bind-input-with-exclude-host></basic-bind-input-with-exclude-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
         title="Basics: bind input with include"
-        html="<basic-bind-input-with-include-parent></basic-bind-input-with-include-parent>"
+        html="<basic-bind-input-with-include-host></basic-bind-input-with-include-host>"
         [ts]="ts['bind-input-with-include']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -109,18 +132,18 @@
 &lt;/basic-bind-input-with-include&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-with-include
-    bindInputs
+    [bindInputs]
     [includeInputs]="['propB']"
     (start)="onStart()"
     [isLoading]="isLoading$ | async"&gt;
 &lt;/basic-bind-input-with-include&gt;</pre>
             <hr>
-            <basic-bind-input-with-include-parent></basic-bind-input-with-include-parent>
+            <basic-bind-input-with-include-host></basic-bind-input-with-include-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
-        title="Basics: bind output with click"
-        html="<basic-bind-output-with-click-parent></basic-bind-output-with-click-parent>"
+        title="Basics: bind output with alternative click event name for binding"
+        html="<basic-bind-output-with-click-host></basic-bind-output-with-click-host>"
         [ts]="ts['bind-output-with-click']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -131,11 +154,11 @@
 &lt;/basic-bind-output-with-click&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-output-with-click
-    bindOutputs
+    [bindOutputs]
     [propA]="propA"&gt;
 &lt;/basic-bind-output-with-click&gt;</pre>
             <hr>
-            <basic-bind-output-with-click-parent></basic-bind-output-with-click-parent>
+            <basic-bind-output-with-click-host></basic-bind-output-with-click-host>
         </div>
     </ngx-docs-example>
 </div>
@@ -145,8 +168,8 @@
     fxLayout.lt-md="column"
     fxLayoutAlign="space-evenly stretch">
     <ngx-docs-example
-        title="Basics: bind output with custom click"
-        html="<basic-bind-output-with-custom-click-parent></basic-bind-output-with-custom-click-parent>"
+        title="Basics: bind output with custom click from custom rules for detect outputs name"
+        html="<basic-bind-output-with-custom-click-host></basic-bind-output-with-custom-click-host>"
         [ts]="ts['bind-output-with-custom-click']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -157,16 +180,16 @@
 &lt;/basic-bind-output-with-custom-click&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-output-with-custom-click
-    bindOutputs
+    [bindOutputs]
     [propA]="propA"&gt;
 &lt;/basic-bind-output-with-custom-click&gt;</pre>
             <hr>
-            <basic-bind-output-with-custom-click-parent></basic-bind-output-with-custom-click-parent>
+            <basic-bind-output-with-custom-click-host></basic-bind-output-with-custom-click-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
         title="Basics: bind input with deep inherits"
-        html="<basic-bind-input-with-deep-inherits-parent></basic-bind-input-with-deep-inherits-parent>"
+        html="<basic-bind-input-with-deep-inherits-host></basic-bind-input-with-deep-inherits-host>"
         [ts]="ts['bind-input-with-deep-inherits']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -179,16 +202,16 @@
 &lt;/basic-bind-input-with-deep-inherits&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-input-with-deep-inherits
-    bindInputs
+    [bindInputs]
     (start)="onStart()"&gt;
 &lt;/basic-bind-input-with-deep-inherits&gt;</pre>
             <hr>
-            <basic-bind-input-with-deep-inherits-parent></basic-bind-input-with-deep-inherits-parent>
+            <basic-bind-input-with-deep-inherits-host></basic-bind-input-with-deep-inherits-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
         title="Basics: bind input with mixins"
-        html="<basic-bind-io-with-mixins-parent></basic-bind-io-with-mixins-parent>"
+        html="<basic-bind-io-with-mixins-host></basic-bind-io-with-mixins-host>"
         [ts]="ts['bind-io-with-mixins']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -201,10 +224,10 @@
 &lt;/basic-bind-io-with-mixins&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-io-with-mixins
-    bindIO&gt;
+    [bindIO]&gt;
 &lt;/basic-bind-io-with-mixins&gt;</pre>
             <hr>
-            <basic-bind-io-with-mixins-parent></basic-bind-io-with-mixins-parent>
+            <basic-bind-io-with-mixins-host></basic-bind-io-with-mixins-host>
         </div>
     </ngx-docs-example>
 </div>
@@ -215,7 +238,7 @@
     fxLayoutAlign="space-evenly stretch">
     <ngx-docs-example
         title="Basics: bind input with on change"
-        html="<basic-bind-input-on-change-parent></basic-bind-input-on-change-parent>"
+        html="<basic-bind-input-on-change-host></basic-bind-input-on-change-host>"
         [ts]="ts['bind-input-on-change']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -228,7 +251,7 @@
 &lt;/basic-bind-input-on-change&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-on-change 
-    bindInputs 
+    [bindInputs] 
     (start)=&quot;onRun()&quot;&gt;
 &lt;/basic-bind-input-on-change&gt;</pre>
             <strong>Options</strong>
@@ -238,12 +261,12 @@
     Loading with 1,5s.
 &lt;/button&gt;</pre>
             <hr>
-            <basic-bind-input-on-change-parent></basic-bind-input-on-change-parent>
+            <basic-bind-input-on-change-host></basic-bind-input-on-change-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
         title="Basics: bind input without onPush"
-        html="<basic-bind-input-no-on-push-parent></basic-bind-input-no-on-push-parent>"
+        html="<basic-bind-input-no-on-push-host></basic-bind-input-no-on-push-host>"
         [ts]="ts['bind-input-no-on-push']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -252,13 +275,13 @@
     (start)=&quot;onRun()&quot;
     [propA]=&quot;propA&quot;
     [propB]=&quot;propB&quot;
-#child1&gt;
+#inner1&gt;
 &lt;/basic-bind-input-no-on-push&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-no-on-push
-    bindInputs
+    [bindInputs]
     (start)=&quot;onRun()&quot;
-#child2&gt;
+#inner2&gt;
 &lt;/basic-bind-input-no-on-push&gt;</pre>
             <strong>Options</strong>
             <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
@@ -267,12 +290,12 @@
     Loading with 1,5s.
 &lt;/button&gt;</pre>
             <hr>
-            <basic-bind-input-no-on-push-parent></basic-bind-input-no-on-push-parent>
+            <basic-bind-input-no-on-push-host></basic-bind-input-no-on-push-host>
         </div>
     </ngx-docs-example>
     <ngx-docs-example
         title="Basics: bind one host to many inners with debug"
-        html="<basic-bind-one-to-many-parent></basic-bind-one-to-many-parent>"
+        html="<basic-bind-one-to-many-host></basic-bind-one-to-many-host>"
         [ts]="ts['bind-input-on-change']"
         fxFlex.gt-sm="50">
         <div class="body">
@@ -292,7 +315,7 @@
 &lt;/basic-bind-one-to-many&gt;</pre>
             <strong>With auto binding inputs and outputs</strong>
             <pre>&lt;basic-bind-one-to-many
-    bindIO&gt;
+    [bindIO]&gt;
 &lt;/basic-bind-one-to-many&gt;
 
 &lt;basic-bind-one-to-many
@@ -305,7 +328,7 @@
     Loading with 1,5s.
 &lt;/button&gt;</pre>
             <hr>
-            <basic-bind-one-to-many-parent></basic-bind-one-to-many-parent>
+            <basic-bind-one-to-many-host></basic-bind-one-to-many-host>
         </div>
     </ngx-docs-example>
 </div>

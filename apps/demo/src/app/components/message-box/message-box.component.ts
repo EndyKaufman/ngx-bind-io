@@ -8,7 +8,8 @@ import {
   Output
 } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
+import { BindIoInner } from 'ngx-bind-io';
+@BindIoInner()
 @Component({
   selector: 'message-box',
   templateUrl: './message-box.component.html',

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
 
 export class BaseBaseBasicBindIOWithMixinsComponent {
@@ -16,6 +17,7 @@ export class BaseBasicBindIOWithMixinsComponent extends BaseBaseBasicBindIOWithM
     this.start.next(true);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-io-with-mixins',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,7 +39,7 @@ export class BasicBindIOWithMixinsComponent extends BaseBasicBindIOWithMixinsCom
 type Constructor<T> = new (...args: any[]) => T;
 class EmptyClass {}
 
-function Base1BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(base?: T) {
+function Base1BasicBindIOWithMixinsHostComponent<T extends Constructor<{}>>(base?: T) {
   if (!base) {
     base = EmptyClass as any;
   }
@@ -46,7 +48,7 @@ function Base1BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(ba
     propB = 'Prop B: defined';
   };
 }
-function Base2BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(base?: T) {
+function Base2BasicBindIOWithMixinsHostComponent<T extends Constructor<{}>>(base?: T) {
   if (!base) {
     base = EmptyClass as any;
   }
@@ -58,16 +60,17 @@ function Base2BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(ba
     }
   };
 }
+@BindIoInner()
 @Component({
-  selector: 'basic-bind-io-with-mixins-parent',
+  selector: 'basic-bind-io-with-mixins-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-io-with-mixins (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
     </basic-bind-io-with-mixins>
     <hr />
-    <basic-bind-io-with-mixins bindIO></basic-bind-io-with-mixins>
+    <basic-bind-io-with-mixins [bindIO]></basic-bind-io-with-mixins>
   `
 })
-export class BasicBindIOWithMixinsParentComponent extends Base1BasicBindIOWithMixinsParentComponent(
-  Base2BasicBindIOWithMixinsParentComponent()
+export class BasicBindIOWithMixinsHostComponent extends Base1BasicBindIOWithMixinsHostComponent(
+  Base2BasicBindIOWithMixinsHostComponent()
 ) {}

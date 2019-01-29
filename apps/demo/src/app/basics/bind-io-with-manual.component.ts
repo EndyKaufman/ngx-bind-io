@@ -3,7 +3,7 @@ import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-io',
+  selector: 'basic-bind-io-with-manual',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngIf="isLoading">Loading... (5s)</div>
@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
     {{ propB }}
   `
 })
-export class BasicBindIOComponent {
+export class BasicBindIOWithManualComponent {
   @Input()
   isLoading = false;
   @Input()
@@ -26,7 +26,7 @@ export class BasicBindIOComponent {
   }
 }
 
-export class BaseBasicBindIOHostComponent {
+export class BaseBasicBindIOWithManualHostComponent {
   isLoading$ = new BehaviorSubject(false);
   onStart() {
     this.isLoading$.next(true);
@@ -35,16 +35,29 @@ export class BaseBasicBindIOHostComponent {
 }
 @BindIoInner()
 @Component({
-  selector: 'basic-bind-io-host',
+  selector: 'basic-bind-io-with-manual-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <basic-bind-io (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
-    </basic-bind-io>
+    <basic-bind-io-with-manual
+      (start)="onStartWithAlert()"
+      [isLoading]="isLoading$ | async"
+      [propA]="propA"
+      propB="Manual binded propB"
+    >
+    </basic-bind-io-with-manual>
     <hr />
-    <basic-bind-io [bindIO]></basic-bind-io>
+    <basic-bind-io-with-manual
+      [bindIO]
+      propB="Manual binded propB"
+      (start)="onStartWithAlert()"
+    ></basic-bind-io-with-manual>
   `
 })
-export class BasicBindIOHostComponent extends BaseBasicBindIOHostComponent {
+export class BasicBindIOWithManualHostComponent extends BaseBasicBindIOWithManualHostComponent {
   propA = 'Prop A: defined';
   propB = 'Prop B: defined';
+  onStartWithAlert() {
+    alert('Alert from manual binded @Output()');
+    this.onStart();
+  }
 }
