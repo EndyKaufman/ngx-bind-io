@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-io',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +33,7 @@ export class BaseBasicBindIOParentComponent {
     setTimeout(() => this.isLoading$.next(false), 5000);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-io-parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +41,7 @@ export class BaseBasicBindIOParentComponent {
     <basic-bind-io (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
     </basic-bind-io>
     <hr />
-    <basic-bind-io bindIO></basic-bind-io>
+    <basic-bind-io [bindIO]></basic-bind-io>
   `
 })
 export class BasicBindIOParentComponent extends BaseBasicBindIOParentComponent {

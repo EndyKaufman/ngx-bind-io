@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-output-with-custom-click',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +33,7 @@ export class BaseBasicBindOutputWithCustomClickParentComponent {
     setTimeout(() => this.isLoading$.next(false), 5000);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-output-with-custom-click-parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +41,7 @@ export class BaseBasicBindOutputWithCustomClickParentComponent {
     <basic-bind-output-with-custom-click (start)="onStartButtonClick()" [propA]="propA">
     </basic-bind-output-with-custom-click>
     <hr />
-    <basic-bind-output-with-custom-click bindOutputs [propA]="propA"></basic-bind-output-with-custom-click>
+    <basic-bind-output-with-custom-click [bindOutputs] [propA]="propA"></basic-bind-output-with-custom-click>
   `
 })
 export class BasicBindOutputWithCustomClickParentComponent extends BaseBasicBindOutputWithCustomClickParentComponent {

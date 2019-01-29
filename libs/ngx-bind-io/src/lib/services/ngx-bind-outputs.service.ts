@@ -1,7 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
+import { collectKeys, removeKeysManualBindedOutputs, removeKeysUsedInAttributes } from '../utils/components-utils';
 import { getPropDescriptor } from '../utils/property-utils';
-import { collectKeys, removeKeysUsedInAttributes, isFunction } from '../utils/utils';
+import { isFunction } from '../utils/utils';
+import { getBindIOMetadata } from '../utils/bind-io-metadata-utils';
 
 @Injectable()
 export class NgxBindOutputsService {
@@ -83,7 +85,10 @@ export class NgxBindOutputsService {
           ]
         : []
     };
-    foundedOutputs.keys = removeKeysUsedInAttributes(directive, foundedOutputs.keys);
+    foundedOutputs.keys = removeKeysManualBindedOutputs(
+      directive,
+      removeKeysUsedInAttributes(directive, foundedOutputs.keys)
+    );
     foundedOutputs.parentKeys = removeKeysUsedInAttributes(directive, foundedOutputs.parentKeys);
     return foundedOutputs;
   }

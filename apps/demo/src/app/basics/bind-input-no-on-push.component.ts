@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-
+import { BindIoInner } from 'ngx-bind-io';
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-no-on-push',
   template: `
@@ -27,7 +28,7 @@ export class BaseBasicBindInputNoOnPushParentComponent {
   child1: BasicBindInputNoOnPushComponent;
   @ViewChild('child2')
   child2: BasicBindInputNoOnPushComponent;
-  constructor(public changeDetectorRef: ChangeDetectorRef) {}
+  constructor(public changeDetectorRef: ChangeDetectorRef) { }
   onRun() {
     this.child1.isLoading = true;
     this.child2.isLoading = true;
@@ -39,13 +40,14 @@ export class BaseBasicBindInputNoOnPushParentComponent {
     }, 5000);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-no-on-push-parent',
   template: `
     <basic-bind-input-no-on-push (start)="onRun()" [propA]="propA" [propB]="propB" #child1>
     </basic-bind-input-no-on-push>
     <hr />
-    <basic-bind-input-no-on-push bindInputs (start)="onRun()" #child2> </basic-bind-input-no-on-push>
+    <basic-bind-input-no-on-push [bindInputs] (start)="onRun()" #child2> </basic-bind-input-no-on-push>
     <hr />
     <input [(ngModel)]="propA" />
     <input [(ngModel)]="propB" />

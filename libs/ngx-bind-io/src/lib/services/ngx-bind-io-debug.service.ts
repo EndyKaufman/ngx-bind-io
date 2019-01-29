@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
-import { removeKeysUsedInAttributes } from '../utils/utils';
+import {
+  removeKeysManualBindedInputs,
+  removeKeysUsedInAttributes,
+  removeKeysManualBindedOutputs
+} from '../utils/components-utils';
 import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
 @Injectable()
@@ -18,9 +22,10 @@ export class NgxBindIODebugService {
       directive.component.__proto__.constructor.ngBaseDef.outputs
     ) {
       const ngBaseDefOutputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.outputs);
-      notExistsOutputs = removeKeysUsedInAttributes(directive, ngBaseDefOutputs).filter(
-        ngBaseDefOutput => directive.outputs.keys.indexOf(ngBaseDefOutput) === -1
-      );
+      notExistsOutputs = removeKeysManualBindedOutputs(
+        directive,
+        removeKeysUsedInAttributes(directive, ngBaseDefOutputs)
+      ).filter(ngBaseDefOutput => directive.outputs.keys.indexOf(ngBaseDefOutput) === -1);
     }
     if (
       directive.inputs &&
@@ -31,9 +36,10 @@ export class NgxBindIODebugService {
       directive.component.__proto__.constructor.ngBaseDef.inputs
     ) {
       const ngBaseDefInputs = Object.keys(directive.component.__proto__.constructor.ngBaseDef.inputs);
-      notExistsInputs = removeKeysUsedInAttributes(directive, ngBaseDefInputs).filter(
-        ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1
-      );
+      notExistsInputs = removeKeysManualBindedInputs(
+        directive,
+        removeKeysUsedInAttributes(directive, ngBaseDefInputs)
+      ).filter(ngBaseDefInput => directive.inputs.keys.indexOf(ngBaseDefInput) === -1);
     }
     if (debug || notExistsOutputs.length > 0 || notExistsInputs.length > 0) {
       if (debug) {
@@ -42,6 +48,7 @@ export class NgxBindIODebugService {
         console.group('NgxBindIO: warning');
       }
       console.log('Component:', directive.component.__proto__.constructor.name, directive.component);
+      console.log('Parent component:', directive.parentComponent.__proto__.constructor.name, directive.parentComponent);
       if (directive.usedOutputs) {
         console.log(
           'Outputs maping:',

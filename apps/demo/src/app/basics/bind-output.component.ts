@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-output',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,13 +33,14 @@ export class BaseBasicBindOutputParentComponent {
     setTimeout(() => this.isLoading$.next(false), 5000);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-output-parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <basic-bind-output (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA"> </basic-bind-output>
     <hr />
-    <basic-bind-output bindOutputs [isLoading]="isLoading$ | async" [propA]="propA"></basic-bind-output>
+    <basic-bind-output [bindOutputs] [isLoading]="isLoading$ | async" [propA]="propA"></basic-bind-output>
   `
 })
 export class BasicBindOutputParentComponent extends BaseBasicBindOutputParentComponent {

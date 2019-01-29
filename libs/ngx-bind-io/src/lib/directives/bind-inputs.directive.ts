@@ -1,10 +1,12 @@
 import {
-  AfterContentInit,
   ChangeDetectorRef,
   Directive,
   Inject,
   Input,
+  OnChanges,
   OnDestroy,
+  OnInit,
+  SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -17,9 +19,9 @@ import { NgxBindIODebugService } from '../services/ngx-bind-io-debug.service';
 @Directive({
   selector: '[bindInputs]'
 })
-export class BindInputsDirective implements Partial<INgxBindIODirective>, OnDestroy, AfterContentInit {
+export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChanges, OnInit, OnDestroy {
   @Input()
-  bindInputs?: INgxBindIOConfig;
+  bindInputs: INgxBindIOConfig | undefined;
   @Input()
   excludeInputs: string[] | string = [];
   @Input()
@@ -39,26 +41,24 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnDest
   destroyed$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
+    public viewContainerRef: ViewContainerRef,
     @Inject(NGX_BIND_IO_CONFIG) private _ngxBindIOConfig: INgxBindIOConfig,
-    private _viewContainerRef: ViewContainerRef,
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _ref: ChangeDetectorRef
   ) {}
-  ngAfterContentInit() {
-    this.component = this._viewContainerRef['_data'].componentView.component;
-    this.parentComponent = (<any>this._viewContainerRef)._view.context;
-    if (this.parentComponent.$implicit !== undefined) {
-      this.parentComponent = (<any>this._viewContainerRef)._view.component;
-    }
+  ngOnChanges(simpleChanges: SimpleChanges) {
+    this.detectComponents();
+  }
+  ngOnInit(): void {
+    this.detectComponents();
+    this.bindAll();
+  }
+  bindAll() {
     this.inputs = this._ngxBindInputsService.getInputs(this);
     this._ngxBindInputsService.bindInputs(this);
     this._ngxBindInputsService.bindObservableInputs(this);
-    const debug =
-      this._ngxBindIOConfig.debug ||
-      (this.bindInputs && this.bindInputs.debug) ||
-      (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true'); // todo: remove on stable release
-    this._ngxBindIODebugService.showDebugInfo(this, debug);
+    this._ngxBindIODebugService.showDebugInfo(this, this.debugIsActive());
   }
   ngOnDestroy() {
     this.destroyed$.next(true);
@@ -67,5 +67,21 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnDest
   bindValue(key: string, value: any) {
     this.component[key] = value;
     this._ref.markForCheck();
+  }
+  detectComponents() {
+    if (!this.component && !this.parentComponent) {
+      this.component = this.viewContainerRef['_data'].componentView.component;
+      this.parentComponent = (<any>this.viewContainerRef)._view.context;
+      if (this.parentComponent.$implicit !== undefined) {
+        this.parentComponent = (<any>this.viewContainerRef)._view.component;
+      }
+    }
+  }
+  debugIsActive() {
+    return (
+      this._ngxBindIOConfig.debug ||
+      (this.bindInputs && this.bindInputs.debug) ||
+      (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true')
+    ); // todo: remove on stable release
   }
 }

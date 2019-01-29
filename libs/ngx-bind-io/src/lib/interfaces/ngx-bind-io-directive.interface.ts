@@ -1,4 +1,5 @@
 import { Subject } from 'rxjs';
+import { ViewContainerRef } from '@angular/core';
 
 export interface INgxBindIODirective {
   excludeIO: string[] | string;
@@ -8,8 +9,8 @@ export interface INgxBindIODirective {
   excludeOutputs: string[] | string;
   includeOutputs: string[] | string;
 
-  component: any;
-  parentComponent: any;
+  component: any | undefined;
+  parentComponent: any | undefined;
   inputs: {
     keys: string[];
     parentKeys: string[];
@@ -19,9 +20,10 @@ export interface INgxBindIODirective {
     parentKeys: string[];
   };
 
-  usedInputs?: { [key: string]: string };
-  usedOutputs?: { [key: string]: string };
+  usedInputs: { [key: string]: string } | undefined;
+  usedOutputs: { [key: string]: string } | undefined;
   destroyed$: Subject<boolean>;
 
+  viewContainerRef: ViewContainerRef;
   bindValue(key: string, value: any): void;
 }

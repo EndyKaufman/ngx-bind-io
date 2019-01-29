@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { Observable } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-one-to-many',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +35,7 @@ export class BaseBasicBindOneToManyParentComponent {
     });
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-one-to-many-parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +46,7 @@ export class BaseBasicBindOneToManyParentComponent {
     <basic-bind-one-to-many (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
     </basic-bind-one-to-many>
     <hr />
-    <basic-bind-one-to-many bindIO></basic-bind-one-to-many>
+    <basic-bind-one-to-many [bindIO]></basic-bind-one-to-many>
     <br />
     <basic-bind-one-to-many [bindIO]="{ debug: true }"></basic-bind-one-to-many>
     <hr />

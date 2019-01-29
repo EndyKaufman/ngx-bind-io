@@ -32,7 +32,7 @@ Without auto binding inputs and outputs
 With auto binding inputs and outputs
 ```html
 <component-name
-    bindIO>
+    [bindIO]>
 </component-name>
 ```
 
@@ -77,7 +77,9 @@ export class AppModule { }
 child.component.ts
 ```js
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 
+@BindIoInner()
 @Component({
   selector: 'child',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -125,7 +127,7 @@ import { BaseParentComponent } from './base-parent.component';
   selector: 'parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <child bindIO></child>
+    <child [bindIO]></child>
   `
 })
 export class ParentComponent extends BaseParentComponent {

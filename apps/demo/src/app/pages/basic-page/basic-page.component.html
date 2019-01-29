@@ -17,7 +17,7 @@
 &lt;/basic-bind-input&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input
-    bindInputs
+    [bindInputs]
     (start)="onRun()"&gt;
 &lt;/basic-bind-input&gt;</pre>
             <hr>
@@ -38,7 +38,7 @@
 &lt;/basic-bind-output&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-output
-    bindOutputs
+    [bindOutputs]
     [isLoading]="isLoading$ | async"
     [propA]="propA"&gt;
 &lt;/basic-bind-output&gt;</pre>
@@ -61,7 +61,7 @@
 &lt;/basic-bind-io&gt;</pre>
             <strong>With auto binding inputs and outputs</strong>
             <pre>&lt;basic-bind-io
-    bindIO&gt;
+    [bindIO]&gt;
 &lt;/basic-bind-io&gt;</pre>
             <hr>
             <basic-bind-io-parent></basic-bind-io-parent>
@@ -87,7 +87,7 @@
 &lt;/basic-bind-input-with-exclude&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-with-exclude
-    bindInputs
+    [bindInputs]
     excludeInputs="propA"
     (start)="onStart()"&gt;
 &lt;/basic-bind-input-with-exclude&gt;</pre>
@@ -109,7 +109,7 @@
 &lt;/basic-bind-input-with-include&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-with-include
-    bindInputs
+    [bindInputs]
     [includeInputs]="['propB']"
     (start)="onStart()"
     [isLoading]="isLoading$ | async"&gt;
@@ -131,7 +131,7 @@
 &lt;/basic-bind-output-with-click&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-output-with-click
-    bindOutputs
+    [bindOutputs]
     [propA]="propA"&gt;
 &lt;/basic-bind-output-with-click&gt;</pre>
             <hr>
@@ -157,7 +157,7 @@
 &lt;/basic-bind-output-with-custom-click&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-output-with-custom-click
-    bindOutputs
+    [bindOutputs]
     [propA]="propA"&gt;
 &lt;/basic-bind-output-with-custom-click&gt;</pre>
             <hr>
@@ -179,7 +179,7 @@
 &lt;/basic-bind-input-with-deep-inherits&gt;</pre>
             <strong>With auto binding outputs</strong>
             <pre>&lt;basic-bind-input-with-deep-inherits
-    bindInputs
+    [bindInputs]
     (start)="onStart()"&gt;
 &lt;/basic-bind-input-with-deep-inherits&gt;</pre>
             <hr>
@@ -201,7 +201,7 @@
 &lt;/basic-bind-io-with-mixins&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-io-with-mixins
-    bindIO&gt;
+    [bindIO]&gt;
 &lt;/basic-bind-io-with-mixins&gt;</pre>
             <hr>
             <basic-bind-io-with-mixins-parent></basic-bind-io-with-mixins-parent>
@@ -228,7 +228,7 @@
 &lt;/basic-bind-input-on-change&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-on-change 
-    bindInputs 
+    [bindInputs] 
     (start)=&quot;onRun()&quot;&gt;
 &lt;/basic-bind-input-on-change&gt;</pre>
             <strong>Options</strong>
@@ -256,7 +256,7 @@
 &lt;/basic-bind-input-no-on-push&gt;</pre>
             <strong>With auto binding inputs</strong>
             <pre>&lt;basic-bind-input-no-on-push
-    bindInputs
+    [bindInputs]
     (start)=&quot;onRun()&quot;
 #child2&gt;
 &lt;/basic-bind-input-no-on-push&gt;</pre>
@@ -292,7 +292,7 @@
 &lt;/basic-bind-one-to-many&gt;</pre>
             <strong>With auto binding inputs and outputs</strong>
             <pre>&lt;basic-bind-one-to-many
-    bindIO&gt;
+    [bindIO]&gt;
 &lt;/basic-bind-one-to-many&gt;
 
 &lt;basic-bind-one-to-many

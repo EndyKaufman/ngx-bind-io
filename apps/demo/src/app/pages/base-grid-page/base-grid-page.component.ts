@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { environment } from 'apps/demo/src/environments/environment';
-
 @Component({
   selector: 'base-grid-page',
   templateUrl: './base-grid-page.component.html',

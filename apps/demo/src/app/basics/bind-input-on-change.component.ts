@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { Observable } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-on-change',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +35,7 @@ export class BaseBasicBindInputOnChangeParentComponent {
     });
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-on-change-parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,7 +43,7 @@ export class BaseBasicBindInputOnChangeParentComponent {
     <basic-bind-input-on-change (start)="onRun()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
     </basic-bind-input-on-change>
     <hr />
-    <basic-bind-input-on-change bindInputs (start)="onRun()"></basic-bind-input-on-change>
+    <basic-bind-input-on-change [bindInputs] (start)="onRun()"></basic-bind-input-on-change>
     <hr />
     <input [(ngModel)]="propA" />
     <input [(ngModel)]="propB" />

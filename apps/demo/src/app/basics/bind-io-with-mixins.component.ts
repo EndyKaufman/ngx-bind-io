@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
 
 export class BaseBaseBasicBindIOWithMixinsComponent {
@@ -16,6 +17,7 @@ export class BaseBasicBindIOWithMixinsComponent extends BaseBaseBasicBindIOWithM
     this.start.next(true);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-io-with-mixins',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,7 +37,7 @@ export class BasicBindIOWithMixinsComponent extends BaseBasicBindIOWithMixinsCom
 }
 
 type Constructor<T> = new (...args: any[]) => T;
-class EmptyClass {}
+class EmptyClass { }
 
 function Base1BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(base?: T) {
   if (!base) {
@@ -58,6 +60,7 @@ function Base2BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(ba
     }
   };
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-io-with-mixins-parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -65,9 +68,9 @@ function Base2BasicBindIOWithMixinsParentComponent<T extends Constructor<{}>>(ba
     <basic-bind-io-with-mixins (start)="onStart()" [isLoading]="isLoading$ | async" [propA]="propA" [propB]="propB">
     </basic-bind-io-with-mixins>
     <hr />
-    <basic-bind-io-with-mixins bindIO></basic-bind-io-with-mixins>
+    <basic-bind-io-with-mixins [bindIO]></basic-bind-io-with-mixins>
   `
 })
 export class BasicBindIOWithMixinsParentComponent extends Base1BasicBindIOWithMixinsParentComponent(
   Base2BasicBindIOWithMixinsParentComponent()
-) {}
+) { }

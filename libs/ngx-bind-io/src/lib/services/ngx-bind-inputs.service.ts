@@ -2,8 +2,10 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, isObservable, Observable, ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
+import { getBindIOMetadata } from '../utils/bind-io-metadata-utils';
+import { collectKeys, removeKeysManualBindedInputs, removeKeysUsedInAttributes } from '../utils/components-utils';
 import { getPropDescriptor, redefineAccessorProperty, redefineSimpleProperty } from '../utils/property-utils';
-import { collectKeys, getBindIOMetadata, isFunction, removeKeysUsedInAttributes } from '../utils/utils';
+import { isFunction } from '../utils/utils';
 
 @Injectable()
 export class NgxBindInputsService {
@@ -190,7 +192,10 @@ export class NgxBindInputsService {
               directive.parentComponent[parentKey] instanceof BehaviorSubject)
         )
     ];
-    foundedInputs.keys = removeKeysUsedInAttributes(directive, foundedInputs.keys);
+    foundedInputs.keys = removeKeysManualBindedInputs(
+      directive,
+      removeKeysUsedInAttributes(directive, foundedInputs.keys)
+    );
     foundedInputs.parentKeys = removeKeysUsedInAttributes(directive, foundedInputs.parentKeys);
     return foundedInputs;
   }

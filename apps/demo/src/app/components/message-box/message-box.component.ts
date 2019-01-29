@@ -1,14 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-
+import { BindIoInner } from 'ngx-bind-io';
+@BindIoInner()
 @Component({
   selector: 'message-box',
   templateUrl: './message-box.component.html',
@@ -37,7 +30,7 @@ export class MessageBoxComponent implements OnInit {
   @Output()
   yes = new EventEmitter<MessageBoxComponent>();
 
-  constructor(public dialogRef: MatDialogRef<MessageBoxComponent>, public changeDetectorRef: ChangeDetectorRef) {}
+  constructor(public dialogRef: MatDialogRef<MessageBoxComponent>, public changeDetectorRef: ChangeDetectorRef) { }
   ngOnInit() {
     this.changeDetectorRef.detectChanges();
   }

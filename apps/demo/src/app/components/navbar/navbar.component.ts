@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Router, Routes } from '@angular/router';
-
+import { BindIoInner } from 'ngx-bind-io';
+@BindIoInner()
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'navbar',

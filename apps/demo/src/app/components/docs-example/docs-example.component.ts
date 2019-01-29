@@ -1,19 +1,12 @@
 // external
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  Optional,
-  ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Inject, Input, Optional, ViewEncapsulation } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 // internal
 import { DocsExampleClass } from './docs-example.class';
 import { PACKAGE_CONFIG_TOKEN } from './docs-example.config';
 import { LaunchInterface } from './docs-example.interface';
 import { PackageConfigInterface } from './package-config.interface';
-
+@BindIoInner()
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,

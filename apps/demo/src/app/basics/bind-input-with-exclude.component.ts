@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
-
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-with-exclude',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +33,7 @@ export class BaseBasicBindInputWithExcludeParentComponent {
     setTimeout(() => this.isLoading$.next(false), 5000);
   }
 }
+@BindIoInner()
 @Component({
   selector: 'basic-bind-input-with-exclude-parent',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +41,11 @@ export class BaseBasicBindInputWithExcludeParentComponent {
     <basic-bind-input-with-exclude (start)="onStart()" [isLoading]="isLoading$ | async" [propB]="propB">
     </basic-bind-input-with-exclude>
     <hr />
-    <basic-bind-input-with-exclude bindInputs excludeInputs="propA" (start)="onStart()"></basic-bind-input-with-exclude>
+    <basic-bind-input-with-exclude
+      [bindInputs]
+      excludeInputs="propA"
+      (start)="onStart()"
+    ></basic-bind-input-with-exclude>
   `
 })
 export class BasicBindInputWithExcludeParentComponent extends BaseBasicBindInputWithExcludeParentComponent {
