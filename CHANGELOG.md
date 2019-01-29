@@ -1,3 +1,17 @@
+# [0.5.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.4.1...0.5.0) (2019-01-29)
+
+
+### Bug Fixes
+
+* Update naming: parent=>host, child=>inner ([ba8cb48](https://github.com/EndyKaufman/ngx-bind-io/commit/ba8cb48))
+
+
+### Features
+
+* Add BindIoInner() decorator for detect and use manual inputs, and support detect and use manual outputs ([82e8a69](https://github.com/EndyKaufman/ngx-bind-io/commit/82e8a69))
+
+
+
 ## [0.4.1](https://github.com/EndyKaufman/ngx-bind-io/compare/0.4.0...0.4.1) (2019-01-27)
 
 

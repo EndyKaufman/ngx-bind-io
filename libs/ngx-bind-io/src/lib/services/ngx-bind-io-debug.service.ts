@@ -9,7 +9,7 @@ import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
 @Injectable()
 export class NgxBindIODebugService {
-  constructor(private _ngxBindInputsService: NgxBindInputsService) { }
+  constructor(private _ngxBindInputsService: NgxBindInputsService) {}
   showDebugInfo(directive: Partial<INgxBindIODirective>, debug: boolean) {
     let notExistsOutputs: string[] = [];
     let notExistsInputs: string[] = [];
