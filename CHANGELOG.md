@@ -1,3 +1,12 @@
+## [0.5.1](https://github.com/EndyKaufman/ngx-bind-io/compare/0.5.0...0.5.1) (2019-01-30)
+
+
+### Bug Fixes
+
+* Add support send changes to user defined ngOnChanges methods ([7f72996](https://github.com/EndyKaufman/ngx-bind-io/commit/7f72996))
+
+
+
 # [0.5.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.4.1...0.5.0) (2019-01-29)
 
 
