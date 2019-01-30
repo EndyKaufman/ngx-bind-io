@@ -86,7 +86,7 @@ inner.component.ts
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BindIoInner } from 'ngx-bind-io';
 
-@BindIoInner()
+@BindIoInner() // <-- need for correct detect manual inputs like [propName]="propValue"
 @Component({
   selector: 'inner',
   changeDetection: ChangeDetectionStrategy.OnPush,
