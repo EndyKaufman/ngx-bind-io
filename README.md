@@ -14,9 +14,14 @@ For check project for use bindIO directives, you may use [ngx-bind-io-cli](https
 npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
 ```
 
-For check and add initialize statement, you may run:
+For check and add initialize statement:
 ```bash
-npx ngx-bind-io-cli ./src --fix --maxInputs=0 --maxOutputs=0
+npx ngx-bind-io-cli ./src --fix=used --maxInputs=0 --maxOutputs=0
+```
+
+For check and add initialize statement if you want correct work with tspath:
+```bash
+npx ngx-bind-io-cli ./src --fix=used --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
 ```
 
 ## Example
@@ -81,7 +86,7 @@ inner.component.ts
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BindIoInner } from 'ngx-bind-io';
 
-@BindIoInner()
+@BindIoInner() // <-- need for correct detect manual inputs like [propName]="propValue"
 @Component({
   selector: 'inner',
   changeDetection: ChangeDetectionStrategy.OnPush,

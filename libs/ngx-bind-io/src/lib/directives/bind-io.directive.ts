@@ -7,6 +7,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChange,
   SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
@@ -50,14 +51,12 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
   outputs: {
     innerKeys: string[];
     hostKeys: string[];
-  } = {
-    innerKeys: [],
-    hostKeys: []
   };
 
   usedInputs: { [key: string]: string } = {};
   usedOutputs: { [key: string]: string } = {};
   destroyed$: Subject<boolean> = new Subject<boolean>();
+  innerSimpleChanges: SimpleChanges = {};
 
   constructor(
     public viewContainerRef: ViewContainerRef,
@@ -79,14 +78,21 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     this.destroyed$.complete();
   }
   bindValue(innerKey: string, value: any) {
+    const previousValue = this.innerComponent[innerKey];
     this.innerComponent[innerKey] = value;
     this._ref.markForCheck();
+    if (typeof this.innerComponent['ngOnChanges'] === 'function') {
+      const simpleChange = new SimpleChange(previousValue, value, this.innerSimpleChanges[innerKey] === undefined);
+      this.innerComponent['ngOnChanges']({ [innerKey]: simpleChange });
+      this.innerSimpleChanges[innerKey] = simpleChange;
+    }
   }
   bindAll() {
     this.inputs = this._ngxBindInputsService.getInputs(this);
-    this.outputs = this._ngxBindOutputsService.getOutputs(this);
     this._ngxBindInputsService.bindInputs(this);
     this._ngxBindInputsService.bindObservableInputs(this);
+
+    this.outputs = this._ngxBindOutputsService.getOutputs(this);
     this._ngxBindOutputsService.bindOutputs(this);
     this._ngxBindIODebugService.showDebugInfo(this, this.debugIsActive());
   }

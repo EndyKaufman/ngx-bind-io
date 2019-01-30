@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 import {
   removeKeysManualBindedInputs,
-  removeKeysUsedInAttributes,
-  removeKeysManualBindedOutputs
+  removeKeysManualBindedOutputs,
+  removeKeysUsedInAttributes
 } from '../utils/components-utils';
 import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
