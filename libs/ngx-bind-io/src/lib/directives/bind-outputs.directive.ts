@@ -33,9 +33,6 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
   outputs: {
     innerKeys: string[];
     hostKeys: string[];
-  } = {
-    innerKeys: [],
-    hostKeys: []
   };
 
   usedOutputs: { [key: string]: string } = {};
@@ -56,9 +53,11 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
     this.bindAll();
   }
   bindAll() {
-    this.outputs = this._ngxBindOutputsService.getOutputs(this);
-    this._ngxBindOutputsService.bindOutputs(this);
-    this._ngxBindIODebugService.showDebugInfo(this, this.debugIsActive());
+    if (this.outputs === undefined) {
+      this.outputs = this._ngxBindOutputsService.getOutputs(this);
+      this._ngxBindOutputsService.bindOutputs(this);
+      this._ngxBindIODebugService.showDebugInfo(this, this.debugIsActive());
+    }
   }
   ngOnDestroy() {
     this.destroyed$.next(true);

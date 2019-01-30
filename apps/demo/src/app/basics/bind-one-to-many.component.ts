@@ -59,11 +59,11 @@ export class BaseBasicBindOneToManyHostComponent {
 export class BasicBindOneToManyHostComponent extends BaseBasicBindOneToManyHostComponent {
   propA = 'Prop A: defined';
   get propB() {
-    console.log('Original getter propB', this._propB);
+    console.log('BasicBindOneToManyHostComponent: Original getter propB', this._propB);
     return this._propB;
   }
   set propB(value: any) {
-    console.log('Original setter propB', value);
+    console.log('BasicBindOneToManyHostComponent: Original setter propB', value);
     this._propB = value;
   }
   _propB = 'Prop B: defined';

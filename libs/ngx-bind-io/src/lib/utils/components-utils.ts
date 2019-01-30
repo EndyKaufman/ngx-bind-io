@@ -40,22 +40,22 @@ export function removeKeysUsedInAttributes(directive: Partial<INgxBindIODirectiv
   return existsKeys;
 }
 export function removeKeysManualBindedOutputs(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
-  const manualOutputs = getBindIOMetadata(directive.innerComponent).asInner.manualOutputs;
   return existsKeys.filter(innerKey => {
     return (
-      (manualOutputs ? Object.keys(manualOutputs) : []).filter(
-        outputName => outputName.toUpperCase() === innerKey.toUpperCase()
-      ).length === 0
+      (getBindIOMetadata(directive.innerComponent).asInner.manualOutputs
+        ? Object.keys(getBindIOMetadata(directive.innerComponent).asInner.manualOutputs)
+        : []
+      ).filter(outputName => outputName.toUpperCase() === innerKey.toUpperCase()).length === 0
     );
   });
 }
 export function removeKeysManualBindedInputs(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
-  const manualInputs = getBindIOMetadata(directive.innerComponent).asInner.manualInputs;
   return existsKeys.filter(innerKey => {
     return (
-      (manualInputs ? Object.keys(manualInputs) : []).filter(
-        inputName => inputName.toUpperCase() === innerKey.toUpperCase()
-      ).length === 0
+      (getBindIOMetadata(directive.innerComponent).asInner.manualInputs
+        ? Object.keys(getBindIOMetadata(directive.innerComponent).asInner.manualInputs)
+        : []
+      ).filter(inputName => inputName.toUpperCase() === innerKey.toUpperCase()).length === 0
     );
   });
 }

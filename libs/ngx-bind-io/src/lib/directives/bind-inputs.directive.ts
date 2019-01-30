@@ -1,11 +1,12 @@
 import {
+  AfterContentInit,
   ChangeDetectorRef,
   Directive,
   Inject,
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
+  SimpleChange,
   SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
@@ -19,7 +20,7 @@ import { NgxBindIODebugService } from '../services/ngx-bind-io-debug.service';
 @Directive({
   selector: '[bindInputs]'
 })
-export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChanges, OnInit, OnDestroy {
+export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChanges, AfterContentInit, OnDestroy {
   @Input()
   bindInputs: INgxBindIOConfig | undefined;
   @Input()
@@ -32,13 +33,11 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
   inputs: {
     innerKeys: string[];
     hostKeys: string[];
-  } = {
-    innerKeys: [],
-    hostKeys: []
   };
 
   usedInputs: { [key: string]: string } = {};
   destroyed$: Subject<boolean> = new Subject<boolean>();
+  innerSimpleChanges: SimpleChanges = {};
 
   constructor(
     public viewContainerRef: ViewContainerRef,
@@ -50,7 +49,7 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }
-  ngOnInit(): void {
+  ngAfterContentInit(): void {
     this.detectComponents();
     this.bindAll();
   }
@@ -65,8 +64,14 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     this.destroyed$.complete();
   }
   bindValue(innerKey: string, value: any) {
+    const previousValue = this.innerComponent[innerKey];
     this.innerComponent[innerKey] = value;
     this._ref.markForCheck();
+    if (typeof this.innerComponent['ngOnChanges'] === 'function') {
+      const simpleChange = new SimpleChange(previousValue, value, this.innerSimpleChanges[innerKey] === undefined);
+      this.innerComponent['ngOnChanges']({ [innerKey]: simpleChange });
+      this.innerSimpleChanges[innerKey] = simpleChange;
+    }
   }
   detectComponents() {
     if (!this.innerComponent && !this.hostComponent) {

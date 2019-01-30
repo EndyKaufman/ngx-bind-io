@@ -1,7 +1,7 @@
 import { INgxBindIOMetadata } from '../interfaces/ngx-bind-io-metadata.interface';
 
 export function getBindIOMetadata(component: any) {
-  const emptyMetadata = {
+  const emptyMetadata: INgxBindIOMetadata = {
     asHost: {
       subjects: {}
     },

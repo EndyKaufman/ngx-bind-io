@@ -58,11 +58,11 @@ export class BaseBasicBindInputNoOnPushHostComponent {
 export class BasicBindInputNoOnPushHostComponent extends BaseBasicBindInputNoOnPushHostComponent {
   propA = 'Prop A: defined';
   get propB() {
-    console.log('Original getter propB', this._propB);
+    console.log('BasicBindInputNoOnPushHostComponent: Original getter propB', this._propB);
     return this._propB;
   }
   set propB(value: any) {
-    console.log('Original setter propB', value);
+    console.log('BasicBindInputNoOnPushHostComponent: Original setter propB', value);
     this._propB = value;
   }
   _propB = 'Prop B: defined';
