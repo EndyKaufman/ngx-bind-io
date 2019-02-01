@@ -1,8 +1,28 @@
 {
   "name": "ngx-bind-io",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Directives for auto binding Input() and Output() in Angular7+ application",
   "keywords": [
+    "angular",
+    "angular2",
+    "angular 2",
+    "angular4",
+    "angular 4",
+    "angular5",
+    "angular 5",
+    "angular6",
+    "angular 6",
+    "angular7",
+    "angular 7",
+    "angularx",
+    "angular-x",
+    "ng",
+    "ng2",
+    "ng4",
+    "ng5",
+    "ng6",
+    "ng7",
+    "ngx",
     "input",
     "output",
     "directives",
@@ -15,9 +35,7 @@
     "nested",
     "class",
     "component",
-    "extends",
-    "angular",
-    "angular7"
+    "extends"
   ],
   "license": "MIT",
   "author": "EndyKaufman <admin@site15.ru>",
@@ -41,8 +59,8 @@
   ],
   "peerDependencies": {
     "rxjs": "^6.4.0",
-    "@angular/common": "^7.2.2",
-    "@angular/compiler": "^7.2.2",
-    "@angular/core": "^7.2.2"
+    "@angular/common": "^7.2.3",
+    "@angular/compiler": "^7.2.3",
+    "@angular/core": "^7.2.3"
   }
 }
