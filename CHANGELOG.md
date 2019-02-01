@@ -1,3 +1,12 @@
+## [0.5.2](https://github.com/EndyKaufman/ngx-bind-io/compare/0.5.1...0.5.2) (2019-02-01)
+
+
+### Bug Fixes
+
+* Update dependencies ([38ca240](https://github.com/EndyKaufman/ngx-bind-io/commit/38ca240))
+
+
+
 ## [0.5.1](https://github.com/EndyKaufman/ngx-bind-io/compare/0.5.0...0.5.1) (2019-01-30)
 
 
