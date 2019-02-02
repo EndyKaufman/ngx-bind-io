@@ -1,9 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
-import { collectKeys, removeKeysManualBindedOutputs, removeKeysUsedInAttributes } from '../utils/components-utils';
+import { collectKeys, removeKeysManualBindedOutputs, removeKeysNotAllowedConstants, removeKeysUsedInAttributes } from '../utils/components-utils';
 import { getPropDescriptor } from '../utils/property-utils';
 import { isFunction } from '../utils/utils';
-import { getBindIOMetadata } from '../utils/bind-io-metadata-utils';
 
 @Injectable()
 export class NgxBindOutputsService {
@@ -62,36 +61,44 @@ export class NgxBindOutputsService {
    * Utils
    */
   getOutputs(directive: Partial<INgxBindIODirective>) {
-    const foundedOutputs = {
-      hostKeys: [
-        ...Object.keys(directive.hostComponent).filter(hostKey => isFunction(directive.hostComponent[hostKey])),
+    let hostKeys = [
+      ...Object.keys(directive.hostComponent).filter(
+        hostKey =>
+          isFunction(directive.hostComponent[hostKey])
+      ),
+      ...collectKeys(
+        directive.hostComponent.__proto__,
+        (cmp, hostKey) =>
+          isFunction(getPropDescriptor(cmp, hostKey).value),
+        10
+      )
+    ];
+    let innerKeys = directive.innerComponent
+      ? [
+        ...Object.keys(directive.innerComponent).filter(
+          innerKey =>
+            (
+              getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter ||
+              directive.innerComponent[innerKey] instanceof EventEmitter
+            )
+        ),
         ...collectKeys(
-          directive.hostComponent.__proto__,
-          (cmp, hostKey) => isFunction(getPropDescriptor(cmp, hostKey).value),
+          directive.innerComponent.__proto__,
+          (cmp, innerKey) =>
+            getPropDescriptor(cmp, innerKey).value instanceof EventEmitter,
           10
         )
-      ],
-      innerKeys: directive.innerComponent
-        ? [
-            ...Object.keys(directive.innerComponent).filter(
-              innerKey =>
-                getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter ||
-                directive.innerComponent[innerKey] instanceof EventEmitter
-            ),
-            ...collectKeys(
-              directive.innerComponent.__proto__,
-              (cmp, innerKey) => getPropDescriptor(cmp, innerKey).value instanceof EventEmitter,
-              10
-            )
-          ]
-        : []
-    };
-    foundedOutputs.innerKeys = removeKeysManualBindedOutputs(
+      ]
+      : [];
+    innerKeys = removeKeysManualBindedOutputs(
       directive,
-      removeKeysUsedInAttributes(directive, foundedOutputs.innerKeys)
+      removeKeysUsedInAttributes(directive, innerKeys)
     );
-    foundedOutputs.hostKeys = removeKeysUsedInAttributes(directive, foundedOutputs.hostKeys);
-    return foundedOutputs;
+    hostKeys = removeKeysUsedInAttributes(directive, hostKeys);
+    return {
+      hostKeys: removeKeysNotAllowedConstants(directive, hostKeys),
+      innerKeys: removeKeysNotAllowedConstants(directive, innerKeys)
+    };
   }
   getIncludesAndExcludes(directive: Partial<INgxBindIODirective>) {
     const exclude = Array.isArray(directive.excludeOutputs) ? directive.excludeOutputs : [directive.excludeOutputs];
@@ -99,13 +106,13 @@ export class NgxBindOutputsService {
     const includeIO = !directive.includeIO
       ? []
       : Array.isArray(directive.includeIO)
-      ? directive.includeIO
-      : [directive.includeIO];
+        ? directive.includeIO
+        : [directive.includeIO];
     const excludeIO = !directive.excludeIO
       ? []
       : Array.isArray(directive.excludeIO)
-      ? directive.excludeIO
-      : [directive.excludeIO];
+        ? directive.excludeIO
+        : [directive.excludeIO];
     const excludeOutputs = [...exclude, ...excludeIO].map(exludeKey => exludeKey.toUpperCase());
     const includeOutputs = [...include, ...includeIO].map(includeKey => includeKey.toUpperCase());
     return { includeOutputs, excludeOutputs };

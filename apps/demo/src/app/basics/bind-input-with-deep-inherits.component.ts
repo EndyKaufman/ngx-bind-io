@@ -28,11 +28,11 @@ export class BaseBasicBindInputWithDeepInheritsComponent extends BaseBaseBasicBi
     {{ propB }}
   `
 })
-export class BasicBindInputWithDeepInheritsComponent extends BaseBasicBindInputWithDeepInheritsComponent {}
+export class BasicBindInputWithDeepInheritsComponent extends BaseBasicBindInputWithDeepInheritsComponent { }
 
 export class BaseBaseBasicBindInputWithDeepInheritsHostComponent {
   isLoading$ = new BehaviorSubject(false);
-  propB = 'Prop B: defined';
+  propB: string;
 }
 export class BaseBasicBindInputWithDeepInheritsHostComponent extends BaseBaseBasicBindInputWithDeepInheritsHostComponent {
   onStart() {

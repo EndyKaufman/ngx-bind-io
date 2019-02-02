@@ -9,7 +9,7 @@ import { NgxBindInputsService } from './ngx-bind-inputs.service';
 
 @Injectable()
 export class NgxBindIODebugService {
-  constructor(private _ngxBindInputsService: NgxBindInputsService) {}
+  constructor(private _ngxBindInputsService: NgxBindInputsService) { }
   showDebugInfo(directive: Partial<INgxBindIODirective>, debug: boolean) {
     let notExistsOutputs: string[] = [];
     let notExistsInputs: string[] = [];
@@ -49,6 +49,7 @@ export class NgxBindIODebugService {
       }
       console.log('Host component:', directive.hostComponent.__proto__.constructor.name, directive.hostComponent);
       console.log('Inner component:', directive.innerComponent.__proto__.constructor.name, directive.innerComponent);
+      console.log('Directive:', directive);
       if (directive.usedOutputs) {
         console.log(
           'Outputs maping:',
