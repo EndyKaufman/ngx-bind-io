@@ -1,6 +1,7 @@
 import { INgxBindIOMetadata } from '../interfaces/ngx-bind-io-metadata.interface';
 
 export const __BIND_IO__ = '__bindIO__';
+export const __ORIGINAL_NGONCHANGES__ = '__originalNgOnChanges__';
 
 export function getBindIOMetadata(component: any) {
   const emptyMetadata: INgxBindIOMetadata = {
