@@ -1,4 +1,17 @@
-import { ApplicationRef, ChangeDetectorRef, Directive, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges, ViewContainerRef } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectorRef,
+  Directive,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+  ViewContainerRef
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
@@ -33,9 +46,9 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     innerKeys: string[];
     hostKeys: string[];
   } = {
-      innerKeys: [],
-      hostKeys: []
-    };
+    innerKeys: [],
+    hostKeys: []
+  };
   outputs: {
     innerKeys: string[];
     hostKeys: string[];
@@ -55,7 +68,7 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _detectorRef: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
@@ -75,7 +88,7 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
       this._detectorRef.markForCheck();
     }
     if (this._detectorRef instanceof ApplicationRef) {
-      setTimeout(() => (this._detectorRef as any as ApplicationRef).tick(), 0);
+      setTimeout(() => ((this._detectorRef as any) as ApplicationRef).tick(), 0);
     }
     if (!this._detectorRef) {
       Object.keys(this.innerComponent).forEach(key => {

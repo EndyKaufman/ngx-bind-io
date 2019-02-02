@@ -15,31 +15,31 @@ export class BaseGridComponent<T extends IModel> implements AfterContentInit {
     component?: BaseModalComponent<T> | any;
     title?: string;
   } = {
-      title: 'Item'
-    };
+    title: 'Item'
+  };
   @Input()
   addModalOptions: {
     component?: BaseModalComponent<T> | any;
     title?: string;
   } = {
-      title: 'Create item'
-    };
+    title: 'Create item'
+  };
   @Input()
   editModalOptions: {
     component?: BaseModalComponent<T> | any;
     title?: string;
   } = {
-      title: 'Edit item #{data.id}'
-    };
+    title: 'Edit item #{data.id}'
+  };
   @Input()
   deleteModalOptions: {
     component?: BaseModalComponent<T> | any;
     title?: string;
     message?: string;
   } = {
-      title: 'Delete item #{data.id}',
-      message: 'Are you sure to delete?'
-    };
+    title: 'Delete item #{data.id}',
+    message: 'Are you sure to delete?'
+  };
   @Input()
   mockedItems?: T[] = undefined;
   @Input()

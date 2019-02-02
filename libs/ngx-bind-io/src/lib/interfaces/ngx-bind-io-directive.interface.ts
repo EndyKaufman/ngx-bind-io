@@ -28,5 +28,4 @@ export interface INgxBindIODirective {
 
   viewContainerRef: ViewContainerRef;
   bindValue(key: string, value: any): void;
-
 }
