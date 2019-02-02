@@ -1,5 +1,5 @@
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
-import { getBindIOMetadata } from './bind-io-metadata-utils';
+import { getBindIOMetadata, __BIND_IO__ } from './bind-io-metadata-utils';
 
 export function collectKeys(component: any, rule: (component: any, propName: string) => boolean, maxLevel?: number) {
   if (maxLevel !== undefined) {
@@ -58,4 +58,8 @@ export function removeKeysManualBindedInputs(directive: Partial<INgxBindIODirect
       ).filter(inputName => inputName.toUpperCase() === innerKey.toUpperCase()).length === 0
     );
   });
+}
+export function removeKeysNotAllowedConstants(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
+  const constants = [__BIND_IO__, 'constructor'];
+  return existsKeys.filter(key => constants.indexOf(key) === -1);
 }

@@ -32,7 +32,7 @@ export class BasicBindInputWithDeepInheritsComponent extends BaseBasicBindInputW
 
 export class BaseBaseBasicBindInputWithDeepInheritsHostComponent {
   isLoading$ = new BehaviorSubject(false);
-  propB = 'Prop B: defined';
+  propB: string;
 }
 export class BaseBasicBindInputWithDeepInheritsHostComponent extends BaseBaseBasicBindInputWithDeepInheritsHostComponent {
   onStart() {

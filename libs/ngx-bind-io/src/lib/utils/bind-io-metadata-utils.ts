@@ -1,5 +1,7 @@
 import { INgxBindIOMetadata } from '../interfaces/ngx-bind-io-metadata.interface';
 
+export const __BIND_IO__ = '__bindIO__';
+
 export function getBindIOMetadata(component: any) {
   const emptyMetadata: INgxBindIOMetadata = {
     asHost: {
@@ -12,10 +14,10 @@ export function getBindIOMetadata(component: any) {
     }
   };
   if (component) {
-    if (!component['__bindIO__']) {
-      (component['__bindIO__'] as INgxBindIOMetadata) = emptyMetadata;
+    if (!component[__BIND_IO__]) {
+      (component[__BIND_IO__] as INgxBindIOMetadata) = emptyMetadata;
     }
-    return component['__bindIO__'] as INgxBindIOMetadata;
+    return component[__BIND_IO__] as INgxBindIOMetadata;
   }
   return emptyMetadata;
 }
