@@ -22,6 +22,14 @@ For check and add initialize statement if you want correct work with tspath:
 npx ngx-bind-io-cli ./src --fix=used --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
 ```
 
+* [Example](#example)
+* [Installation](#installation)
+* [Links](#links)
+* [Usage](#usage)
+* [Debug](#debug)
+* [Rules for detect inputs and outputs](#rules-for-detect-inputs-and-outputs)
+* [Bind to dynamic components](#bind-to-dynamic-components)
+
 ## Example
 
 Without auto binding inputs and outputs
@@ -163,8 +171,9 @@ For debug on one place
 ```html
 <comp-name [bindIO]="{debug:true}"></comp-name>
 ```
+## Rules for detect inputs and outputs
 
-## Custom rules for detect output method
+### Custom rules for detect output method
 
 my-ngx-bind-outputs.service.ts
 ```js
@@ -216,8 +225,7 @@ import { HostComponent } from './host.component';
 })
 export class AppModule { }
 ```
-
-## Default rules for detect output method
+### Default rules for detect output method
 
 ngx-bind-outputs.service.ts
 ```js
@@ -235,8 +243,7 @@ export class NgxBindOutputsService {
   ...
 }
 ```
-
-## Default rules for detect inputs variables
+### Default rules for detect inputs variables
 
 ngx-bind-inputs.service.ts
 ```js
@@ -250,6 +257,86 @@ export class NgxBindInputsService {
     return hostKey === `${innerKey}$` && hostKey[0] !== '_';
   }
   ...
+}
+```
+## Bind to dynamic components
+
+Becouse dynamic components not have normal lifecicle, recomendate define they without OnPush strategy.
+If you want use with OnPush, you may use Inputs with BindObservable and call properties with async pipe.
+
+inner.component.ts
+```js
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
+
+@BindIoInner() // <-- need for correct detect manual inputs like [propName]="propValue"
+@Component({
+  selector: 'inner',
+  // changeDetection: ChangeDetectionStrategy.OnPush, <-- change detection with OnPush strategy incorrected work for dynamic components 
+  template: `
+    <div *ngIf="isLoading">Loading... (5s)</div>
+    <button (click)="onStart()">Start</button> <br />
+    {{ propA }} <br />
+    {{ propB }}
+  `
+})
+export class InnerComponent {
+  @Input()
+  isLoading: boolean = undefined;
+  @Input()
+  propA = 'Prop A: not defined';
+  @Input()
+  propB = 'Prop B: not defined';
+  @Output()
+  start = new EventEmitter();
+  onStart() {
+    this.start.next(true);
+  }
+}
+```
+
+host.component.ts
+```js
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BaseHostComponent } from './base-host.component';
+import { BehaviorSubject } from 'rxjs';
+import { InnerComponent } from './inner.component';
+
+@Component({
+  selector: 'host',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <template #inner></template>
+  `
+})
+export class HostComponent {
+  @ViewChild('inner', { read: ViewContainerRef })
+  inner: ViewContainerRef;
+
+  propA = 'Prop A: defined';
+  propB = 'Prop B: defined';
+  isLoading$ = new BehaviorSubject(false);
+
+  constructor(
+    private _ngxBindIoService: NgxBindIoService,
+    private _resolver: ComponentFactoryResolver
+  ) {
+    this.createInner();
+  }  
+  createInner() {
+    this.inner.clear();
+    const factory = this._resolver.resolveComponentFactory(InnerComponent);
+    const componentRef = this.inner.createComponent(factory);
+    this._ngxBindIoService.linkHostToInner(
+      this,
+      componentRef.instance,
+      { propA: this.propA, propB: this.propB }
+    );
+  }
+  onStart() {
+    this.isLoading$.next(true);
+    setTimeout(() => this.isLoading$.next(false), 5000);
+  }
 }
 ```
 

@@ -47,42 +47,38 @@ export class BaseBasicBindInputWithDeepInheritsModalHostComponent extends BaseBa
   selector: 'basic-bind-input-with-deep-inherits-modal-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-<small style="color:orange">
+<small style="color:red">
 After update inputs on host changes not applied in inner<br/>
 </small>
 <button
-    mat-raised-button
     (click)="createWithoutBindIO()">
 Create component without bindIO
 </button>
 <br/>
 <template #withoutBindIO></template>
 <br/>
-<small style="color:orange">
-Binding work only with ChangeDetectionStrategy.Default on modal component<br/>
+<small style="color:red">
+Binding work only with ChangeDetectionStrategy.Default on inner component<br/>
 </small>
 <button
-    mat-raised-button
     (click)="openDialogWithoutBindIO()">
 Show modal without bindIO
 </button>
 <hr/>
-<small style="color:orange">
-Binding work only with ChangeDetectionStrategy.Default on modal component<br/>
+<small style="color:red">
+Binding work only with ChangeDetectionStrategy.Default on inner component<br/>
 </small>
 <button
-    mat-raised-button
     (click)="createWithBindIO()">
 Create component with bindIO
 </button>
 <br/>
 <template #withBindIO></template>
 <br/>
-<small style="color:orange">
-Binding work only with ChangeDetectionStrategy.Default on modal component<br/>
+<small style="color:red">
+Binding work only with ChangeDetectionStrategy.Default on inner component<br/>
 </small>
 <button
-    mat-raised-button
     (click)="openDialogWitBindIO()">
 Show modal with bindIO
 </button>
@@ -159,8 +155,7 @@ export class BasicBindInputWithDeepInheritsModalHostComponent extends
     this._ngxBindIoService.linkHostToInner(
       this,
       componentRef.instance,
-      { propA: this.propA, propB: this.propB },
-      this._changeDetectorRef
+      { propA: this.propA, propB: this.propB }
     );
   }
   openDialogWitBindIO() {
