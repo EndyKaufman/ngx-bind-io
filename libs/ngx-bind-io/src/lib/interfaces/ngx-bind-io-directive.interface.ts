@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
 import { ViewContainerRef } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export interface INgxBindIODirective {
   excludeIO: string[] | string;
@@ -24,6 +24,9 @@ export interface INgxBindIODirective {
   usedOutputs: { [key: string]: string } | undefined;
   destroyed$: Subject<boolean>;
 
+  ignoreKeysManualBinded?: boolean;
+
   viewContainerRef: ViewContainerRef;
   bindValue(key: string, value: any): void;
+
 }

@@ -1,15 +1,4 @@
-import {
-  AfterContentInit,
-  ChangeDetectorRef,
-  Directive,
-  Inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  SimpleChange,
-  SimpleChanges,
-  ViewContainerRef
-} from '@angular/core';
+import { AfterContentInit, ApplicationRef, ChangeDetectorRef, Directive, Inject, Input, OnChanges, OnDestroy, SimpleChange, SimpleChanges, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
@@ -44,12 +33,12 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     @Inject(NGX_BIND_IO_CONFIG) private _ngxBindIOConfig: INgxBindIOConfig,
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
-    private _ref: ChangeDetectorRef
-  ) {}
+    private _detectorRef: ChangeDetectorRef
+  ) { }
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }
-  ngAfterContentInit(): void {
+  ngAfterContentInit() {
     this.detectComponents();
     this.bindAll();
   }
@@ -66,7 +55,19 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
   bindValue(innerKey: string, value: any) {
     const previousValue = this.innerComponent[innerKey];
     this.innerComponent[innerKey] = value;
-    this._ref.markForCheck();
+    if (this._detectorRef && typeof this._detectorRef.markForCheck === 'function') {
+      this._detectorRef.markForCheck();
+    }
+    if (this._detectorRef instanceof ApplicationRef) {
+      setTimeout(() => (this._detectorRef as any as ApplicationRef).tick(), 50);
+    }
+    if (!this._detectorRef) {
+      Object.keys(this.innerComponent).forEach(key => {
+        if (this.innerComponent[key] instanceof ChangeDetectorRef) {
+          this.innerComponent[key].markForCheck();
+        }
+      });
+    }
     if (typeof this.innerComponent['ngOnChanges'] === 'function') {
       const simpleChange = new SimpleChange(previousValue, value, this.innerSimpleChanges[innerKey] === undefined);
       this.innerComponent['ngOnChanges']({ [innerKey]: simpleChange });
@@ -74,7 +75,7 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     }
   }
   detectComponents() {
-    if (!this.innerComponent && !this.hostComponent) {
+    if (this.viewContainerRef && !this.innerComponent && !this.hostComponent) {
       this.innerComponent = this.viewContainerRef['_data'].componentView.component;
       this.hostComponent = (<any>this.viewContainerRef)._view.context;
       if (this.hostComponent.$implicit !== undefined) {

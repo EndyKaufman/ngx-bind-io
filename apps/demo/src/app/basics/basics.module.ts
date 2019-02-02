@@ -1,12 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { NgxBindIOModule } from 'ngx-bind-io';
 import {
   BasicBindInputNoOnPushComponent,
   BasicBindInputNoOnPushHostComponent
 } from './bind-input-no-on-push.component';
 import { BasicBindInputOnChangeComponent, BasicBindInputOnChangeHostComponent } from './bind-input-on-change.component';
+import {
+  BasicBindInputWithDeepInheritsModalComponent,
+  BasicBindInputWithDeepInheritsModalHostComponent
+} from './bind-input-with-deep-inherits-on-modal.component';
 import {
   BasicBindInputWithDeepInheritsComponent,
   BasicBindInputWithDeepInheritsHostComponent
@@ -35,7 +40,7 @@ import {
 import { BasicBindOutputComponent, BasicBindOutputHostComponent } from './bind-output.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, NgxBindIOModule],
+  imports: [CommonModule, FormsModule, NgxBindIOModule, MatButtonModule],
   declarations: [
     BasicBindInputComponent,
     BasicBindInputHostComponent,
@@ -62,7 +67,9 @@ import { BasicBindOutputComponent, BasicBindOutputHostComponent } from './bind-o
     BasicBindOneToManyHostComponent,
     BasicBindOneToManyComponent,
     BasicBindIOWithManualHostComponent,
-    BasicBindIOWithManualComponent
+    BasicBindIOWithManualComponent,
+    BasicBindInputWithDeepInheritsModalComponent,
+    BasicBindInputWithDeepInheritsModalHostComponent
   ],
   exports: [
     BasicBindInputHostComponent,
@@ -77,7 +84,9 @@ import { BasicBindOutputComponent, BasicBindOutputHostComponent } from './bind-o
     BasicBindInputOnChangeHostComponent,
     BasicBindInputNoOnPushHostComponent,
     BasicBindOneToManyHostComponent,
-    BasicBindIOWithManualHostComponent
-  ]
+    BasicBindIOWithManualHostComponent,
+    BasicBindInputWithDeepInheritsModalHostComponent
+  ],
+  entryComponents: [BasicBindInputWithDeepInheritsModalComponent]
 })
 export class BasicsModule {}

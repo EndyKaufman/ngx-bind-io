@@ -1,16 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Directive,
-  EventEmitter,
-  Inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChange,
-  SimpleChanges,
-  ViewContainerRef
-} from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Directive, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
@@ -45,9 +33,9 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     innerKeys: string[];
     hostKeys: string[];
   } = {
-    innerKeys: [],
-    hostKeys: []
-  };
+      innerKeys: [],
+      hostKeys: []
+    };
   outputs: {
     innerKeys: string[];
     hostKeys: string[];
@@ -58,18 +46,21 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
   destroyed$: Subject<boolean> = new Subject<boolean>();
   innerSimpleChanges: SimpleChanges = {};
 
+  ignoreKeysManualBinded: boolean;
+
   constructor(
     public viewContainerRef: ViewContainerRef,
     @Inject(NGX_BIND_IO_CONFIG) private _ngxBindIOConfig: INgxBindIOConfig,
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
-    private _ref: ChangeDetectorRef
-  ) {}
+    private _detectorRef: ChangeDetectorRef
+  ) { }
+
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }
-  ngOnInit(): void {
+  ngOnInit() {
     this.detectComponents();
     this.bindAll();
   }
@@ -80,7 +71,19 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
   bindValue(innerKey: string, value: any) {
     const previousValue = this.innerComponent[innerKey];
     this.innerComponent[innerKey] = value;
-    this._ref.markForCheck();
+    if (this._detectorRef && typeof this._detectorRef.markForCheck === 'function') {
+      this._detectorRef.markForCheck();
+    }
+    if (this._detectorRef instanceof ApplicationRef) {
+      setTimeout(() => (this._detectorRef as any as ApplicationRef).tick(), 0);
+    }
+    if (!this._detectorRef) {
+      Object.keys(this.innerComponent).forEach(key => {
+        if (this.innerComponent[key] instanceof ChangeDetectorRef) {
+          this.innerComponent[key].markForCheck();
+        }
+      });
+    }
     if (typeof this.innerComponent['ngOnChanges'] === 'function') {
       const simpleChange = new SimpleChange(previousValue, value, this.innerSimpleChanges[innerKey] === undefined);
       this.innerComponent['ngOnChanges']({ [innerKey]: simpleChange });
@@ -88,6 +91,20 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     }
   }
   bindAll() {
+    getBindIOMetadata(this.innerComponent).asInner.manualOutputs = {};
+    Object.keys(this.innerComponent)
+      .filter(
+        innerKey =>
+          this.innerComponent[innerKey] instanceof EventEmitter &&
+          (this.innerComponent[innerKey] as EventEmitter<any>).observers.length > 0
+      )
+      .forEach(
+        innerKey =>
+          (getBindIOMetadata(this.innerComponent).asInner.manualOutputs[innerKey] = (this.innerComponent[
+            innerKey
+          ] as EventEmitter<any>).observers.length)
+      );
+
     this.inputs = this._ngxBindInputsService.getInputs(this);
     this._ngxBindInputsService.bindInputs(this);
     this._ngxBindInputsService.bindObservableInputs(this);
@@ -97,25 +114,12 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     this._ngxBindIODebugService.showDebugInfo(this, this.debugIsActive());
   }
   detectComponents() {
-    if (!this.innerComponent && !this.hostComponent) {
+    if (this.viewContainerRef && !this.innerComponent && !this.hostComponent) {
       this.innerComponent = this.viewContainerRef['_data'].componentView.component;
       this.hostComponent = (<any>this.viewContainerRef)._view.context;
       if (this.hostComponent.$implicit !== undefined) {
         this.hostComponent = (<any>this.viewContainerRef)._view.component;
       }
-      getBindIOMetadata(this.innerComponent).asInner.manualOutputs = {};
-      Object.keys(this.innerComponent)
-        .filter(
-          innerKey =>
-            this.innerComponent[innerKey] instanceof EventEmitter &&
-            (this.innerComponent[innerKey] as EventEmitter<any>).observers.length > 0
-        )
-        .forEach(
-          innerKey =>
-            (getBindIOMetadata(this.innerComponent).asInner.manualOutputs[innerKey] = (this.innerComponent[
-              innerKey
-            ] as EventEmitter<any>).observers.length)
-        );
     }
   }
   debugIsActive() {

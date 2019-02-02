@@ -40,6 +40,9 @@ export function removeKeysUsedInAttributes(directive: Partial<INgxBindIODirectiv
   return existsKeys;
 }
 export function removeKeysManualBindedOutputs(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
+  if (directive.ignoreKeysManualBinded) {
+    return existsKeys;
+  }
   return existsKeys.filter(innerKey => {
     return (
       (getBindIOMetadata(directive.innerComponent).asInner.manualOutputs
@@ -50,6 +53,9 @@ export function removeKeysManualBindedOutputs(directive: Partial<INgxBindIODirec
   });
 }
 export function removeKeysManualBindedInputs(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
+  if (directive.ignoreKeysManualBinded) {
+    return existsKeys;
+  }
   return existsKeys.filter(innerKey => {
     return (
       (getBindIOMetadata(directive.innerComponent).asInner.manualInputs
