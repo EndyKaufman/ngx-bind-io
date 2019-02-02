@@ -44,7 +44,7 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _ref: ChangeDetectorRef
-  ) { }
+  ) {}
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }

@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BindIoInner, NgxBindIoService } from 'ngx-bind-io';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -30,7 +41,7 @@ export class BaseBasicBindInputWithDeepInheritsModalComponent extends BaseBaseBa
     {{ propB }}
   `
 })
-export class BasicBindInputWithDeepInheritsModalComponent extends BaseBasicBindInputWithDeepInheritsModalComponent { }
+export class BasicBindInputWithDeepInheritsModalComponent extends BaseBasicBindInputWithDeepInheritsModalComponent {}
 
 export class BaseBaseBasicBindInputWithDeepInheritsModalHostComponent {
   isLoading$ = new BehaviorSubject(false);
@@ -47,49 +58,37 @@ export class BaseBasicBindInputWithDeepInheritsModalHostComponent extends BaseBa
   selector: 'basic-bind-input-with-deep-inherits-modal-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-<small style="color:red">
-After update inputs on host changes not applied in inner<br/>
-</small>
-<button
-    (click)="createWithoutBindIO()">
-Create component without bindIO
-</button>
-<br/>
-<template #withoutBindIO></template>
-<br/>
-<small style="color:red">
-Binding work only with ChangeDetectionStrategy.Default on inner component<br/>
-</small>
-<button
-    (click)="openDialogWithoutBindIO()">
-Show modal without bindIO
-</button>
-<hr/>
-<small style="color:red">
-Binding work only with ChangeDetectionStrategy.Default on inner component<br/>
-</small>
-<button
-    (click)="createWithBindIO()">
-Create component with bindIO
-</button>
-<br/>
-<template #withBindIO></template>
-<br/>
-<small style="color:red">
-Binding work only with ChangeDetectionStrategy.Default on inner component<br/>
-</small>
-<button
-    (click)="openDialogWitBindIO()">
-Show modal with bindIO
-</button>
-<hr />
-<input [(ngModel)]="propA" />
-<input [(ngModel)]="propB" />
+    <small style="color:red"> After update inputs on host changes not applied in inner<br /> </small>
+    <button (click)="createWithoutBindIO()">
+      Create component without bindIO
+    </button>
+    <br />
+    <template #withoutBindIO></template>
+    <br />
+    <small style="color:red"> Binding work only with ChangeDetectionStrategy.Default on inner component<br /> </small>
+    <button (click)="openDialogWithoutBindIO()">
+      Show modal without bindIO
+    </button>
+    <hr />
+    <small style="color:red"> Binding work only with ChangeDetectionStrategy.Default on inner component<br /> </small>
+    <button (click)="createWithBindIO()">
+      Create component with bindIO
+    </button>
+    <br />
+    <template #withBindIO></template>
+    <br />
+    <small style="color:red"> Binding work only with ChangeDetectionStrategy.Default on inner component<br /> </small>
+    <button (click)="openDialogWitBindIO()">
+      Show modal with bindIO
+    </button>
+    <hr />
+    <input [(ngModel)]="propA" />
+    <input [(ngModel)]="propB" />
   `
 })
-export class BasicBindInputWithDeepInheritsModalHostComponent extends
-  BaseBasicBindInputWithDeepInheritsModalHostComponent implements OnDestroy {
-
+export class BasicBindInputWithDeepInheritsModalHostComponent
+  extends BaseBasicBindInputWithDeepInheritsModalHostComponent
+  implements OnDestroy {
   @ViewChild('withoutBindIO', { read: ViewContainerRef })
   withoutBindIO: ViewContainerRef;
   @ViewChild('withBindIO', { read: ViewContainerRef })
@@ -115,19 +114,13 @@ export class BasicBindInputWithDeepInheritsModalHostComponent extends
     const componentRef = this.withoutBindIO.createComponent(factory);
     componentRef.instance.propA = this.propA;
     componentRef.instance.propB = this.propB;
-    componentRef.instance.start.subscribe(
-      $event =>
-        this.onStart()
-    );
-    this.isLoading$
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(
-        isLoading => {
-          if (componentRef.instance) {
-            componentRef.instance.isLoading = isLoading;
-            this._changeDetectorRef.detectChanges();
-          }
-        });
+    componentRef.instance.start.subscribe($event => this.onStart());
+    this.isLoading$.pipe(takeUntil(this.destroyed$)).subscribe(isLoading => {
+      if (componentRef.instance) {
+        componentRef.instance.isLoading = isLoading;
+        this._changeDetectorRef.detectChanges();
+      }
+    });
   }
   openDialogWithoutBindIO() {
     const dialogRef = this.dialog.open(BasicBindInputWithDeepInheritsModalComponent, {
@@ -135,37 +128,23 @@ export class BasicBindInputWithDeepInheritsModalHostComponent extends
     });
     dialogRef.componentInstance.propA = this.propA;
     dialogRef.componentInstance.propB = this.propB;
-    dialogRef.componentInstance.start.subscribe(
-      $event =>
-        this.onStart()
-    );
-    this.isLoading$
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(
-        isLoading => {
-          if (dialogRef.componentInstance) {
-            dialogRef.componentInstance.isLoading = isLoading;
-          }
-        });
+    dialogRef.componentInstance.start.subscribe($event => this.onStart());
+    this.isLoading$.pipe(takeUntil(this.destroyed$)).subscribe(isLoading => {
+      if (dialogRef.componentInstance) {
+        dialogRef.componentInstance.isLoading = isLoading;
+      }
+    });
   }
   createWithBindIO() {
     this.withBindIO.clear();
     const factory = this._resolver.resolveComponentFactory(BasicBindInputWithDeepInheritsModalComponent);
     const componentRef = this.withBindIO.createComponent(factory);
-    this._ngxBindIoService.linkHostToInner(
-      this,
-      componentRef.instance,
-      { propA: this.propA, propB: this.propB }
-    );
+    this._ngxBindIoService.linkHostToInner(this, componentRef.instance, { propA: this.propA, propB: this.propB });
   }
   openDialogWitBindIO() {
     const dialogRef = this.dialog.open(BasicBindInputWithDeepInheritsModalComponent, {
       width: '250px'
     });
-    this._ngxBindIoService.linkHostToInner(
-      this,
-      dialogRef.componentInstance,
-      { propA: this.propA, propB: this.propB }
-    );
+    this._ngxBindIoService.linkHostToInner(this, dialogRef.componentInstance, { propA: this.propA, propB: this.propB });
   }
 }

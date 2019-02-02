@@ -1,3 +1,17 @@
+# [0.6.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.5.3...0.6.0) (2019-02-02)
+
+
+### Bug Fixes
+
+* Update words for removeKeysNotAllowedConstants ([8846b66](https://github.com/EndyKaufman/ngx-bind-io/commit/8846b66))
+
+
+### Features
+
+* Add support binding to dynamic created components ([d8f07f4](https://github.com/EndyKaufman/ngx-bind-io/commit/d8f07f4))
+
+
+
 ## [0.5.3](https://github.com/EndyKaufman/ngx-bind-io/compare/0.5.2...0.5.3) (2019-02-02)
 
 

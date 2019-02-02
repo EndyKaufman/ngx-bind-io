@@ -1,4 +1,16 @@
-import { AfterContentInit, ApplicationRef, ChangeDetectorRef, Directive, Inject, Input, OnChanges, OnDestroy, SimpleChange, SimpleChanges, ViewContainerRef } from '@angular/core';
+import {
+  AfterContentInit,
+  ApplicationRef,
+  ChangeDetectorRef,
+  Directive,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChange,
+  SimpleChanges,
+  ViewContainerRef
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
@@ -34,7 +46,7 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _detectorRef: ChangeDetectorRef
-  ) { }
+  ) {}
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }
@@ -59,7 +71,7 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
       this._detectorRef.markForCheck();
     }
     if (this._detectorRef instanceof ApplicationRef) {
-      setTimeout(() => (this._detectorRef as any as ApplicationRef).tick(), 50);
+      setTimeout(() => ((this._detectorRef as any) as ApplicationRef).tick(), 50);
     }
     if (!this._detectorRef) {
       Object.keys(this.innerComponent).forEach(key => {
