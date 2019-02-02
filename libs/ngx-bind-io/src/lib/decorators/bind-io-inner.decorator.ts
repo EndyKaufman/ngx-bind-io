@@ -15,7 +15,7 @@ export class BindIoInnerLifecycle implements OnChanges {
   }
 }
 export function BindIoInner() {
-  return function (target: Function) {
+  return function(target: Function) {
     if (!target.prototype.__originalNgOnChanges__) {
       if (target.prototype.ngOnChanges === 'function') {
         const bindIoInnerLifecycle = new BindIoInnerLifecycle();

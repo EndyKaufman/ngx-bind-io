@@ -3,7 +3,12 @@ import { BehaviorSubject, isObservable, Observable, ReplaySubject, Subject } fro
 import { takeUntil } from 'rxjs/operators';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
 import { getBindIOMetadata } from '../utils/bind-io-metadata-utils';
-import { collectKeys, removeKeysManualBindedInputs, removeKeysNotAllowedConstants, removeKeysUsedInAttributes } from '../utils/components-utils';
+import {
+  collectKeys,
+  removeKeysManualBindedInputs,
+  removeKeysNotAllowedConstants,
+  removeKeysUsedInAttributes
+} from '../utils/components-utils';
 import { getPropDescriptor, redefineAccessorProperty, redefineSimpleProperty } from '../utils/property-utils';
 import { isFunction } from '../utils/utils';
 
@@ -145,7 +150,7 @@ export class NgxBindInputsService {
       });
     try {
       directive.hostComponent[hostKey] = currentValue;
-    } catch (error) { }
+    } catch (error) {}
     if (isBehaviorSubject) {
       currentValue.next(behaviorSubjectValue);
     }
@@ -156,22 +161,19 @@ export class NgxBindInputsService {
   getInputs(directive: Partial<INgxBindIODirective>) {
     let innerKeys = directive.innerComponent
       ? [
-        ...Object.keys(directive.innerComponent).filter(
-          innerKey =>
-            !(
-              getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter ||
-              directive.innerComponent[innerKey] instanceof EventEmitter
-            )
-        ),
-        ...collectKeys(
-          directive.innerComponent.__proto__,
-          (cmp, innerKey) =>
-            !(
-              getPropDescriptor(cmp, innerKey).value instanceof EventEmitter
-            ),
-          10
-        )
-      ]
+          ...Object.keys(directive.innerComponent).filter(
+            innerKey =>
+              !(
+                getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter ||
+                directive.innerComponent[innerKey] instanceof EventEmitter
+              )
+          ),
+          ...collectKeys(
+            directive.innerComponent.__proto__,
+            (cmp, innerKey) => !(getPropDescriptor(cmp, innerKey).value instanceof EventEmitter),
+            10
+          )
+        ]
       : [];
     let hostKeys = collectKeys(
       directive.hostComponent,
@@ -191,21 +193,16 @@ export class NgxBindInputsService {
               directive.hostComponent[hostKey] instanceof Subject ||
               directive.hostComponent[hostKey] instanceof BehaviorSubject)
         ),
-      ...innerKeys.filter(innerKey =>
-        getPropDescriptor(
-          directive.hostComponent,
-          innerKey
-        ).originalDescriptor === undefined &&
-        typeof directive.hostComponent[innerKey] === 'undefined' &&
-        typeof directive.hostComponent[innerKey + '$'] === 'undefined' &&
-        !isFunction(getPropDescriptor(directive.hostComponent, innerKey).value) &&
-        !isFunction(directive.hostComponent[innerKey])
+      ...innerKeys.filter(
+        innerKey =>
+          getPropDescriptor(directive.hostComponent, innerKey).originalDescriptor === undefined &&
+          typeof directive.hostComponent[innerKey] === 'undefined' &&
+          typeof directive.hostComponent[innerKey + '$'] === 'undefined' &&
+          !isFunction(getPropDescriptor(directive.hostComponent, innerKey).value) &&
+          !isFunction(directive.hostComponent[innerKey])
       )
     ];
-    innerKeys = removeKeysManualBindedInputs(
-      directive,
-      removeKeysUsedInAttributes(directive, innerKeys)
-    );
+    innerKeys = removeKeysManualBindedInputs(directive, removeKeysUsedInAttributes(directive, innerKeys));
     hostKeys = removeKeysUsedInAttributes(directive, hostKeys);
     return {
       hostKeys: removeKeysNotAllowedConstants(directive, hostKeys),
@@ -218,13 +215,13 @@ export class NgxBindInputsService {
     const includeIO = !directive.includeIO
       ? []
       : Array.isArray(directive.includeIO)
-        ? directive.includeIO
-        : [directive.includeIO];
+      ? directive.includeIO
+      : [directive.includeIO];
     const excludeIO = !directive.excludeIO
       ? []
       : Array.isArray(directive.excludeIO)
-        ? directive.excludeIO
-        : [directive.excludeIO];
+      ? directive.excludeIO
+      : [directive.excludeIO];
     const excludeInputs = [...exclude, ...excludeIO].map(excludeKey => excludeKey.toUpperCase());
     const includeInputs = [...include, ...includeIO].map(includeKey => includeKey.toUpperCase());
     return { includeInputs, excludeInputs };
