@@ -18,6 +18,7 @@ export class BasicPageComponent {
     'bind-output-with-custom-click': require('!!raw-loader?lang=typescript!../../basics/bind-output-with-custom-click.component.ts'),
     'bind-input-on-change': require('!!raw-loader?lang=typescript!../../basics/bind-input-on-change.component.ts'),
     'bind-input-no-on-push': require('!!raw-loader?lang=typescript!../../basics/bind-input-no-on-push.component.ts'),
-    'bind-one-to-many': require('!!raw-loader?lang=typescript!../../basics/bind-one-to-many.component.ts')
+    'bind-one-to-many': require('!!raw-loader?lang=typescript!../../basics/bind-one-to-many.component.ts'),
+    'bind-input-with-deep-inherits-on-modal': require('!!raw-loader?lang=typescript!../../basics/bind-input-with-deep-inherits-on-modal.component.ts')
   };
 }

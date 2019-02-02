@@ -332,4 +332,42 @@
             <basic-bind-one-to-many-host></basic-bind-one-to-many-host>
         </div>
     </ngx-docs-example>
+
+    <ngx-docs-example
+        title="Basics: bind input with deep inherits and bind to dynamic components (INCORRECT WORK!)"
+        html="<basic-bind-input-with-deep-inherits-modal-host></basic-bind-input-with-deep-inherits-modal-host>"
+        [ts]="ts['bind-input-with-deep-inherits-on-modal']"
+        fxFlex.gt-sm="50">
+        <div class="body">
+            <strong>Without auto binding inputs and outputs</strong>
+            <pre>&lt;button
+    (click)=&quot;createWithoutBindIO()&quot;&gt;
+Create component without bindIO
+&lt;/button&gt;
+
+&lt;template #withoutBindIO&gt;&lt;/template&gt;
+
+&lt;button
+    (click)=&quot;openDialogWithoutBindIO()&quot;&gt;
+Show modal without bindIO
+&lt;/button&gt;</pre>
+            <strong>With auto binding inputs and outputs</strong>
+            <pre>&lt;button
+    (click)=&quot;createWithBindIO()&quot;&gt;
+Create component with bindIO
+&lt;/button&gt;
+
+&lt;template #withBindIO&gt;&lt;/template&gt;
+
+&lt;button
+    (click)=&quot;openDialogWitBindIO()&quot;&gt;
+Show modal with bindIO
+&lt;/button&gt;</pre>
+            <strong>Options</strong>
+            <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
+&lt;input [(ngModel)]=&quot;propB&quot; /&gt;</pre>
+            <hr>
+            <basic-bind-input-with-deep-inherits-modal-host></basic-bind-input-with-deep-inherits-modal-host>
+        </div>
+    </ngx-docs-example>
 </div>

@@ -42,13 +42,13 @@ export class MessageBoxComponent implements OnInit {
   ngOnInit() {
     this.changeDetectorRef.detectChanges();
   }
-  onYesClick(): void {
+  onYesClick() {
     this.yes.emit(this);
     if (this.hideOnYes) {
       this.dialogRef.close();
     }
   }
-  onNoClick(): void {
+  onNoClick() {
     this.no.emit(this);
     if (this.hideOnNo) {
       this.dialogRef.close();

@@ -39,7 +39,7 @@ export class BaseModalComponent<T extends IModel> {
       this.form.validateAllFormFields();
     }
   }
-  onYesClick(): void {
+  onYesClick() {
     if (this.data) {
       if (this.form.valid) {
         this.data = this.form.object;
@@ -54,7 +54,7 @@ export class BaseModalComponent<T extends IModel> {
       this.dialogRef.close();
     }
   }
-  onNoClick(): void {
+  onNoClick() {
     this.no.emit(this);
     if (this.hideOnNo) {
       this.dialogRef.close();

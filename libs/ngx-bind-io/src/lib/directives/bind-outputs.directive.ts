@@ -48,11 +48,24 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }
-  ngOnInit(): void {
+  ngOnInit() {
     this.detectComponents();
     this.bindAll();
   }
   bindAll() {
+    getBindIOMetadata(this.innerComponent).asInner.manualOutputs = {};
+    Object.keys(this.innerComponent)
+      .filter(
+        innerKey =>
+          this.innerComponent[innerKey] instanceof EventEmitter &&
+          (this.innerComponent[innerKey] as EventEmitter<any>).observers.length > 0
+      )
+      .forEach(
+        innerKey =>
+          (getBindIOMetadata(this.innerComponent).asInner.manualOutputs[innerKey] = (this.innerComponent[
+            innerKey
+          ] as EventEmitter<any>).observers.length)
+      );
     if (this.outputs === undefined) {
       this.outputs = this._ngxBindOutputsService.getOutputs(this);
       this._ngxBindOutputsService.bindOutputs(this);
@@ -64,25 +77,12 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
     this.destroyed$.complete();
   }
   detectComponents() {
-    if (!this.innerComponent && !this.hostComponent) {
+    if (this.viewContainerRef && !this.innerComponent && !this.hostComponent) {
       this.innerComponent = this.viewContainerRef['_data'].componentView.component;
       this.hostComponent = (<any>this.viewContainerRef)._view.context;
       if (this.hostComponent.$implicit !== undefined) {
         this.hostComponent = (<any>this.viewContainerRef)._view.component;
       }
-      getBindIOMetadata(this.innerComponent).asInner.manualOutputs = {};
-      Object.keys(this.innerComponent)
-        .filter(
-          innerKey =>
-            this.innerComponent[innerKey] instanceof EventEmitter &&
-            (this.innerComponent[innerKey] as EventEmitter<any>).observers.length > 0
-        )
-        .forEach(
-          innerKey =>
-            (getBindIOMetadata(this.innerComponent).asInner.manualOutputs[innerKey] = (this.innerComponent[
-              innerKey
-            ] as EventEmitter<any>).observers.length)
-        );
     }
   }
   debugIsActive() {

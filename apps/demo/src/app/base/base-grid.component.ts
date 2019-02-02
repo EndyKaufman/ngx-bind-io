@@ -114,8 +114,7 @@ export class BaseGridComponent<T extends IModel> implements AfterContentInit {
       '';
     const message = (this.deleteModalOptions && this.deleteModalOptions.message) || '';
     const dialogRef = this.dialog.open((component as any) as ComponentType<BaseModalComponent<T>>, {
-      width: '300px',
-      data: null
+      width: '300px'
     });
     dialogRef.componentInstance.title = title.replace('{data.id}', (item.id || '').toString());
     dialogRef.componentInstance.message = message.replace('{data.id}', (item.id || '').toString());

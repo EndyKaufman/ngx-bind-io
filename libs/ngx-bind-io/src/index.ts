@@ -9,6 +9,7 @@ export * from './lib/interfaces/ngx-bind-io-directive.interface';
 export * from './lib/interfaces/ngx-bind-io-metadata.interface';
 export * from './lib/services/ngx-bind-inputs.service';
 export * from './lib/services/ngx-bind-io-debug.service';
+export * from './lib/services/ngx-bind-io.service';
 export * from './lib/services/ngx-bind-outputs.service';
 export * from './lib/utils/bind-io-metadata-utils';
 export * from './lib/utils/components-utils';
