@@ -45,7 +45,7 @@ export class BasicBindInputWithDeepInheritsModalComponent extends BaseBasicBindI
 
 export class BaseBaseBasicBindInputWithDeepInheritsModalHostComponent {
   isLoading$ = new BehaviorSubject(false);
-  propB: string;
+  propB: string = undefined;
 }
 export class BaseBasicBindInputWithDeepInheritsModalHostComponent extends BaseBaseBasicBindInputWithDeepInheritsModalHostComponent {
   onStart() {
@@ -139,12 +139,22 @@ export class BasicBindInputWithDeepInheritsModalHostComponent
     this.withBindIO.clear();
     const factory = this._resolver.resolveComponentFactory(BasicBindInputWithDeepInheritsModalComponent);
     const componentRef = this.withBindIO.createComponent(factory);
-    this._ngxBindIoService.linkHostToInner(this, componentRef.instance, { propA: this.propA, propB: this.propB });
+    this._ngxBindIoService.linkHostToInner(
+      this,
+      componentRef.instance,
+      { propA: this.propA, propB: this.propB },
+      this._changeDetectorRef
+    );
   }
   openDialogWitBindIO() {
     const dialogRef = this.dialog.open(BasicBindInputWithDeepInheritsModalComponent, {
       width: '250px'
     });
-    this._ngxBindIoService.linkHostToInner(this, dialogRef.componentInstance, { propA: this.propA, propB: this.propB });
+    this._ngxBindIoService.linkHostToInner(
+      this,
+      dialogRef.componentInstance,
+      { propA: this.propA, propB: this.propB },
+      this._changeDetectorRef
+    );
   }
 }

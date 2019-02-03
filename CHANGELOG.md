@@ -1,3 +1,12 @@
+## [0.6.1](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.0...0.6.1) (2019-02-03)
+
+
+### Bug Fixes
+
+* Remove create on host component all "inputs" needed for correct work inner component, if them not exists ([d65303f](https://github.com/EndyKaufman/ngx-bind-io/commit/d65303f))
+
+
+
 # [0.6.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.5.3...0.6.0) (2019-02-02)
 
 
