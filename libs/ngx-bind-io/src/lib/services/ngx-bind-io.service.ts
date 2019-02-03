@@ -13,7 +13,7 @@ export class NgxBindIoService {
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService
-  ) {}
+  ) { }
   linkHostToInner(
     hostComponent: any,
     innerComponent: any,
@@ -25,9 +25,9 @@ export class NgxBindIoService {
       undefined,
       config
         ? {
-            ...this._ngxBindIOConfig,
-            ...config
-          }
+          ...this._ngxBindIOConfig,
+          ...config
+        }
         : this._ngxBindIOConfig,
       this._ngxBindInputsService,
       this._ngxBindOutputsService,
@@ -40,7 +40,10 @@ export class NgxBindIoService {
     if (inputs) {
       const changes: SimpleChanges = {};
       Object.keys(inputs).forEach(
-        innerKey => (changes[innerKey] = new SimpleChange(undefined, inputs[innerKey], true))
+        innerKey => {
+          (directive.innerComponent as any)[innerKey] = inputs[innerKey];
+          (changes[innerKey] = new SimpleChange(undefined, inputs[innerKey], true));
+        }
       );
       (directive.innerComponent as any).ngOnChanges(changes);
     }
