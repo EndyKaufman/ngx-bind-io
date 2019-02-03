@@ -192,15 +192,7 @@ export class NgxBindInputsService {
             (directive.hostComponent[hostKey] instanceof ReplaySubject ||
               directive.hostComponent[hostKey] instanceof Subject ||
               directive.hostComponent[hostKey] instanceof BehaviorSubject)
-        ),
-      ...innerKeys.filter(
-        innerKey =>
-          getPropDescriptor(directive.hostComponent, innerKey).originalDescriptor === undefined &&
-          typeof directive.hostComponent[innerKey] === 'undefined' &&
-          typeof directive.hostComponent[innerKey + '$'] === 'undefined' &&
-          !isFunction(getPropDescriptor(directive.hostComponent, innerKey).value) &&
-          !isFunction(directive.hostComponent[innerKey])
-      )
+        )
     ];
     innerKeys = removeKeysManualBindedInputs(directive, removeKeysUsedInAttributes(directive, innerKeys));
     hostKeys = removeKeysUsedInAttributes(directive, hostKeys);
