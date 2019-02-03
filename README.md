@@ -7,9 +7,9 @@
 
 Directives for auto binding Input() and Output() in Angular7+ application
 
-***Attention !!! For correct work in AOT, all Inputs and Outputs ​​must be initialized, you can set them to "undefined".***
+***For correct work, all Inputs, Outputs and host properties ​​must be initialized, you can set them to "undefined".***
 
-For check project for use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
+For check project ready to use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
 ```bash
 npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
 ```
@@ -265,6 +265,7 @@ export class NgxBindInputsService {
 
 Becouse dynamic components not have normal lifecicle, recomendate define they without OnPush strategy.
 If you want use with OnPush, you may use Inputs with BindObservable and call properties with async pipe.
+Or use NgxBindIoService and run method linkHostToInner for bind inputs and outputs.
 
 inner.component.ts
 ```js
