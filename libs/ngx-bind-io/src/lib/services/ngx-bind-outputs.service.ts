@@ -51,7 +51,7 @@ export class NgxBindOutputsService {
     );
   }
   checkOutputToBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
-    const value = getPropDescriptor(directive.innerComponent, innerKey).value || directive.innerComponent[innerKey];
+    const value = getPropDescriptor(directive.innerComponent, innerKey).value;
     return (
       directive.usedOutputs[hostKey] === undefined &&
       value instanceof EventEmitter &&
@@ -77,9 +77,7 @@ export class NgxBindOutputsService {
     let innerKeys = directive.innerComponent
       ? [
           ...Object.keys(directive.innerComponent).filter(
-            innerKey =>
-              getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter ||
-              directive.innerComponent[innerKey] instanceof EventEmitter
+            innerKey => getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter
           ),
           ...collectKeys(
             directive.innerComponent.__proto__,

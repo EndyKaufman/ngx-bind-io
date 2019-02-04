@@ -20,7 +20,7 @@ export class UsersGridWithBindIOComponent extends BaseGridComponent<User> {
   @Input()
   strings = User.strings;
   @Input()
-  displayedColumns = ['id', 'username', 'email', 'roles', 'action'];
+  displayedColumns = ['id', 'username', 'email', 'roles', 'action', 'hidden'];
 
   constructor(
     public dialog: MatDialog,

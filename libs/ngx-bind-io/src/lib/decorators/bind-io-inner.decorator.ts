@@ -10,11 +10,11 @@ export class BindIoInnerLifecycle implements OnChanges {
       }
     }
     if (
-      (this as any).__proto__ &&
-      (this as any).__proto__[__ORIGINAL_NGONCHANGES__] &&
-      typeof (this as any).__proto__[__ORIGINAL_NGONCHANGES__] === 'function'
+      (this as any) &&
+      (this as any)[__ORIGINAL_NGONCHANGES__] &&
+      typeof (this as any)[__ORIGINAL_NGONCHANGES__] === 'function'
     ) {
-      (this as any).__proto__[__ORIGINAL_NGONCHANGES__](simpleChanges);
+      (this as any)[__ORIGINAL_NGONCHANGES__](simpleChanges);
     }
   }
 }

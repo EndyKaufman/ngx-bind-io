@@ -1,6 +1,6 @@
 <entity-grid
     [dataSource]="dataSource$ | async"
-    [displayedColumns]="['id', 'username', 'email', 'roles', 'action']"
+    [displayedColumns]="['id', 'username', 'email', 'roles', 'action', 'hidden']"
     [strings]="strings"
     (add)="onAddClick($event)"
     (edit)="onEditClick($event)"
