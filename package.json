@@ -1,6 +1,6 @@
 {
   "name": "ngx-bind-io",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Directives for auto binding Input() and Output() in Angular7+ application",
   "keywords": [
     "angular",
@@ -63,7 +63,8 @@
     "prepare:mono": "rucken prepare -m dev",
     "prepare:prod": "rucken prepare -m prod",
     "lib:build-lib": "ng build ngx-bind-io --prod",
-    "lib:build": "run-s prepare:prod lib:build-lib",
+    "lib:postbuild-lib": "./node_modules/.bin/cp-cli ./CHANGELOG.md ./dist/ngx-bind-io/CHANGELOG.md",
+    "lib:build": "run-s prepare:prod lib:build-lib lib:postbuild-lib",
     "app:prebuild": "ng build demo --prod",
     "app:build": "run-s format:fix prepare:mono app:prebuild",
     "lite-server": "lite-server -c bs-config.json",

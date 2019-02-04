@@ -62,7 +62,10 @@ export function getPropDescriptor(target: object, propertyKey: string | number |
   let originalDescriptor = Reflect.getOwnPropertyDescriptor(target, propertyKey);
   let setter = originalDescriptor && originalDescriptor.set;
   let getter = originalDescriptor && originalDescriptor.get;
-  const value = originalDescriptor ? originalDescriptor.value : target[propertyKey];
+  const value =
+    originalDescriptor && Object.getOwnPropertyDescriptor(originalDescriptor, 'value')
+      ? originalDescriptor.value
+      : target[propertyKey];
   if (!setter || (target as { __lookupSetter__: Function }).__lookupSetter__(propertyKey)) {
     setter = (target as { __lookupSetter__: Function }).__lookupSetter__(propertyKey);
   }

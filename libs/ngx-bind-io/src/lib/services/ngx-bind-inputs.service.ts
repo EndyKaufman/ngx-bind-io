@@ -81,7 +81,8 @@ export class NgxBindInputsService {
     directive.usedInputs[hostKey] = innerKey;
     const descriptor = getPropDescriptor(directive.hostComponent, hostKey);
     const currentValue: any = descriptor.value;
-    if (!getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey]) {
+    const currentHostSubject = getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey];
+    if (!currentHostSubject) {
       getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey] = new Subject<any>();
       delete directive.hostComponent[hostKey];
       if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
@@ -97,7 +98,15 @@ export class NgxBindInputsService {
     getBindIOMetadata(directive.hostComponent)
       .asHost.subjects[hostKey].pipe(takeUntil(directive.destroyed$))
       .subscribe(value => directive.bindValue(innerKey, value));
-    directive.hostComponent[hostKey] = currentValue;
+    try {
+      if (!currentHostSubject) {
+        directive.hostComponent[hostKey] = currentValue;
+      } else {
+        if (!directive.ignoreKeysManualBinded) {
+          directive.bindValue(innerKey, currentValue);
+        }
+      }
+    } catch (error) {}
   }
   /**
    * Observable Inputs
@@ -106,7 +115,8 @@ export class NgxBindInputsService {
     return hostKey === `${innerKey}$` && hostKey[0] !== '_';
   }
   checkObservableInputToBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
-    const hostValue = getPropDescriptor(directive.hostComponent, hostKey).value;
+    const descriptor = getPropDescriptor(directive.hostComponent, hostKey);
+    const hostValue = descriptor.value;
     return (
       directive.usedInputs[hostKey] === undefined &&
       isObservable(hostValue) &&
@@ -123,7 +133,8 @@ export class NgxBindInputsService {
     if (descriptor.value instanceof BehaviorSubject) {
       behaviorSubjectValue = descriptor.value.getValue();
     }
-    if (!getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey]) {
+    const currentHostSubject = getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey];
+    if (!currentHostSubject) {
       getBindIOMetadata(directive.hostComponent).asHost.subjects[hostKey] = new Subject<any>();
       delete directive.hostComponent[hostKey];
       if (descriptor !== undefined && descriptor.setter !== undefined && descriptor.getter !== undefined) {
@@ -149,8 +160,21 @@ export class NgxBindInputsService {
         }
       });
     try {
+      /* todo: original, check and refactor later
+      if (!currentHostSubject) {
+        directive.hostComponent[hostKey] = currentValue;
+      } else {
+        if (!directive.ignoreKeysManualBinded) {
+          directive.bindValue(innerKey, currentValue);
+        }
+      }
+      */
       directive.hostComponent[hostKey] = currentValue;
+      if (!directive.ignoreKeysManualBinded) {
+        directive.bindValue(innerKey, currentValue);
+      }
     } catch (error) {}
+
     if (isBehaviorSubject) {
       currentValue.next(behaviorSubjectValue);
     }
