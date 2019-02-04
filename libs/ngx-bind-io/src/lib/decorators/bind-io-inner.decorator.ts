@@ -10,16 +10,16 @@ export class BindIoInnerLifecycle implements OnChanges {
       }
     }
     if (
-      (this as any).__proto__ &&
-      (this as any).__proto__[__ORIGINAL_NGONCHANGES__] &&
-      typeof (this as any).__proto__[__ORIGINAL_NGONCHANGES__] === 'function'
+      (this as any) &&
+      (this as any)[__ORIGINAL_NGONCHANGES__] &&
+      typeof (this as any)[__ORIGINAL_NGONCHANGES__] === 'function'
     ) {
-      (this as any).__proto__[__ORIGINAL_NGONCHANGES__](simpleChanges);
+      (this as any)[__ORIGINAL_NGONCHANGES__](simpleChanges);
     }
   }
 }
 export function BindIoInner() {
-  return function(target: Function) {
+  return function (target: Function) {
     if (!target.prototype[__ORIGINAL_NGONCHANGES__]) {
       const bindIoInnerLifecycle = new BindIoInnerLifecycle();
       target.prototype[__ORIGINAL_NGONCHANGES__] = target.prototype.ngOnChanges;
