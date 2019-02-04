@@ -7,7 +7,7 @@
 
 Directives for auto binding Input() and Output() in Angular7+ application
 
-***For correct work, all Inputs, Outputs and host properties ​​must be initialized, you can set them to "undefined".***
+***For correct work, all inner Inputs, Outputs and all host properties ​​must be initialized, you can set them to "undefined".***
 
 For check project ready to use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
 ```bash
@@ -16,12 +16,12 @@ npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
 
 For check and add initialize statement:
 ```bash
-npx ngx-bind-io-cli ./src --fix=used --maxInputs=0 --maxOutputs=0
+npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0
 ```
 
 For check and add initialize statement if you want correct work with tspath:
 ```bash
-npx ngx-bind-io-cli ./src --fix=used --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
+npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
 ```
 
 * [Example](#example)
@@ -264,7 +264,9 @@ export class NgxBindInputsService {
 ## Bind to dynamic components
 
 Becouse dynamic components not have normal lifecicle, recomendate define they without OnPush strategy.
+
 If you want use with OnPush, you may use Inputs with BindObservable and call properties with async pipe.
+
 Or use NgxBindIoService and run method linkHostToInner for bind inputs and outputs.
 
 inner.component.ts
@@ -300,7 +302,7 @@ export class InnerComponent {
 
 host.component.ts
 ```js
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { BaseHostComponent } from './base-host.component';
 import { BehaviorSubject } from 'rxjs';
 import { InnerComponent } from './inner.component';
@@ -322,6 +324,7 @@ export class HostComponent {
 
   constructor(
     private _ngxBindIoService: NgxBindIoService,
+    private _changeDetectorRef: ChangeDetectorRef,
     private _resolver: ComponentFactoryResolver
   ) {
     this.createInner();
@@ -333,7 +336,8 @@ export class HostComponent {
     this._ngxBindIoService.linkHostToInner(
       this,
       componentRef.instance,
-      { propA: this.propA, propB: this.propB }
+      { propA: this.propA, propB: this.propB },
+      this._changeDetectorRef
     );
   }
   onStart() {
