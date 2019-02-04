@@ -31,7 +31,7 @@ export class BindIoInnerLifecycle implements OnChanges, OnDestroy {
   }
 }
 export function BindIoInner() {
-  return function (target: Function) {
+  return function(target: Function) {
     if (!target.prototype[__ORIGINAL_NGONCHANGES__]) {
       const bindIoInnerLifecycle = new BindIoInnerLifecycle();
       target.prototype[__ORIGINAL_NGONCHANGES__] = target.prototype.ngOnChanges;

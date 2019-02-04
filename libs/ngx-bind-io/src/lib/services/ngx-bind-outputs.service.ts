@@ -1,6 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
-import { collectKeys, removeKeysManualBindedOutputs, removeKeysNotAllowedConstants, removeKeysUsedInAttributes } from '../utils/components-utils';
+import {
+  collectKeys,
+  removeKeysManualBindedOutputs,
+  removeKeysNotAllowedConstants,
+  removeKeysUsedInAttributes
+} from '../utils/components-utils';
 import { getPropDescriptor } from '../utils/property-utils';
 import { isFunction } from '../utils/utils';
 
@@ -71,15 +76,15 @@ export class NgxBindOutputsService {
     ];
     let innerKeys = directive.innerComponent
       ? [
-        ...Object.keys(directive.innerComponent).filter(
-          innerKey => getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter
-        ),
-        ...collectKeys(
-          directive.innerComponent.__proto__,
-          (cmp, innerKey) => getPropDescriptor(cmp, innerKey).value instanceof EventEmitter,
-          10
-        )
-      ]
+          ...Object.keys(directive.innerComponent).filter(
+            innerKey => getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter
+          ),
+          ...collectKeys(
+            directive.innerComponent.__proto__,
+            (cmp, innerKey) => getPropDescriptor(cmp, innerKey).value instanceof EventEmitter,
+            10
+          )
+        ]
       : [];
     innerKeys = removeKeysManualBindedOutputs(directive, removeKeysUsedInAttributes(directive, innerKeys));
     hostKeys = removeKeysUsedInAttributes(directive, hostKeys);
@@ -94,13 +99,13 @@ export class NgxBindOutputsService {
     const includeIO = !directive.includeIO
       ? []
       : Array.isArray(directive.includeIO)
-        ? directive.includeIO
-        : [directive.includeIO];
+      ? directive.includeIO
+      : [directive.includeIO];
     const excludeIO = !directive.excludeIO
       ? []
       : Array.isArray(directive.excludeIO)
-        ? directive.excludeIO
-        : [directive.excludeIO];
+      ? directive.excludeIO
+      : [directive.excludeIO];
     const excludeOutputs = [...exclude, ...excludeIO].map(exludeKey => exludeKey.toUpperCase());
     const includeOutputs = [...include, ...includeIO].map(includeKey => includeKey.toUpperCase());
     return { includeOutputs, excludeOutputs };

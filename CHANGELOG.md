@@ -1,3 +1,12 @@
+## [0.6.3](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.2...0.6.3) (2019-02-04)
+
+
+### Bug Fixes
+
+* Update logic of binding inputs and outputs for correct work on dynamic components ([97bae1f](https://github.com/EndyKaufman/ngx-bind-io/commit/97bae1f))
+
+
+
 ## [0.6.2](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.1...0.6.2) (2019-02-04)
 
 

@@ -1,5 +1,10 @@
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
-import { getBindIOMetadata, __BIND_IO__, __ORIGINAL_NGONCHANGES__, __ORIGINAL_NGONDESTROY__ } from './bind-io-metadata-utils';
+import {
+  getBindIOMetadata,
+  __BIND_IO__,
+  __ORIGINAL_NGONCHANGES__,
+  __ORIGINAL_NGONDESTROY__
+} from './bind-io-metadata-utils';
 
 export function collectKeys(component: any, rule: (component: any, propName: string) => boolean, maxLevel?: number) {
   if (maxLevel !== undefined) {
