@@ -1,3 +1,12 @@
+## [0.6.4](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.3...0.6.4) (2019-02-05)
+
+
+### Bug Fixes
+
+* Remove wrong bind value ([c933f3d](https://github.com/EndyKaufman/ngx-bind-io/commit/c933f3d))
+
+
+
 ## [0.6.3](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.2...0.6.3) (2019-02-04)
 
 
