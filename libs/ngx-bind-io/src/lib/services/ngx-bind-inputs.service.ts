@@ -160,19 +160,7 @@ export class NgxBindInputsService {
         }
       });
     try {
-      /* todo: original, check and refactor later
-      if (!currentHostSubject) {
-        directive.hostComponent[hostKey] = currentValue;
-      } else {
-        if (!directive.ignoreKeysManualBinded) {
-          directive.bindValue(innerKey, currentValue);
-        }
-      }
-      */
       directive.hostComponent[hostKey] = currentValue;
-      if (!directive.ignoreKeysManualBinded) {
-        directive.bindValue(innerKey, currentValue);
-      }
     } catch (error) {}
 
     if (isBehaviorSubject) {
