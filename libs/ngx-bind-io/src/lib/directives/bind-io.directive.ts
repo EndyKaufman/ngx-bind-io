@@ -136,10 +136,6 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     }
   }
   debugIsActive() {
-    return (
-      this._ngxBindIOConfig.debug ||
-      (this.bindIO && this.bindIO.debug) ||
-      (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true')
-    ); // todo: remove on stable release
+    return this._ngxBindIOConfig.debug || (this.bindIO && this.bindIO.debug);
   }
 }

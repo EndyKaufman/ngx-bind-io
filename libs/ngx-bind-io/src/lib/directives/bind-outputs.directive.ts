@@ -86,10 +86,6 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
     }
   }
   debugIsActive() {
-    return (
-      this._ngxBindIOConfig.debug ||
-      (this.bindOutputs && this.bindOutputs.debug) ||
-      (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true')
-    ); // todo: remove on stable release
+    return this._ngxBindIOConfig.debug || (this.bindOutputs && this.bindOutputs.debug);
   }
 }

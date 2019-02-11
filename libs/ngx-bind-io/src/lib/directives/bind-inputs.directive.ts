@@ -96,10 +96,6 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     }
   }
   debugIsActive() {
-    return (
-      this._ngxBindIOConfig.debug ||
-      (this.bindInputs && this.bindInputs.debug) ||
-      (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true')
-    ); // todo: remove on stable release
+    return this._ngxBindIOConfig.debug || (this.bindInputs && this.bindInputs.debug);
   }
 }

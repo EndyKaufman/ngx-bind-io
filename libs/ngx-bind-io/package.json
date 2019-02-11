@@ -1,6 +1,6 @@
 {
   "name": "ngx-bind-io",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Directives for auto binding Input() and Output() in Angular7+ application",
   "keywords": [
     "angular",
@@ -59,8 +59,8 @@
   ],
   "peerDependencies": {
     "rxjs": "^6.4.0",
-    "@angular/common": "^7.2.3",
-    "@angular/compiler": "^7.2.3",
-    "@angular/core": "^7.2.3"
+    "@angular/common": "^7.2.4",
+    "@angular/compiler": "^7.2.4",
+    "@angular/core": "^7.2.4"
   }
 }
