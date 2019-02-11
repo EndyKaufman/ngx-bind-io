@@ -1,3 +1,12 @@
+## [0.6.5](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.4...0.6.5) (2019-02-11)
+
+
+### Bug Fixes
+
+* Remove enable debug with set "debug_ngx-bind-io" to "true" in localStorage ([55167fd](https://github.com/EndyKaufman/ngx-bind-io/commit/55167fd))
+
+
+
 ## [0.6.4](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.3...0.6.4) (2019-02-05)
 
 
