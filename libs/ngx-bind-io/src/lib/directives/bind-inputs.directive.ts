@@ -46,7 +46,7 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _detectorRef: ChangeDetectorRef
-  ) { }
+  ) {}
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }
@@ -96,9 +96,6 @@ export class BindInputsDirective implements Partial<INgxBindIODirective>, OnChan
     }
   }
   debugIsActive() {
-    return (
-      this._ngxBindIOConfig.debug ||
-      (this.bindInputs && this.bindInputs.debug)
-    );
+    return this._ngxBindIOConfig.debug || (this.bindInputs && this.bindInputs.debug);
   }
 }
