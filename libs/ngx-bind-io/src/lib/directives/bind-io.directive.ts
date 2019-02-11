@@ -46,9 +46,9 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     innerKeys: string[];
     hostKeys: string[];
   } = {
-    innerKeys: [],
-    hostKeys: []
-  };
+      innerKeys: [],
+      hostKeys: []
+    };
   outputs: {
     innerKeys: string[];
     hostKeys: string[];
@@ -68,7 +68,7 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _detectorRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
@@ -138,8 +138,7 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
   debugIsActive() {
     return (
       this._ngxBindIOConfig.debug ||
-      (this.bindIO && this.bindIO.debug) ||
-      (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true')
-    ); // todo: remove on stable release
+      (this.bindIO && this.bindIO.debug)
+    );
   }
 }

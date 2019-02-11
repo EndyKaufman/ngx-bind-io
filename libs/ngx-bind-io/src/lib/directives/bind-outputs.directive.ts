@@ -1,15 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Directive,
-  EventEmitter,
-  Inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewContainerRef
-} from '@angular/core';
+import { ChangeDetectorRef, Directive, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { INgxBindIODirective } from '../interfaces/ngx-bind-io-directive.interface';
@@ -44,7 +33,7 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
     private _ref: ChangeDetectorRef
-  ) {}
+  ) { }
   ngOnChanges(simpleChanges: SimpleChanges) {
     this.detectComponents();
   }
@@ -88,8 +77,7 @@ export class BindOutputsDirective implements Partial<INgxBindIODirective>, OnCha
   debugIsActive() {
     return (
       this._ngxBindIOConfig.debug ||
-      (this.bindOutputs && this.bindOutputs.debug) ||
-      (localStorage && localStorage.getItem('debug_ngx-bind-io') === 'true')
-    ); // todo: remove on stable release
+      (this.bindOutputs && this.bindOutputs.debug)
+    );
   }
 }
