@@ -2,31 +2,35 @@ import { OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { getBindIOMetadata, __ORIGINAL_NGONCHANGES__, __ORIGINAL_NGONDESTROY__ } from '../utils/bind-io-metadata-utils';
 
 export class BindIoInnerLifecycle implements OnChanges, OnDestroy {
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    if (!getBindIOMetadata(this).asInner.manualInputs) {
-      getBindIOMetadata(this).asInner.manualInputs = {};
-      if (simpleChanges) {
-        Object.keys(simpleChanges).forEach(innerKey => (getBindIOMetadata(this).asInner.manualInputs[innerKey] = 1));
+  ngOnChanges(simpleChanges: SimpleChanges, runnedFromBindIo = false) {
+    if (!runnedFromBindIo) {
+      if (!getBindIOMetadata(this).asInner.manualInputs) {
+        getBindIOMetadata(this).asInner.manualInputs = {};
+        if (simpleChanges) {
+          Object.keys(simpleChanges).forEach(innerKey => (getBindIOMetadata(this).asInner.manualInputs[innerKey] = 1));
+        }
+      }
+      if (
+        (this as any) &&
+        (this as any)[__ORIGINAL_NGONCHANGES__] &&
+        typeof (this as any)[__ORIGINAL_NGONCHANGES__] === 'function'
+      ) {
+        (this as any)[__ORIGINAL_NGONCHANGES__](simpleChanges, true);
       }
     }
-    if (
-      (this as any) &&
-      (this as any)[__ORIGINAL_NGONCHANGES__] &&
-      typeof (this as any)[__ORIGINAL_NGONCHANGES__] === 'function'
-    ) {
-      (this as any)[__ORIGINAL_NGONCHANGES__](simpleChanges);
-    }
   }
-  ngOnDestroy() {
-    Object.keys(getBindIOMetadata(this).asInner.subscriptions).forEach(subscriptionName =>
-      getBindIOMetadata(this).asInner.subscriptions[subscriptionName].unsubscribe()
-    );
-    if (
-      (this as any) &&
-      (this as any)[__ORIGINAL_NGONDESTROY__] &&
-      typeof (this as any)[__ORIGINAL_NGONDESTROY__] === 'function'
-    ) {
-      (this as any)[__ORIGINAL_NGONDESTROY__]();
+  ngOnDestroy(runnedFromBindIo = false) {
+    if (!runnedFromBindIo) {
+      Object.keys(getBindIOMetadata(this).asInner.subscriptions).forEach(subscriptionName =>
+        getBindIOMetadata(this).asInner.subscriptions[subscriptionName].unsubscribe()
+      );
+      if (
+        (this as any) &&
+        (this as any)[__ORIGINAL_NGONDESTROY__] &&
+        typeof (this as any)[__ORIGINAL_NGONDESTROY__] === 'function'
+      ) {
+        (this as any)[__ORIGINAL_NGONDESTROY__](true);
+      }
     }
   }
 }
