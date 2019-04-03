@@ -1,3 +1,12 @@
+## [0.6.6](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.5...0.6.6) (2019-04-03)
+
+
+### Bug Fixes
+
+* Add runnedFromBindIo attribute to ngOnChanges and ngOnDestroy, for detect and stop twiced run ([e870a97](https://github.com/EndyKaufman/ngx-bind-io/commit/e870a97))
+
+
+
 ## [0.6.5](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.4...0.6.5) (2019-02-11)
 
 
