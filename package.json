@@ -137,7 +137,7 @@
     "karma-jasmine-html-reporter": "^1.4.0",
     "lite-server": "^2.4.0",
     "markdown-loader": "^5.0.0",
-    "ng-packagr": "^4.7.0",
+    "ng-packagr": "^5.5.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.16.3",
     "protractor": "~5.4.2",
