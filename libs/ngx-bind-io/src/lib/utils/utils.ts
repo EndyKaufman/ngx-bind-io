@@ -1,3 +1,4 @@
 export function isFunction(functionToCheck: any) {
-  return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+  const result = functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+  return result;
 }

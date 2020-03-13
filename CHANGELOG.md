@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.6...0.7.0) (2020-03-13)
+
+
+### Features
+
+* update deps and all sources for it, update to Angular9 ivy ([751c243](https://github.com/EndyKaufman/ngx-bind-io/commit/751c24395b8ce77cd6bb8d30b95a4392c2922ed5))
+
+
+
 ## [0.6.6](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.5...0.6.6) (2019-04-03)
 
 

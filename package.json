@@ -1,6 +1,6 @@
 {
   "name": "ngx-bind-io",
-  "version": "0.6.6",
+  "version": "0.7.0",
   "description": "Directives for auto binding Input() and Output() in Angular9+ application",
   "keywords": [
     "angular",
@@ -65,7 +65,8 @@
     "github:build": "run-s format:fix lib:build config:prod github:prebuild config:mono lib:build github:postbuild",
     "github:postbuild": "./node_modules/.bin/cp-cli ./dist/demo/index.html ./dist/demo/404.html",
     "github:deploy": "gh-pages -d dist/demo",
-    "format:fix": "prettier  --config ./.prettierrc --write \"{apps,libs}/**/*.ts\""
+    "format:fix": "prettier  --config ./.prettierrc --write \"{apps,libs}/**/*.ts\"",
+    "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
   },
   "private": true,
   "dependencies": {
@@ -76,7 +77,6 @@
     "@angular/core": "^9.0.6",
     "@angular/flex-layout": "^9.0.0-beta.29",
     "@angular/forms": "^9.0.6",
-    "@angular/http": "^7.2.16",
     "@angular/material": "^9.1.2",
     "@angular/platform-browser": "^9.0.6",
     "@angular/platform-browser-dynamic": "^9.0.6",
@@ -91,6 +91,7 @@
     "ngx-dynamic-form-builder": "^1.2.0",
     "ngx-markdown": "^9.0.0",
     "ngx-repository": "^0.6.3",
+    "node-sass": "^4.13.1",
     "prismjs": "^1.19.0",
     "raw-loader": "^4.0.0",
     "rxjs": "^6.5.4",
