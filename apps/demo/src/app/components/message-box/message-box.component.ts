@@ -7,9 +7,8 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { BindIoInner } from 'ngx-bind-io';
-@BindIoInner()
+import { MatDialogRef } from '@angular/material/dialog';
+
 @Component({
   selector: 'message-box',
   templateUrl: './message-box.component.html',
@@ -18,23 +17,32 @@ import { BindIoInner } from 'ngx-bind-io';
 })
 export class MessageBoxComponent implements OnInit {
   @Input()
-  isInfo?: boolean = undefined;
+  isInfo?: boolean;
+
   @Input()
-  isError?: boolean = undefined;
+  isError?: boolean;
+
   @Input()
   hideOnNo = true;
+
   @Input()
   hideOnYes = false;
+
   @Input()
-  title: string = undefined;
+  title: string;
+
   @Input()
-  message: string = undefined;
+  message: string;
+
   @Input()
   noTitle = 'Cancel';
+
   @Input()
   yesTitle = 'OK';
+
   @Output()
   no = new EventEmitter<MessageBoxComponent>();
+
   @Output()
   yes = new EventEmitter<MessageBoxComponent>();
 
@@ -42,13 +50,13 @@ export class MessageBoxComponent implements OnInit {
   ngOnInit() {
     this.changeDetectorRef.detectChanges();
   }
-  onYesClick() {
+  onYesClick(): void {
     this.yes.emit(this);
     if (this.hideOnYes) {
       this.dialogRef.close();
     }
   }
-  onNoClick() {
+  onNoClick(): void {
     this.no.emit(this);
     if (this.hideOnNo) {
       this.dialogRef.close();

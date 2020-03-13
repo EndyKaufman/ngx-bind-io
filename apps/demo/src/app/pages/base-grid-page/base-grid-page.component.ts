@@ -10,29 +10,31 @@ export class BaseGridPageComponent {
   apiUrl = environment.apiUrl;
 
   source = {
-    html: require('!!raw-loader?lang=html!../../entities/users/users-grid/users-grid.component.html'),
-    ts: require('!!raw-loader?lang=typescript!../../entities/users/users-grid/users-grid.component.ts')
+    html: require('!!raw-loader!../../entities/users/users-grid/users-grid.component.html').default,
+    ts: require('!!raw-loader!../../entities/users/users-grid/users-grid.component.ts').default
   };
   sourceWithBindIO = {
-    html: require('!!raw-loader?lang=html!../../entities/users/users-grid-with-bind-io/users-grid-with-bind-io.component.html'),
-    ts: require('!!raw-loader?lang=typescript!../../entities/users/users-grid-with-bind-io/users-grid-with-bind-io.component.ts')
+    html: require('!!raw-loader!../../entities/users/users-grid-with-bind-io/users-grid-with-bind-io.component.html')
+      .default,
+    ts: require('!!raw-loader!../../entities/users/users-grid-with-bind-io/users-grid-with-bind-io.component.ts')
+      .default
   };
 
   otherFiles: { name: string; language: string; content: string }[] = [
     {
       name: 'user.ts',
       language: 'javascript',
-      content: require('!!raw-loader?lang=typescript!../../models/user.ts')
+      content: require('!!raw-loader!../../models/user.ts').default
     },
     {
       name: 'base-grid.component.ts',
       language: 'javascript',
-      content: require('!!raw-loader?lang=typescript!../../base/base-grid.component.ts')
+      content: require('!!raw-loader!../../base/base-grid.component.ts').default
     },
     {
       name: 'base-modal.component.ts',
       language: 'javascript',
-      content: require('!!raw-loader?lang=typescript!../../base/base-modal.component.ts')
+      content: require('!!raw-loader!../../base/base-modal.component.ts').default
     }
   ];
 }

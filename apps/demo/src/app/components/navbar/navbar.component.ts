@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Router, Routes } from '@angular/router';
-import { BindIoInner } from 'ngx-bind-io';
-@BindIoInner()
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'navbar',
@@ -10,7 +9,8 @@ import { BindIoInner } from 'ngx-bind-io';
 })
 export class NavbarComponent implements OnInit {
   @Input()
-  title: string = undefined;
+  title: string;
+
   @Input()
   set childrenRoutes(routes: any[]) {
     this._childrenRoutes = routes.filter((item: any) => item.data);

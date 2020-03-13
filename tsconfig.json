@@ -1,5 +1,12 @@
 {
   "compileOnSave": false,
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "disableTypeScriptVersionCheck": true,
+    "enableIvy": true
+  },
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -18,10 +25,10 @@
     ],
     "paths": {
       "ngx-bind-io": [
-        "dist/ngx-bind-io"
+        "libs/ngx-bind-io/src"
       ],
       "ngx-bind-io/*": [
-        "dist/ngx-bind-io/*"
+        "libs/ngx-bind-io/src/*"
       ]
     }
   }

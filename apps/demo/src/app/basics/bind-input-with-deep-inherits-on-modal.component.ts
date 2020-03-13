@@ -8,12 +8,14 @@ import {
   OnDestroy,
   Output,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
+  Injector,
+  SkipSelf
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { BindIoInner, NgxBindIoService } from 'ngx-bind-io';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 export class BaseBaseBasicBindInputWithDeepInheritsModalComponent {
   @Input()
@@ -35,6 +37,7 @@ export class BaseBasicBindInputWithDeepInheritsModalComponent extends BaseBaseBa
   selector: 'basic-bind-input-with-deep-inherits-modal',
   // changeDetection: ChangeDetectionStrategy.OnPush, // <-- OnPush change detection for dynamic components not work
   template: `
+    <br />
     <div *ngIf="isLoading">Loading... (5s)</div>
     <button (click)="onStart()">Start</button> <br />
     {{ propA }} <br />
@@ -99,6 +102,8 @@ export class BasicBindInputWithDeepInheritsModalHostComponent
   constructor(
     public dialog: MatDialog,
     private _ngxBindIoService: NgxBindIoService,
+    @SkipSelf()
+    private _parentInjector: Injector,
     private _changeDetectorRef: ChangeDetectorRef,
     private _resolver: ComponentFactoryResolver
   ) {
@@ -143,6 +148,7 @@ export class BasicBindInputWithDeepInheritsModalHostComponent
       this,
       componentRef.instance,
       { propA: this.propA, propB: this.propB },
+      this._parentInjector,
       this._changeDetectorRef
     );
   }
@@ -154,6 +160,7 @@ export class BasicBindInputWithDeepInheritsModalHostComponent
       this,
       dialogRef.componentInstance,
       { propA: this.propA, propB: this.propB },
+      this._parentInjector,
       this._changeDetectorRef
     );
   }
