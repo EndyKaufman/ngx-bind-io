@@ -38,7 +38,7 @@ export class BasicBindInputOnChangeComponent implements OnChanges {
     Object.keys(simpleChanges)
       .filter(simpleChange => simpleChanges[simpleChange].firstChange === false)
       .forEach(key => {
-        alert(`${this.name}: Data from ngOnChanges for ${key}:${JSON.stringify(simpleChanges[key])}`);
+        // alert(`${this.name}: Data from ngOnChanges for ${key}:${JSON.stringify(simpleChanges[key])}`);
       });
   }
 }

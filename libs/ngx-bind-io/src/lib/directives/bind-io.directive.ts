@@ -2,6 +2,7 @@ import {
   ApplicationRef,
   ChangeDetectorRef,
   Directive,
+  EmbeddedViewRef,
   EventEmitter,
   Inject,
   Input,
@@ -10,7 +11,12 @@ import {
   OnInit,
   SimpleChange,
   SimpleChanges,
-  ViewContainerRef
+  SkipSelf,
+  ViewContainerRef,
+  Injector,
+  Optional,
+  ComponentRef,
+  Host
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
@@ -67,6 +73,8 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
     private _ngxBindInputsService: NgxBindInputsService,
     private _ngxBindOutputsService: NgxBindOutputsService,
     private _ngxBindIODebugService: NgxBindIODebugService,
+    @SkipSelf()
+    private _parentInjector: Injector,
     private _detectorRef: ChangeDetectorRef
   ) {}
 
@@ -128,11 +136,9 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
   }
   detectComponents() {
     if (this.viewContainerRef && !this.innerComponent && !this.hostComponent) {
-      this.innerComponent = this.viewContainerRef['_data'].componentView.component;
-      this.hostComponent = (<any>this.viewContainerRef)._view.context;
-      if (this.hostComponent.$implicit !== undefined) {
-        this.hostComponent = (<any>this.viewContainerRef)._view.component;
-      }
+      this.innerComponent = (this._detectorRef as EmbeddedViewRef<any>).context;
+      this.hostComponent =
+        this._parentInjector && (this._parentInjector as any)._lView.filter(item => item && item.__ngContext__)[1];
     }
   }
   debugIsActive() {

@@ -1,373 +1,442 @@
-<div
-    class="basic-page"
-    fxLayout.gt-md="row"
-    fxLayout.lt-md="column">
-    <ngx-docs-example
-        title="Basics: bind input"
-        html="<basic-bind-input-host></basic-bind-input-host>"
-        [ts]="ts['bind-input']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-input
+<div class="basic-page" fxLayout.gt-md="row" fxLayout.lt-md="column">
+  <ngx-docs-example
+    title="Basics: bind input"
+    html="<basic-bind-input-host></basic-bind-input-host>"
+    [ts]="ts['bind-input']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-input
     (start)="onRun()"
     [isLoading]="isLoading$ | async"
     [propA]="propA"
     [propB]="propB"&gt;
-&lt;/basic-bind-input&gt;</pre>
-            <strong>With auto binding inputs</strong>
-            <pre>&lt;basic-bind-input
+&lt;/basic-bind-input&gt;</pre
+      >
+      <strong>With auto binding inputs</strong>
+      <pre>
+&lt;basic-bind-input
     [bindInputs]
     (start)="onRun()"&gt;
-&lt;/basic-bind-input&gt;</pre>
-            <hr>
-            <basic-bind-input-host></basic-bind-input-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind output"
-        html="<basic-bind-output-host></basic-bind-output-host>"
-        [ts]="ts['bind-output']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-output
+&lt;/basic-bind-input&gt;</pre
+      >
+      <hr />
+      <basic-bind-input-host></basic-bind-input-host>
+    </div>
+  </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind output"
+    html="<basic-bind-output-host></basic-bind-output-host>"
+    [ts]="ts['bind-output']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-output
         (start)="onStart()"
         [isLoading]="isLoading$ | async"
         [propA]="propA"&gt;
-&lt;/basic-bind-output&gt;</pre>
-            <strong>With auto binding outputs</strong>
-            <pre>&lt;basic-bind-output
+&lt;/basic-bind-output&gt;</pre
+      >
+      <strong>With auto binding outputs</strong>
+      <pre>
+&lt;basic-bind-output
     [bindOutputs]
     [isLoading]="isLoading$ | async"
     [propA]="propA"&gt;
-&lt;/basic-bind-output&gt;</pre>
-            <hr>
-            <basic-bind-output-host></basic-bind-output-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind io"
-        html="<basic-bind-io-host></basic-bind-io-host>"
-        [ts]="ts['bind-io']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-io
-    (start)="onStart()"
-    [isLoading]="isLoading$ | async"
-    [propA]="propA"
-    [propB]="propB"&gt;
-&lt;/basic-bind-io&gt;</pre>
-            <strong>With auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-io
-    [bindIO]&gt;
-&lt;/basic-bind-io&gt;</pre>
-            <hr>
-            <basic-bind-io-host></basic-bind-io-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind io with manual input and output and skip default bind by name"
-        html="<basic-bind-io-with-manual-host></basic-bind-io-with-manual-host>"
-        [ts]="ts['bind-io-with-manual']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-io-with-manual
-    (start)="onStartWithAlert()
-    [isLoading]="isLoading$ | async"
-    [propA]="propA"
-    propB="Manual binded propB"&gt;
-&lt;/basic-bind-io-with-manual&gt;</pre>
-            <strong>With auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-io-with-manual
-    [bindIO]
-    (start)="onStartWithAlert()
-    propB="Manual binded propB"&gt;
-&lt;/basic-bind-io-with-manual&gt;</pre>
-            <hr>
-            <basic-bind-io-with-manual-host></basic-bind-io-with-manual-host>
-        </div>
-    </ngx-docs-example>
+&lt;/basic-bind-output&gt;</pre
+      >
+      <hr />
+      <basic-bind-output-host></basic-bind-output-host>
+    </div>
+  </ngx-docs-example>
 </div>
-<div
-    class="basic-page"
-    fxLayout.gt-md="row"
-    fxLayout.lt-md="column"
-    fxLayoutAlign="space-evenly stretch">
-    <ngx-docs-example
-        title="Basics: bind input with exclude"
-        html="<basic-bind-input-with-exclude-host></basic-bind-input-with-exclude-host>"
-        [ts]="ts['bind-input-with-exclude']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-input-with-exclude
+<div class="basic-page" fxLayout.gt-md="row" fxLayout.lt-md="column">
+  <ngx-docs-example
+    title="Basics: bind io"
+    html="<basic-bind-io-host></basic-bind-io-host>"
+    [ts]="ts['bind-io']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+  &lt;basic-bind-io
+      (start)="onStart()"
+      [isLoading]="isLoading$ | async"
+      [propA]="propA"
+      [propB]="propB"&gt;
+  &lt;/basic-bind-io&gt;</pre
+      >
+      <strong>With auto binding inputs and outputs</strong>
+      <pre>
+  &lt;basic-bind-io
+      [bindIO]&gt;
+  &lt;/basic-bind-io&gt;</pre
+      >
+      <hr />
+      <basic-bind-io-host></basic-bind-io-host>
+    </div>
+  </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind io with manual input and output and skip default bind by name"
+    html="<basic-bind-io-with-manual-host></basic-bind-io-with-manual-host>"
+    [ts]="ts['bind-io-with-manual']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+  &lt;basic-bind-io-with-manual
+      (start)="onStartWithAlert()
+      [isLoading]="isLoading$ | async"
+      [propA]="propA"
+      propB="Manual binded propB"&gt;
+  &lt;/basic-bind-io-with-manual&gt;</pre
+      >
+      <strong>With auto binding inputs and outputs</strong>
+      <pre>
+  &lt;basic-bind-io-with-manual
+      [bindIO]
+      (start)="onStartWithAlert()
+      propB="Manual binded propB"&gt;
+  &lt;/basic-bind-io-with-manual&gt;</pre
+      >
+      <hr />
+      <basic-bind-io-with-manual-host></basic-bind-io-with-manual-host>
+    </div>
+  </ngx-docs-example>
+</div>
+
+<div class="basic-page" fxLayout.gt-md="row" fxLayout.lt-md="column">
+  <ngx-docs-example
+    title="Basics: bind input with exclude"
+    html="<basic-bind-input-with-exclude-host></basic-bind-input-with-exclude-host>"
+    [ts]="ts['bind-input-with-exclude']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-input-with-exclude
     (start)="onStart()"
     [isLoading]="isLoading$ | async"
     [propB]="propB"&gt;
-&lt;/basic-bind-input-with-exclude&gt;</pre>
-            <strong>With auto binding inputs</strong>
-            <pre>&lt;basic-bind-input-with-exclude
+&lt;/basic-bind-input-with-exclude&gt;</pre
+      >
+      <strong>With auto binding inputs</strong>
+      <pre>
+&lt;basic-bind-input-with-exclude
     [bindInputs]
     excludeInputs="propA"
     (start)="onStart()"&gt;
-&lt;/basic-bind-input-with-exclude&gt;</pre>
-            <hr>
-            <basic-bind-input-with-exclude-host></basic-bind-input-with-exclude-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind input with include"
-        html="<basic-bind-input-with-include-host></basic-bind-input-with-include-host>"
-        [ts]="ts['bind-input-with-include']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-input-with-include
+&lt;/basic-bind-input-with-exclude&gt;</pre
+      >
+      <hr />
+      <basic-bind-input-with-exclude-host></basic-bind-input-with-exclude-host>
+    </div>
+  </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind input with include"
+    html="<basic-bind-input-with-include-host></basic-bind-input-with-include-host>"
+    [ts]="ts['bind-input-with-include']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-input-with-include
     (start)="onStart()"
     [isLoading]="isLoading$ | async"
     [propB]="propB"&gt;
-&lt;/basic-bind-input-with-include&gt;</pre>
-            <strong>With auto binding inputs</strong>
-            <pre>&lt;basic-bind-input-with-include
+&lt;/basic-bind-input-with-include&gt;</pre
+      >
+      <strong>With auto binding inputs</strong>
+      <pre>
+&lt;basic-bind-input-with-include
     [bindInputs]
     [includeInputs]="['propB']"
     (start)="onStart()"
     [isLoading]="isLoading$ | async"&gt;
-&lt;/basic-bind-input-with-include&gt;</pre>
-            <hr>
-            <basic-bind-input-with-include-host></basic-bind-input-with-include-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind output with alternative click event name for binding"
-        html="<basic-bind-output-with-click-host></basic-bind-output-with-click-host>"
-        [ts]="ts['bind-output-with-click']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-output-with-click
+&lt;/basic-bind-input-with-include&gt;</pre
+      >
+      <hr />
+      <basic-bind-input-with-include-host></basic-bind-input-with-include-host>
+    </div>
+  </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind output with alternative click event name for binding"
+    html="<basic-bind-output-with-click-host></basic-bind-output-with-click-host>"
+    [ts]="ts['bind-output-with-click']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-output-with-click
     (start)="onStartClick()"
     [propA]="propA"&gt;
-&lt;/basic-bind-output-with-click&gt;</pre>
-            <strong>With auto binding outputs</strong>
-            <pre>&lt;basic-bind-output-with-click
+&lt;/basic-bind-output-with-click&gt;</pre
+      >
+      <strong>With auto binding outputs</strong>
+      <pre>
+&lt;basic-bind-output-with-click
     [bindOutputs]
     [propA]="propA"&gt;
-&lt;/basic-bind-output-with-click&gt;</pre>
-            <hr>
-            <basic-bind-output-with-click-host></basic-bind-output-with-click-host>
-        </div>
-    </ngx-docs-example>
+&lt;/basic-bind-output-with-click&gt;</pre
+      >
+      <hr />
+      <basic-bind-output-with-click-host></basic-bind-output-with-click-host>
+    </div>
+  </ngx-docs-example>
 </div>
-<div
-    class="basic-page"
-    fxLayout.gt-md="row"
-    fxLayout.lt-md="column"
-    fxLayoutAlign="space-evenly stretch">
-    <ngx-docs-example
-        title="Basics: bind output with custom click from custom rules for detect outputs name"
-        html="<basic-bind-output-with-custom-click-host></basic-bind-output-with-custom-click-host>"
-        [ts]="ts['bind-output-with-custom-click']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-output-with-custom-click
+<div class="basic-page" fxLayout.gt-md="row" fxLayout.lt-md="column">
+  <ngx-docs-example
+    title="Basics: bind output with custom click from custom rules for detect outputs name"
+    html="<basic-bind-output-with-custom-click-host></basic-bind-output-with-custom-click-host>"
+    [ts]="ts['bind-output-with-custom-click']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-output-with-custom-click
     (start)="onStartButtonClick()"
     [propA]="propA"&gt;
-&lt;/basic-bind-output-with-custom-click&gt;</pre>
-            <strong>With auto binding outputs</strong>
-            <pre>&lt;basic-bind-output-with-custom-click
+&lt;/basic-bind-output-with-custom-click&gt;</pre
+      >
+      <strong>With auto binding outputs</strong>
+      <pre>
+&lt;basic-bind-output-with-custom-click
     [bindOutputs]
     [propA]="propA"&gt;
-&lt;/basic-bind-output-with-custom-click&gt;</pre>
-            <hr>
-            <basic-bind-output-with-custom-click-host></basic-bind-output-with-custom-click-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind input with deep inherits"
-        html="<basic-bind-input-with-deep-inherits-host></basic-bind-input-with-deep-inherits-host>"
-        [ts]="ts['bind-input-with-deep-inherits']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-input-with-deep-inherits
+&lt;/basic-bind-output-with-custom-click&gt;</pre
+      >
+      <hr />
+      <basic-bind-output-with-custom-click-host></basic-bind-output-with-custom-click-host>
+    </div>
+  </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind input with deep inherits"
+    html="<basic-bind-input-with-deep-inherits-host></basic-bind-input-with-deep-inherits-host>"
+    [ts]="ts['bind-input-with-deep-inherits']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-input-with-deep-inherits
     (start)="onStart()"
     [isLoading]="isLoading$ | async"
     [propA]="propA"
     [propB]="propB"&gt;
-&lt;/basic-bind-input-with-deep-inherits&gt;</pre>
-            <strong>With auto binding outputs</strong>
-            <pre>&lt;basic-bind-input-with-deep-inherits
+&lt;/basic-bind-input-with-deep-inherits&gt;</pre
+      >
+      <strong>With auto binding outputs</strong>
+      <pre>
+&lt;basic-bind-input-with-deep-inherits
     [bindInputs]
     (start)="onStart()"&gt;
-&lt;/basic-bind-input-with-deep-inherits&gt;</pre>
-            <hr>
-            <basic-bind-input-with-deep-inherits-host></basic-bind-input-with-deep-inherits-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind input with mixins"
-        html="<basic-bind-io-with-mixins-host></basic-bind-io-with-mixins-host>"
-        [ts]="ts['bind-io-with-mixins']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-io-with-mixins
+&lt;/basic-bind-input-with-deep-inherits&gt;</pre
+      >
+      <hr />
+      <basic-bind-input-with-deep-inherits-host></basic-bind-input-with-deep-inherits-host>
+    </div>
+  </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind input with mixins"
+    html="<basic-bind-io-with-mixins-host></basic-bind-io-with-mixins-host>"
+    [ts]="ts['bind-io-with-mixins']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-io-with-mixins
     (start)="onStart()"
     [isLoading]="isLoading$ | async"
     [propA]="propA"
     [propB]="propB"&gt;
-&lt;/basic-bind-io-with-mixins&gt;</pre>
-            <strong>With auto binding inputs</strong>
-            <pre>&lt;basic-bind-io-with-mixins
+&lt;/basic-bind-io-with-mixins&gt;</pre
+      >
+      <strong>With auto binding inputs</strong>
+      <pre>
+&lt;basic-bind-io-with-mixins
     [bindIO]&gt;
-&lt;/basic-bind-io-with-mixins&gt;</pre>
-            <hr>
-            <basic-bind-io-with-mixins-host></basic-bind-io-with-mixins-host>
-        </div>
-    </ngx-docs-example>
+&lt;/basic-bind-io-with-mixins&gt;</pre
+      >
+      <hr />
+      <basic-bind-io-with-mixins-host></basic-bind-io-with-mixins-host>
+    </div>
+  </ngx-docs-example>
 </div>
-<div
-    class="basic-page"
-    fxLayout.gt-md="row"
-    fxLayout.lt-md="column"
-    fxLayoutAlign="space-evenly stretch">
-    <ngx-docs-example
-        title="Basics: bind input with on change"
-        html="<basic-bind-input-on-change-host></basic-bind-input-on-change-host>"
-        [ts]="ts['bind-input-on-change']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-input-on-change 
+<div class="basic-page" fxLayout.gt-md="row" fxLayout.lt-md="column">
+  <ngx-docs-example
+    title="Basics: bind input with on change"
+    html="<basic-bind-input-on-change-host></basic-bind-input-on-change-host>"
+    [ts]="ts['bind-input-on-change']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-input-on-change 
     (start)=&quot;onRun()&quot; 
     [isLoading]=&quot;isLoading$ | async&quot; 
     [propA]=&quot;propA&quot; 
     [propB]=&quot;propB&quot;&gt;
-&lt;/basic-bind-input-on-change&gt;</pre>
-            <strong>With auto binding inputs</strong>
-            <pre>&lt;basic-bind-input-on-change 
+&lt;/basic-bind-input-on-change&gt;</pre
+      >
+      <strong>With auto binding inputs</strong>
+      <pre>
+&lt;basic-bind-input-on-change 
     [bindInputs] 
     [propA]="propA"
     (start)=&quot;onRun()&quot;&gt;
-&lt;/basic-bind-input-on-change&gt;</pre>
-            <strong>Options</strong>
-            <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
+&lt;/basic-bind-input-on-change&gt;</pre
+      >
+      <strong>Options</strong>
+      <pre>
+&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
 &lt;input [(ngModel)]=&quot;propB&quot; /&gt;
 &lt;button (click)=&quot;loadingWith1500s()&quot;&gt;
     Loading with 1,5s.
-&lt;/button&gt;</pre>
-            <hr>
-            <basic-bind-input-on-change-host></basic-bind-input-on-change-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind input without onPush"
-        html="<basic-bind-input-no-on-push-host></basic-bind-input-no-on-push-host>"
-        [ts]="ts['bind-input-no-on-push']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-input-no-on-push
+&lt;/button&gt;</pre
+      >
+      <hr />
+      <basic-bind-input-on-change-host></basic-bind-input-on-change-host>
+    </div>
+  </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind input without onPush"
+    html="<basic-bind-input-no-on-push-host></basic-bind-input-no-on-push-host>"
+    [ts]="ts['bind-input-no-on-push']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+&lt;basic-bind-input-no-on-push
     (start)=&quot;onRun()&quot;
     [propA]=&quot;propA&quot;
     [propB]=&quot;propB&quot;
 #inner1&gt;
-&lt;/basic-bind-input-no-on-push&gt;</pre>
-            <strong>With auto binding inputs</strong>
-            <pre>&lt;basic-bind-input-no-on-push
+&lt;/basic-bind-input-no-on-push&gt;</pre
+      >
+      <strong>With auto binding inputs</strong>
+      <pre>
+&lt;basic-bind-input-no-on-push
     [bindInputs]
     (start)=&quot;onRun()&quot;
 #inner2&gt;
-&lt;/basic-bind-input-no-on-push&gt;</pre>
-            <strong>Options</strong>
-            <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
+&lt;/basic-bind-input-no-on-push&gt;</pre
+      >
+      <strong>Options</strong>
+      <pre>
+&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
 &lt;input [(ngModel)]=&quot;propB&quot; /&gt;
 &lt;button (click)=&quot;loadingWith1500s()&quot;&gt;
     Loading with 1,5s.
-&lt;/button&gt;</pre>
-            <hr>
-            <basic-bind-input-no-on-push-host></basic-bind-input-no-on-push-host>
-        </div>
-    </ngx-docs-example>
-    <ngx-docs-example
-        title="Basics: bind one host to many inners with debug"
-        html="<basic-bind-one-to-many-host></basic-bind-one-to-many-host>"
-        [ts]="ts['bind-input-on-change']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-one-to-many 
-    (start)=&quot;onStart()&quot; 
-    [isLoading]=&quot;isLoading$ | async&quot; 
-    [propA]=&quot;propA&quot; 
-    [propB]=&quot;propB&quot;&gt;
-&lt;/basic-bind-one-to-many&gt;
+&lt;/button&gt;</pre
+      >
+      <hr />
+      <basic-bind-input-no-on-push-host></basic-bind-input-no-on-push-host>
+    </div>
+  </ngx-docs-example>
+</div>
 
-&lt;basic-bind-one-to-many 
-    (start)=&quot;onStart()&quot; 
-    [isLoading]=&quot;isLoading$ | async&quot; 
-    [propA]=&quot;propA&quot; 
-    [propB]=&quot;propB&quot;&gt;
-&lt;/basic-bind-one-to-many&gt;</pre>
-            <strong>With auto binding inputs and outputs</strong>
-            <pre>&lt;basic-bind-one-to-many
-    [bindIO]&gt;
-&lt;/basic-bind-one-to-many&gt;
+<div class="basic-page" fxLayout.gt-md="row" fxLayout.lt-md="column">
+  <ngx-docs-example
+    title="Basics: bind one host to many inners with debug"
+    html="<basic-bind-one-to-many-host></basic-bind-one-to-many-host>"
+    [ts]="ts['bind-input-on-change']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+  &lt;basic-bind-one-to-many 
+      (start)=&quot;onStart()&quot; 
+      [isLoading]=&quot;isLoading$ | async&quot; 
+      [propA]=&quot;propA&quot; 
+      [propB]=&quot;propB&quot;&gt;
+  &lt;/basic-bind-one-to-many&gt;
+  
+  &lt;basic-bind-one-to-many 
+      (start)=&quot;onStart()&quot; 
+      [isLoading]=&quot;isLoading$ | async&quot; 
+      [propA]=&quot;propA&quot; 
+      [propB]=&quot;propB&quot;&gt;
+  &lt;/basic-bind-one-to-many&gt;</pre
+      >
+      <strong>With auto binding inputs and outputs</strong>
+      <pre>
+  &lt;basic-bind-one-to-many
+      [bindIO]&gt;
+  &lt;/basic-bind-one-to-many&gt;
+  
+  &lt;basic-bind-one-to-many
+      [bindIO]=&quot;&#x7B;debug:true&#x7D;&quot;&gt;
+  &lt;/basic-bind-one-to-many&gt;</pre
+      >
+      <strong>Options</strong>
+      <pre>
+  &lt;input [(ngModel)]=&quot;propA&quot; /&gt;
+  &lt;input [(ngModel)]=&quot;propB&quot; /&gt;
+  &lt;button (click)=&quot;loadingWith1500s()&quot;&gt;
+      Loading with 1,5s.
+  &lt;/button&gt;</pre
+      >
+      <hr />
+      <basic-bind-one-to-many-host></basic-bind-one-to-many-host>
+    </div>
+  </ngx-docs-example>
 
-&lt;basic-bind-one-to-many
-    [bindIO]=&quot;&#x7B;debug:true&#x7D;&quot;&gt;
-&lt;/basic-bind-one-to-many&gt;</pre>
-            <strong>Options</strong>
-            <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
-&lt;input [(ngModel)]=&quot;propB&quot; /&gt;
-&lt;button (click)=&quot;loadingWith1500s()&quot;&gt;
-    Loading with 1,5s.
-&lt;/button&gt;</pre>
-            <hr>
-            <basic-bind-one-to-many-host></basic-bind-one-to-many-host>
-        </div>
-    </ngx-docs-example>
-
-    <ngx-docs-example
-        title="Basics: bind input with deep inherits and bind to dynamic components (INCORRECT WORK!)"
-        html="<basic-bind-input-with-deep-inherits-modal-host></basic-bind-input-with-deep-inherits-modal-host>"
-        [ts]="ts['bind-input-with-deep-inherits-on-modal']"
-        fxFlex.gt-sm="50">
-        <div class="body">
-            <strong>Without auto binding inputs and outputs</strong>
-            <pre>&lt;button
-    (click)=&quot;createWithoutBindIO()&quot;&gt;
-Create component without bindIO
-&lt;/button&gt;
-
-&lt;template #withoutBindIO&gt;&lt;/template&gt;
-
-&lt;button
-    (click)=&quot;openDialogWithoutBindIO()&quot;&gt;
-Show modal without bindIO
-&lt;/button&gt;</pre>
-            <strong>With auto binding inputs and outputs</strong>
-            <pre>&lt;button
-    (click)=&quot;createWithBindIO()&quot;&gt;
-Create component with bindIO
-&lt;/button&gt;
-
-&lt;template #withBindIO&gt;&lt;/template&gt;
-
-&lt;button
-    (click)=&quot;openDialogWitBindIO()&quot;&gt;
-Show modal with bindIO
-&lt;/button&gt;</pre>
-            <strong>Options</strong>
-            <pre>&lt;input [(ngModel)]=&quot;propA&quot; /&gt;
-&lt;input [(ngModel)]=&quot;propB&quot; /&gt;</pre>
-            <hr>
-            <basic-bind-input-with-deep-inherits-modal-host></basic-bind-input-with-deep-inherits-modal-host>
-        </div>
-    </ngx-docs-example>
+  <ngx-docs-example
+    title="Basics: bind input with deep inherits and bind to dynamic components (INCORRECT WORK!)"
+    html="<basic-bind-input-with-deep-inherits-modal-host></basic-bind-input-with-deep-inherits-modal-host>"
+    [ts]="ts['bind-input-with-deep-inherits-on-modal']"
+    fxFlex.gt-sm="50"
+  >
+    <div class="body">
+      <strong>Without auto binding inputs and outputs</strong>
+      <pre>
+  &lt;button
+      (click)=&quot;createWithoutBindIO()&quot;&gt;
+  Create component without bindIO
+  &lt;/button&gt;
+  
+  &lt;template #withoutBindIO&gt;&lt;/template&gt;
+  
+  &lt;button
+      (click)=&quot;openDialogWithoutBindIO()&quot;&gt;
+  Show modal without bindIO
+  &lt;/button&gt;</pre
+      >
+      <strong>With auto binding inputs and outputs</strong>
+      <pre>
+  &lt;button
+      (click)=&quot;createWithBindIO()&quot;&gt;
+  Create component with bindIO
+  &lt;/button&gt;
+  
+  &lt;template #withBindIO&gt;&lt;/template&gt;
+  
+  &lt;button
+      (click)=&quot;openDialogWitBindIO()&quot;&gt;
+  Show modal with bindIO
+  &lt;/button&gt;</pre
+      >
+      <strong>Options</strong>
+      <pre>
+  &lt;input [(ngModel)]=&quot;propA&quot; /&gt;
+  &lt;input [(ngModel)]=&quot;propB&quot; /&gt;</pre
+      >
+      <hr />
+      <basic-bind-input-with-deep-inherits-modal-host></basic-bind-input-with-deep-inherits-modal-host>
+    </div>
+  </ngx-docs-example>
 </div>

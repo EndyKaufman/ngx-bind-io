@@ -1,6 +1,5 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { AfterContentInit, Input } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ValidationError } from 'class-validator';
 import { ShortValidationErrors } from 'ngx-dynamic-form-builder';
 import { DynamicRepository, IFactoryModel, IModel, Repository, ValidatorError } from 'ngx-repository';
@@ -8,6 +7,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MessageBoxService } from '../components/message-box/message-box.service';
 import { BaseModalComponent } from './base-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 export class BaseGridComponent<T extends IModel> implements AfterContentInit {
   @Input()

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
-  readme = require('!!raw-loader?lang=markdown!../../../../../../README.md').replace(
+  readme = require('!!raw-loader!../../../../../../README.md').default.replace(
     '# ngx-bind-io',
     ''
   );

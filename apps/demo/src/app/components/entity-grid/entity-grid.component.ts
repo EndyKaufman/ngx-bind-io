@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { BindObservable } from 'bind-observable';
 import { BindIoInner } from 'ngx-bind-io';
 import { Observable } from 'rxjs';
@@ -28,8 +28,8 @@ export class EntityGridComponent<T = any> extends BaseEntityGridComponent<T> imp
   @Output()
   delete = new EventEmitter<T>();
   @BindObservable()
-  filtredDisplayedColumns: MatTableDataSource<T> = undefined;
-  filtredDisplayedColumns$: Observable<MatTableDataSource<T>>;
+  filtredDisplayedColumns: string[] = undefined;
+  filtredDisplayedColumns$: Observable<string[]>;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.displayedColumns) {

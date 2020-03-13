@@ -8,13 +8,12 @@ import {
   Optional,
   ViewEncapsulation
 } from '@angular/core';
-import { BindIoInner } from 'ngx-bind-io';
 // internal
 import { DocsExampleClass } from './docs-example.class';
 import { PACKAGE_CONFIG_TOKEN } from './docs-example.config';
 import { LaunchInterface } from './docs-example.interface';
 import { PackageConfigInterface } from './package-config.interface';
-@BindIoInner()
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -29,16 +28,22 @@ export class DocsExampleComponent extends DocsExampleClass {
   set config(config: PackageConfigInterface | undefined) {
     this.setStyle(config);
   }
+
   @Input()
   css: string | undefined = undefined;
+
   @Input()
   html: string | undefined = undefined;
+
   @Input()
   launch: LaunchInterface | undefined = undefined;
+
   @Input()
   title: string | undefined = undefined;
+
   @Input()
   ts: string | undefined = undefined;
+
   @Input()
   customClass: string;
 

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BindIoInner } from 'ngx-bind-io';
 import { BehaviorSubject } from 'rxjs';
+import { Mixin } from 'ts-mixer';
 
 export class BaseBaseBasicBindIOWithMixinsComponent {
   @Input()
@@ -36,29 +37,17 @@ export class BasicBindIOWithMixinsComponent extends BaseBasicBindIOWithMixinsCom
   propB: string;
 }
 
-type Constructor<T> = new (...args: any[]) => T;
-class EmptyClass {}
-
-function Base1BasicBindIOWithMixinsHostComponent<T extends Constructor<{}>>(base?: T) {
-  if (!base) {
-    base = EmptyClass as any;
-  }
-  return class extends base {
-    propA = 'Prop A: defined';
-    propB = 'Prop B: defined';
-  };
+class Base1BasicBindIOWithMixinsHostComponent {
+  propA = 'Prop A: defined';
+  propB = 'Prop B: defined';
 }
-function Base2BasicBindIOWithMixinsHostComponent<T extends Constructor<{}>>(base?: T) {
-  if (!base) {
-    base = EmptyClass as any;
+
+class Base2BasicBindIOWithMixinsHostComponent {
+  isLoading$ = new BehaviorSubject(false);
+  onStart() {
+    this.isLoading$.next(true);
+    setTimeout(() => this.isLoading$.next(false), 5000);
   }
-  return class extends base {
-    isLoading$ = new BehaviorSubject(false);
-    onStart() {
-      this.isLoading$.next(true);
-      setTimeout(() => this.isLoading$.next(false), 5000);
-    }
-  };
 }
 @BindIoInner()
 @Component({
@@ -71,6 +60,7 @@ function Base2BasicBindIOWithMixinsHostComponent<T extends Constructor<{}>>(base
     <basic-bind-io-with-mixins [bindIO]></basic-bind-io-with-mixins>
   `
 })
-export class BasicBindIOWithMixinsHostComponent extends Base1BasicBindIOWithMixinsHostComponent(
-  Base2BasicBindIOWithMixinsHostComponent()
+export class BasicBindIOWithMixinsHostComponent extends Mixin(
+  Base2BasicBindIOWithMixinsHostComponent,
+  Base1BasicBindIOWithMixinsHostComponent
 ) {}

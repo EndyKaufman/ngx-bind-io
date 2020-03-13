@@ -28,7 +28,7 @@ export function removeKeysUsedInAttributes(directive: Partial<INgxBindIODirectiv
     viewContainerRef.element.nativeElement.attributes
   ) {
     const attributes = viewContainerRef.element.nativeElement.attributes as NamedNodeMap;
-    return existsKeys.filter(existKey => {
+    const filtered = existsKeys.filter(existKey => {
       let founded = false;
       for (let i = 0; i < attributes.length; i++) {
         const name = attributes
@@ -41,6 +41,7 @@ export function removeKeysUsedInAttributes(directive: Partial<INgxBindIODirectiv
       }
       return !founded;
     });
+    return filtered;
   }
   return existsKeys;
 }
@@ -48,27 +49,29 @@ export function removeKeysManualBindedOutputs(directive: Partial<INgxBindIODirec
   if (directive.ignoreKeysManualBinded) {
     return existsKeys;
   }
-  return existsKeys.filter(innerKey => {
-    return (
+  const filtered = existsKeys.filter(innerKey => {
+    const innerFiltered =
       (getBindIOMetadata(directive.innerComponent).asInner.manualOutputs
         ? Object.keys(getBindIOMetadata(directive.innerComponent).asInner.manualOutputs)
         : []
-      ).filter(outputName => outputName.toUpperCase() === innerKey.toUpperCase()).length === 0
-    );
+      ).filter(outputName => outputName.toUpperCase() === innerKey.toUpperCase()).length === 0;
+    return innerFiltered;
   });
+  return filtered;
 }
 export function removeKeysManualBindedInputs(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
   if (directive.ignoreKeysManualBinded) {
     return existsKeys;
   }
-  return existsKeys.filter(innerKey => {
-    return (
+  const filtered = existsKeys.filter(innerKey => {
+    const innerFiltered =
       (getBindIOMetadata(directive.innerComponent).asInner.manualInputs
         ? Object.keys(getBindIOMetadata(directive.innerComponent).asInner.manualInputs)
         : []
-      ).filter(inputName => inputName.toUpperCase() === innerKey.toUpperCase()).length === 0
-    );
+      ).filter(inputName => inputName.toUpperCase() === innerKey.toUpperCase()).length === 0;
+    return innerFiltered;
   });
+  return filtered;
 }
 export function removeKeysNotAllowedConstants(directive: Partial<INgxBindIODirective>, existsKeys: string[]) {
   const constants = [
@@ -79,5 +82,6 @@ export function removeKeysNotAllowedConstants(directive: Partial<INgxBindIODirec
     'ngOnChanges',
     'ngOnDestroy'
   ];
-  return existsKeys.filter(key => constants.indexOf(key) === -1);
+  const filtered = existsKeys.filter(key => constants.indexOf(key) === -1);
+  return filtered;
 }

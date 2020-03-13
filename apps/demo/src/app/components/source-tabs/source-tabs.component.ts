@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BindIoInner } from 'ngx-bind-io';
-@BindIoInner()
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+
 @Component({
   selector: 'source-tabs',
   templateUrl: './source-tabs.component.html',
@@ -8,8 +7,8 @@ import { BindIoInner } from 'ngx-bind-io';
 })
 export class SourceTabsComponent {
   @Input()
-  title: string = undefined;
+  title: string;
 
   @Input()
-  files: { name: string; language: string; content: string }[] = undefined;
+  files: { name: string; language: string; content: string }[];
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Inject, Injectable, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Inject, Injectable, SimpleChange, SimpleChanges, Injector } from '@angular/core';
 import { BindIODirective } from '../directives/bind-io.directive';
 import { INgxBindIOConfig } from '../interfaces/ngx-bind-io-config.interface';
 import { NGX_BIND_IO_CONFIG } from '../ngx-bind-io.config';
@@ -18,6 +18,7 @@ export class NgxBindIoService {
     hostComponent: any,
     innerComponent: any,
     inputs?: { [key: string]: any },
+    parentInjectorRef?: Injector,
     changeDetectorRef?: ChangeDetectorRef,
     config?: INgxBindIOConfig
   ) {
@@ -32,6 +33,7 @@ export class NgxBindIoService {
       this._ngxBindInputsService,
       this._ngxBindOutputsService,
       this._ngxBindIODebugService,
+      parentInjectorRef,
       changeDetectorRef
     );
     directive.ignoreKeysManualBinded = true;

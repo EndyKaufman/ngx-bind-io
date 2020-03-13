@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { BindIoInner } from 'ngx-bind-io';
 import { DynamicRepository } from 'ngx-repository';
 import { BaseGridComponent } from '../../../base/base-grid.component';
