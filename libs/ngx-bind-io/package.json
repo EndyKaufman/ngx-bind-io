@@ -1,7 +1,7 @@
 {
   "name": "ngx-bind-io",
-  "version": "1.0.0",
-  "description": "Directives for auto binding Input() and Output() in Angular9+ application",
+  "version": "1.0.1",
+  "description": "Directives for auto binding Input() and Output() from host component to inner in Angular9+ application",
   "keywords": [
     "angular",
     "ng",

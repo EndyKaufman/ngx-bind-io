@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/EndyKaufman/ngx-bind-io.svg?branch=master)](https://travis-ci.org/EndyKaufman/ngx-bind-io)
 [![npm version](https://badge.fury.io/js/ngx-bind-io.svg)](https://badge.fury.io/js/ngx-bind-io)
 
-Directives for auto binding Input() and Output() in Angular9+ application
+Directives for auto binding Input() and Output() from host component to inner in Angular9+ application
 
 - [Example](#example)
 - [Installation](#installation)
