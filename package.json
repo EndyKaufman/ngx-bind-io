@@ -1,6 +1,6 @@
 {
   "name": "ngx-bind-io",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "Directives for auto binding Input() and Output() in Angular9+ application",
   "keywords": [
     "angular",
@@ -57,6 +57,7 @@
     "ng": "ng",
     "serve": "ng serve",
     "start": "run-s format:fix prepare:mono serve",
+    "start:prod": "run-s format:fix prepare:mono serve -- --prod",
     "build": "run-s app:build",
     "test": "run-s github:build",
     "lint": "ng lint",

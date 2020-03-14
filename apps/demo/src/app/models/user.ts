@@ -1,4 +1,4 @@
-import { plainToClassFromExist } from 'class-transformer';
+import { Expose, plainToClassFromExist } from 'class-transformer';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class User {
@@ -12,15 +12,26 @@ export class User {
     isActive: 'User'
   };
 
-  id: number = undefined;
+  @Expose()
+  id: number;
+
   @IsNotEmpty()
-  username: string = undefined;
+  @Expose()
+  username: string;
+
   @IsEmail()
   @IsNotEmpty()
-  email: string = undefined;
-  isSuperuser: boolean = undefined;
-  isStaff: boolean = undefined;
-  isActive: boolean = undefined;
+  @Expose()
+  email: string;
+
+  @Expose()
+  isSuperuser: boolean;
+
+  @Expose()
+  isStaff: boolean;
+
+  @Expose()
+  isActive: boolean;
 
   get roles() {
     const roles: string[] = [];

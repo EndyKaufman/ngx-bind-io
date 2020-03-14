@@ -4,8 +4,10 @@
 
 my-ngx-bind-outputs.service.ts
 ```js
+import { Injectable } from '@angular/core';
 import { IBindIO, NgxBindOutputsService } from 'ngx-bind-io';
 
+@Injectable()
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
   checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
     const outputs = directive.outputs;

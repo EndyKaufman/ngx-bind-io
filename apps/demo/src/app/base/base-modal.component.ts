@@ -5,17 +5,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export class BaseModalComponent<T extends IModel> {
   @Input()
-  form: DynamicFormGroup<T> = undefined;
+  form: DynamicFormGroup<T>;
   @Input()
   hideOnNo = true;
   @Input()
   hideOnYes = false;
   @Input()
-  strings: { [key: string]: string } = undefined;
+  strings: { [key: string]: string };
   @Input()
-  title: string = undefined;
+  title: string;
   @Input()
-  message: string = undefined;
+  message: string;
   @Input()
   noTitle = 'Cancel';
   @Input()

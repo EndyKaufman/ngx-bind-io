@@ -6,26 +6,6 @@
 
 Directives for auto binding Input() and Output() in Angular9+ application
 
-**_For correct work, all inner Inputs, Outputs and all host properties ​​must be initialized, you can set them to "undefined"._**
-
-For check project ready to use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
-
-```bash
-npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
-```
-
-For check and add initialize statement:
-
-```bash
-npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0
-```
-
-For check and add initialize statement if you want correct work with tspath:
-
-```bash
-npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
-```
-
 - [Example](#example)
 - [Installation](#installation)
 - [Links](#links)
@@ -33,6 +13,7 @@ npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0  --tsconfig=./s
 - [Debug](#debug)
 - [Rules for detect inputs and outputs](#rules-for-detect-inputs-and-outputs)
 - [Bind to dynamic components](#bind-to-dynamic-components)
+- [Work without IVY Renderer](#work-without-ivy-renderer)
 
 ## Example
 
@@ -91,9 +72,7 @@ inner.component.ts
 
 ```js
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { BindIoInner } from 'ngx-bind-io';
 
-@BindIoInner() // <-- need for correct detect manual inputs like [propName]="propValue"
 @Component({
   selector: 'inner',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -106,7 +85,7 @@ import { BindIoInner } from 'ngx-bind-io';
 })
 export class InnerComponent {
   @Input()
-  isLoading: boolean = undefined;
+  isLoading: boolean;
   @Input()
   propA = 'Prop A: not defined';
   @Input()
@@ -184,8 +163,10 @@ For debug on one place
 my-ngx-bind-outputs.service.ts
 
 ```js
+import { Injectable } from '@angular/core';
 import { IBindIO, NgxBindOutputsService } from 'ngx-bind-io';
 
+@Injectable()
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
   checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
     const outputs = directive.outputs;
@@ -284,9 +265,7 @@ inner.component.ts
 
 ```js
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { BindIoInner } from 'ngx-bind-io';
 
-@BindIoInner() // <-- need for correct detect manual inputs like [propName]="propValue"
 @Component({
   selector: 'inner',
   // changeDetection: ChangeDetectionStrategy.OnPush, <-- change detection with OnPush strategy incorrected work for dynamic components
@@ -362,6 +341,63 @@ export class HostComponent {
   }
 }
 ```
+
+
+## Work without IVY Renderer
+
+
+**_For correct work without IVY Renderer, all inner Inputs, Outputs and all host properties ​​must be initialized, you can set them to "undefined"._**
+
+For check project ready to use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
+
+```bash
+npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
+```
+
+For check and add initialize statement:
+
+```bash
+npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0
+```
+
+For check and add initialize statement if you want correct work with tspath:
+
+```bash
+npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
+```
+
+inner.component.ts
+
+```js
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BindIoInner } from 'ngx-bind-io';
+
+@BindIoInner() // <-- need if use not IVY Renderer for correct detect manual inputs like [propName]="propValue"
+@Component({
+  selector: 'inner',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div *ngIf="isLoading">Loading... (5s)</div>
+    <button (click)="onStart()">Start</button> <br />
+    {{ propA }} <br />
+    {{ propB }}
+  `
+})
+export class InnerComponent {
+  @Input()
+  isLoading: boolean = undefined; // if use not IVY Renderer you mast define all inputs and outputs
+  @Input()
+  propA = 'Prop A: not defined';
+  @Input()
+  propB = 'Prop B: not defined';
+  @Output()
+  start = new EventEmitter();
+  onStart() {
+    this.start.next(true);
+  }
+}
+```
+
 
 ## License
 

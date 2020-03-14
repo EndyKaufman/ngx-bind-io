@@ -7,9 +7,8 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import { BindIoInner } from 'ngx-bind-io';
 import { Observable } from 'rxjs';
-@BindIoInner()
+
 @Component({
   selector: 'basic-bind-input-on-change',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,7 +19,7 @@ import { Observable } from 'rxjs';
     {{ propB }}
   `
 })
-export class BasicBindInputOnChangeComponent implements OnChanges {
+export class WithIvyBasicBindInputOnChangeComponent implements OnChanges {
   @Input()
   name: string;
   @Input()
@@ -43,7 +42,7 @@ export class BasicBindInputOnChangeComponent implements OnChanges {
   }
 }
 
-export class BaseBasicBindInputOnChangeHostComponent {
+export class WithIvyBaseBasicBindInputOnChangeHostComponent {
   isLoading$: Observable<boolean> = new Observable();
   onRun() {
     this.isLoading$ = new Observable(observer => {
@@ -52,7 +51,7 @@ export class BaseBasicBindInputOnChangeHostComponent {
     });
   }
 }
-@BindIoInner()
+
 @Component({
   selector: 'basic-bind-input-on-change-host',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -79,7 +78,7 @@ export class BaseBasicBindInputOnChangeHostComponent {
     <button (click)="loadingWith1500s()">Loading with 1,5s.</button>
   `
 })
-export class BasicBindInputOnChangeHostComponent extends BaseBasicBindInputOnChangeHostComponent {
+export class WithIvyBasicBindInputOnChangeHostComponent extends WithIvyBaseBasicBindInputOnChangeHostComponent {
   propA = 'Prop A: defined';
   get propB() {
     console.log('BasicBindInputOnChangeHostComponent: Original getter propB', this._propB);

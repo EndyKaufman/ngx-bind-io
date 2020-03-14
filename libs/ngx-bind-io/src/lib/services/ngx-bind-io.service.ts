@@ -5,6 +5,7 @@ import { NGX_BIND_IO_CONFIG } from '../ngx-bind-io.config';
 import { NgxBindInputsService } from './ngx-bind-inputs.service';
 import { NgxBindIODebugService } from './ngx-bind-io-debug.service';
 import { NgxBindOutputsService } from './ngx-bind-outputs.service';
+import { isFunction } from '../utils/utils';
 
 @Injectable()
 export class NgxBindIoService {
@@ -42,10 +43,12 @@ export class NgxBindIoService {
     if (inputs) {
       const changes: SimpleChanges = {};
       Object.keys(inputs).forEach(innerKey => {
-        (directive.innerComponent as any)[innerKey] = inputs[innerKey];
+        directive.innerComponent[innerKey] = inputs[innerKey];
         changes[innerKey] = new SimpleChange(undefined, inputs[innerKey], true);
       });
-      (directive.innerComponent as any).ngOnChanges(changes);
+      if (isFunction(directive.innerComponent.ngOnChanges)) {
+        directive.innerComponent.ngOnChanges(changes);
+      }
     }
     directive.bindAll();
   }

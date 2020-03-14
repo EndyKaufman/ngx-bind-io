@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BindIoInner } from 'ngx-bind-io';
 import { DynamicRepository } from 'ngx-repository';
 import { BaseGridComponent } from '../../../base/base-grid.component';
 import { MessageBoxService } from '../../../components/message-box/message-box.service';
 import { User } from '../../../models/user';
 import { UserModalComponent } from '../user-modal/user-modal.component';
-@BindIoInner()
+
 @Component({
   selector: 'users-grid-with-bind-io',
   templateUrl: './users-grid-with-bind-io.component.html',

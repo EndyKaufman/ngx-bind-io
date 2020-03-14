@@ -42,13 +42,13 @@ export class BaseGridComponent<T extends IModel> implements AfterContentInit {
     message: 'Are you sure to delete?'
   };
   @Input()
-  mockedItems?: T[] = undefined;
+  mockedItems?: T[];
   @Input()
-  apiUrl?: string = undefined;
+  apiUrl?: string;
   @Input()
-  strings: { [key: string]: string } = undefined;
+  strings: { [key: string]: string };
   @Input()
-  displayedColumns: string[] = undefined;
+  displayedColumns: string[];
 
   dataSource$: Observable<MatTableDataSource<T>>;
   repository: Repository<T>;
