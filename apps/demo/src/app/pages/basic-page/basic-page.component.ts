@@ -5,6 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BasicPageComponent {
+  readme = require('!!raw-loader!./basic-page.md').default;
   ts = {
     'bind-input': require('!!raw-loader!../../basics/bind-input.component.ts').default,
     'bind-input-with-exclude': require('!!raw-loader!../../basics/bind-input-with-exclude.component.ts').default,

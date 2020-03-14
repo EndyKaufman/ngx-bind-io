@@ -4,26 +4,6 @@
 
 Directives for auto binding Input() and Output() in Angular9+ application
 
-**_For correct work, all inner Inputs, Outputs and all host properties ​​must be initialized, you can set them to "undefined"._**
-
-For check project ready to use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
-
-```bash
-npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
-```
-
-For check and add initialize statement:
-
-```bash
-npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0
-```
-
-For check and add initialize statement if you want correct work with tspath:
-
-```bash
-npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
-```
-
 - [Example](#example)
 - [Installation](#installation)
 - [Links](#links)
@@ -31,6 +11,7 @@ npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0  --tsconfig=./s
 - [Debug](#debug)
 - [Rules for detect inputs and outputs](#rules-for-detect-inputs-and-outputs)
 - [Bind to dynamic components](#bind-to-dynamic-components)
+- [Work without IVY Renderer](#work-without-ivy-renderer)
 
 ## Example
 
@@ -182,8 +163,10 @@ For debug on one place
 my-ngx-bind-outputs.service.ts
 
 ```js
+import { Injectable } from '@angular/core';
 import { IBindIO, NgxBindOutputsService } from 'ngx-bind-io';
 
+@Injectable()
 export class MyNgxBindOutputsService extends NgxBindOutputsService {
   checkKeyNameToOutputBind(directive: Partial<INgxBindIODirective>, hostKey: string, innerKey: string) {
     const outputs = directive.outputs;
@@ -313,7 +296,7 @@ export class InnerComponent {
 host.component.ts
 
 ```js
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, SkipSelf} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, SkipSelf } from '@angular/core';
 import { BaseHostComponent } from './base-host.component';
 import { BehaviorSubject } from 'rxjs';
 import { InnerComponent } from './inner.component';
@@ -359,6 +342,30 @@ export class HostComponent {
     setTimeout(() => this.isLoading$.next(false), 5000);
   }
 }
+```
+
+
+## Work without IVY Renderer
+
+
+**_For correct work without IVY Renderer, all inner Inputs, Outputs and all host properties ​​must be initialized, you can set them to "undefined"._**
+
+For check project ready to use bindIO directives, you may use [ngx-bind-io-cli](https://www.npmjs.com/package/ngx-bind-io-cli) and run:
+
+```bash
+npx ngx-bind-io-cli ./src --maxInputs=0 --maxOutputs=0
+```
+
+For check and add initialize statement:
+
+```bash
+npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0
+```
+
+For check and add initialize statement if you want correct work with tspath:
+
+```bash
+npx ngx-bind-io-cli ./src --fix=all --maxInputs=0 --maxOutputs=0  --tsconfig=./src/tsconfig.app.json
 ```
 
 ## License

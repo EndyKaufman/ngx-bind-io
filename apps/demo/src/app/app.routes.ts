@@ -3,6 +3,7 @@ import { BaseGridPageRoutes } from './pages/base-grid-page/base-grid-page.routes
 import { BasicPageRoutes } from './pages/basic-page/basic-page.routes';
 import { CustomizationPageRoutes } from './pages/customization-page/customization-page.routes';
 import { HomePageRoutes } from './pages/home-page/home-page.routes';
+import { BasicWithIvyPageRoutes } from './pages/basic-with-ivy-page/basic-with-ivy-page.routes';
 
 export const AppRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,7 +13,12 @@ export const AppRoutes: Routes = [
     data: HomePageRoutes[0].data
   },
   {
-    path: 'basic',
+    path: BasicWithIvyPageRoutes[0].data.name,
+    loadChildren: './pages/basic-with-ivy-page/basic-with-ivy-page.module#BasicWithIvyPageModule',
+    data: BasicWithIvyPageRoutes[0].data
+  },
+  {
+    path: BasicPageRoutes[0].data.name,
     loadChildren: './pages/basic-page/basic-page.module#BasicPageModule',
     data: BasicPageRoutes[0].data
   },

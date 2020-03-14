@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
 
 export class BaseEntityGridComponent<T = any> {
   @Input()
-  dataSource: MatTableDataSource<T> = undefined;
+  dataSource: MatTableDataSource<T>;
   @Input()
-  displayedColumns: string[] = undefined;
+  displayedColumns: string[];
 }
-@BindIoInner()
+
 @Component({
   selector: 'entity-grid',
   templateUrl: './entity-grid.component.html',
@@ -20,7 +20,7 @@ export class EntityGridComponent<T = any> extends BaseEntityGridComponent<T> imp
   @Input()
   class = 'entity-grid';
   @Input()
-  strings: { [key: string]: string } = undefined;
+  strings: { [key: string]: string };
   @Output()
   add = new EventEmitter<T>();
   @Output()
@@ -28,7 +28,7 @@ export class EntityGridComponent<T = any> extends BaseEntityGridComponent<T> imp
   @Output()
   delete = new EventEmitter<T>();
   @BindObservable()
-  filtredDisplayedColumns: string[] = undefined;
+  filtredDisplayedColumns: string[];
   filtredDisplayedColumns$: Observable<string[]>;
 
   ngOnChanges(changes: SimpleChanges) {

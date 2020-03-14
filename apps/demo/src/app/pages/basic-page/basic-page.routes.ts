@@ -7,7 +7,7 @@ export const BasicPageRoutes: Routes = [
     component: BasicPageComponent,
     data: {
       name: 'basic',
-      title: 'Basic',
+      title: 'Basic (without ivy)',
       visible: true
     },
     children: []
