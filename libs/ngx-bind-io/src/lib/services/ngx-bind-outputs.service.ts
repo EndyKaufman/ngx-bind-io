@@ -66,7 +66,24 @@ export class NgxBindOutputsService {
    * Utils
    */
   getOutputs(directive: Partial<INgxBindIODirective>) {
-    let hostKeys = [
+    const { innerPropDescriptorKeys, hostPropDescriptorKeys } = this.getOutputsFromPropDescriptor(directive);
+    const { hostIvyKeys, innerIvyKeys } = this.getIvyOutputs(directive);
+    let innerKeys = [...innerPropDescriptorKeys, ...innerIvyKeys];
+    let hostKeys = [...hostPropDescriptorKeys, ...hostIvyKeys];
+    innerKeys = removeKeysManualBindedOutputs(directive, removeKeysUsedInAttributes(directive, innerKeys));
+    hostKeys = removeKeysUsedInAttributes(directive, hostKeys);
+    const outputs = {
+      hostKeys: removeKeysNotAllowedConstants(directive, hostKeys),
+      innerKeys: removeKeysNotAllowedConstants(directive, innerKeys)
+    };
+    if (directive.innerComponent.name === 'BasicBindIOComponent') {
+      console.log(directive.innerComponent.name, { directive, outputs });
+    }
+    return outputs;
+  }
+
+  private getOutputsFromPropDescriptor(directive: Partial<INgxBindIODirective>) {
+    const hostPropDescriptorKeys = [
       ...Object.keys(directive.hostComponent).filter(hostKey => isFunction(directive.hostComponent[hostKey])),
       ...collectKeys(
         directive.hostComponent.__proto__,
@@ -74,7 +91,7 @@ export class NgxBindOutputsService {
         10
       )
     ];
-    let innerKeys = directive.innerComponent
+    const innerPropDescriptorKeys = directive.innerComponent
       ? [
           ...Object.keys(directive.innerComponent).filter(
             innerKey => getPropDescriptor(directive.innerComponent, innerKey).value instanceof EventEmitter
@@ -86,13 +103,25 @@ export class NgxBindOutputsService {
           )
         ]
       : [];
-    innerKeys = removeKeysManualBindedOutputs(directive, removeKeysUsedInAttributes(directive, innerKeys));
-    hostKeys = removeKeysUsedInAttributes(directive, hostKeys);
-    return {
-      hostKeys: removeKeysNotAllowedConstants(directive, hostKeys),
-      innerKeys: removeKeysNotAllowedConstants(directive, innerKeys)
-    };
+    return { innerPropDescriptorKeys, hostPropDescriptorKeys };
   }
+
+  private getIvyOutputs(directive: Partial<INgxBindIODirective>) {
+    const hostIvyKeys = directive.hostComponent
+      ? [
+          ...Object.keys(directive.hostComponent?.__proto__?.constructor?.ɵcmp?.outputs || {}).filter(
+            key => getPropDescriptor(directive.hostComponent, key).value instanceof EventEmitter
+          )
+        ]
+      : [];
+    const innerIvyKeys = [
+      ...Object.keys(directive.innerComponent?.__proto__?.constructor?.ɵcmp?.outputs || {}).filter(
+        key => getPropDescriptor(directive.innerComponent, key).value instanceof EventEmitter
+      )
+    ];
+    return { innerIvyKeys, hostIvyKeys };
+  }
+
   getIncludesAndExcludes(directive: Partial<INgxBindIODirective>) {
     const exclude = Array.isArray(directive.excludeOutputs) ? directive.excludeOutputs : [directive.excludeOutputs];
     const include = Array.isArray(directive.includeOutputs) ? directive.includeOutputs : [directive.includeOutputs];
