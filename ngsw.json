@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1584199583576,
+  "timestamp": 1584205884272,
   "index": "/ngx-bind-io/index.html",
   "assetGroups": [
     {
@@ -16,7 +16,7 @@
         "/ngx-bind-io/9.1153a96cd7c6b1293bae.js",
         "/ngx-bind-io/favicon.ico",
         "/ngx-bind-io/index.html",
-        "/ngx-bind-io/main.96e0ed054465ac7a5671.js",
+        "/ngx-bind-io/main.1327bc91f3c5c7865336.js",
         "/ngx-bind-io/polyfills-es5.f7283b0032f0ae99e0f7.js",
         "/ngx-bind-io/polyfills.c8c246d09b22e56eabf9.js",
         "/ngx-bind-io/runtime.f623323e38aaad49631e.js",
@@ -63,8 +63,8 @@
     "/ngx-bind-io/assets/img/icons/github-circle.svg": "9a2dfab04214dc8b31f2df7baec3419e18ed166e",
     "/ngx-bind-io/assets/img/icons/shape-outline.svg": "9d0f9439eb430f8282fd8cc60e674b07ec8318ac",
     "/ngx-bind-io/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/ngx-bind-io/index.html": "ebc9daeaa479574e84c9ae032661fb88ce2a0ee3",
-    "/ngx-bind-io/main.96e0ed054465ac7a5671.js": "6a9b81e8e9f126c1d89869030d2d127daa3e8956",
+    "/ngx-bind-io/index.html": "f4865b8278cba8bc7d7a90a95ae76dd3d181b235",
+    "/ngx-bind-io/main.1327bc91f3c5c7865336.js": "1bea3dd2e9f32d74c5cdfacbc92a1624108e9e92",
     "/ngx-bind-io/polyfills-es5.f7283b0032f0ae99e0f7.js": "69aa568aad312ef242704303e34abd2ad451ee04",
     "/ngx-bind-io/polyfills.c8c246d09b22e56eabf9.js": "7a528ff12ede241cbb9f9ef2139f43d73256cca4",
     "/ngx-bind-io/runtime.f623323e38aaad49631e.js": "8c02c0903099d1c31328a58f74557279fe2c7d62",
