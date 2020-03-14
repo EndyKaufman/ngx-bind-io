@@ -1,3 +1,12 @@
+# [1.0.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.7.0...1.0.0) (2020-03-14)
+
+
+### Features
+
+* add support get inputs and outputs from ivy metadata ([e6e4f3d](https://github.com/EndyKaufman/ngx-bind-io/commit/e6e4f3d30b3c8b08590f18b4fa697b083b38d8a3))
+
+
+
 # [0.7.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.6.6...0.7.0) (2020-03-13)
 
 

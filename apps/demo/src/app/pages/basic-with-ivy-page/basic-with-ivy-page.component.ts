@@ -7,8 +7,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 export class BasicWithIvyPageComponent {
   ts = {
     'bind-input': require('!!raw-loader!../../basics-with-ivy/bind-input.component.ts').default,
-    'bind-input-with-exclude': require('!!raw-loader!../../basics-with-ivy/bind-input-with-exclude.component.ts').default,
-    'bind-input-with-include': require('!!raw-loader!../../basics-with-ivy/bind-input-with-include.component.ts').default,
+    'bind-input-with-exclude': require('!!raw-loader!../../basics-with-ivy/bind-input-with-exclude.component.ts')
+      .default,
+    'bind-input-with-include': require('!!raw-loader!../../basics-with-ivy/bind-input-with-include.component.ts')
+      .default,
     'bind-input-with-deep-inherits': require('!!raw-loader!../../basics-with-ivy/bind-input-with-deep-inherits.component.ts')
       .default,
     'bind-io-with-mixins': require('!!raw-loader!../../basics-with-ivy/bind-io-with-mixins.component.ts').default,
