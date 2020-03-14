@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/EndyKaufman/ngx-bind-io/compare/1.0.0...1.0.1) (2020-03-14)
+
+
+### Bug Fixes
+
+* incorrect detect components without ivy mode ([b8e5158](https://github.com/EndyKaufman/ngx-bind-io/commit/b8e5158ca2cf39fe3a47cb19906806ed2b81e614))
+
+
+
 # [1.0.0](https://github.com/EndyKaufman/ngx-bind-io/compare/0.7.0...1.0.0) (2020-03-14)
 
 
