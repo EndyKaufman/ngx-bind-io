@@ -136,9 +136,22 @@ export class BindIODirective implements INgxBindIODirective, OnChanges, OnInit, 
   }
   detectComponents() {
     if (this.viewContainerRef && !this.innerComponent && !this.hostComponent) {
-      this.innerComponent = (this._detectorRef as EmbeddedViewRef<any>).context;
+      // ivy
+      this.innerComponent = (this._detectorRef as EmbeddedViewRef<any>)?.context;
       this.hostComponent =
-        this._parentInjector && (this._parentInjector as any)._lView.filter(item => item && item.__ngContext__)[1];
+        this._parentInjector &&
+        ((this._parentInjector as any)?._lView || []).filter(item => item && item.__ngContext__)[1];
+      // if not ivy try old logic
+      if (!this.innerComponent) {
+        this.innerComponent = this.viewContainerRef['_data'].componentView.component;
+      }
+      // if not ivy try old logic
+      if (!this.hostComponent) {
+        this.hostComponent = (<any>this.viewContainerRef)._view.context;
+        if (this.hostComponent.$implicit !== undefined) {
+          this.hostComponent = (<any>this.viewContainerRef)._view.component;
+        }
+      }
     }
   }
   debugIsActive() {
