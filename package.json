@@ -96,7 +96,7 @@
     "prismjs": "^1.19.0",
     "raw-loader": "^4.0.0",
     "rxjs": "^6.5.4",
-    "ts-mixer": "^5.0.0",
+    "ts-mixer": "^5.1.0",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
