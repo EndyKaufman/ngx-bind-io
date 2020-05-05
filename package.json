@@ -81,7 +81,7 @@
     "@angular/material": "^9.1.2",
     "@angular/platform-browser": "^9.0.6",
     "@angular/platform-browser-dynamic": "^9.0.6",
-    "@angular/pwa": "^0.900.6",
+    "@angular/pwa": "^0.901.1",
     "@angular/router": "^9.0.6",
     "@angular/service-worker": "^9.0.6",
     "@types/lodash-es": "^4.17.3",
