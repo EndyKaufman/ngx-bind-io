@@ -88,7 +88,7 @@
     "@types/prismjs": "^1.16.0",
     "bind-observable": "^1.0.3",
     "core-js": "^3.6.4",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "ngx-dynamic-form-builder": "^1.2.0",
     "ngx-markdown": "^9.0.0",
     "ngx-repository": "^0.6.3",
