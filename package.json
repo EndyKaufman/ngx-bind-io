@@ -90,7 +90,7 @@
     "core-js": "^3.6.4",
     "lodash-es": "^4.17.15",
     "ngx-dynamic-form-builder": "^1.2.0",
-    "ngx-markdown": "^9.0.0",
+    "ngx-markdown": "^14.0.0",
     "ngx-repository": "^0.6.3",
     "node-sass": "^4.13.1",
     "prismjs": "^1.19.0",
