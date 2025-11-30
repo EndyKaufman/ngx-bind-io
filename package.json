@@ -73,7 +73,7 @@
   "dependencies": {
     "@angular/animations": "^9.0.6",
     "@angular/cdk": "^9.1.2",
-    "@angular/common": "^9.0.6",
+    "@angular/common": "^19.2.16",
     "@angular/compiler": "^9.0.6",
     "@angular/core": "^9.0.6",
     "@angular/flex-layout": "^9.0.0-beta.29",
@@ -89,7 +89,7 @@
     "bind-observable": "^1.0.3",
     "core-js": "^3.6.4",
     "lodash-es": "^4.17.15",
-    "ngx-dynamic-form-builder": "^1.2.0",
+    "ngx-dynamic-form-builder": "^1.5.0",
     "ngx-markdown": "^9.0.0",
     "ngx-repository": "^0.6.3",
     "node-sass": "^4.13.1",
